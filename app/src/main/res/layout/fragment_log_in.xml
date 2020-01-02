@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
@@ -60,31 +61,52 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_create_new_user" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/auth_email_edit_text"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/auth_email_text_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="56dp"
-                android:background="@drawable/auth_edit_text_background"
                 android:hint="@string/edit_text_email_hint"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:textColorHint="#333333"
-                android:textSize="12sp"
-                app:layout_constraintTop_toBottomOf="@id/auth_logo_image" />
+                android:textColorHint="@color/edit_text_hint_color"
+                app:hintTextColor="@color/edit_text_highlight_hint_color"
+                app:layout_constraintTop_toBottomOf="@id/auth_logo_image">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/auth_password_edit_text"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/auth_email_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/auth_edit_text_background"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:textColor="@color/edit_text_hint_color"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/auth_password_text_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/auth_edit_text_background"
                 android:hint="@string/edit_text_password_hint"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:textColorHint="#333333"
-                android:textSize="12sp"
-                app:layout_constraintTop_toBottomOf="@id/auth_email_edit_text" />
+                android:textColorHint="@color/edit_text_hint_color"
+                app:hintTextColor="@color/edit_text_highlight_hint_color"
+                app:layout_constraintTop_toBottomOf="@id/auth_email_text_layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/auth_password_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/auth_edit_text_background"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:textColor="@color/edit_text_hint_color"
+                    android:textColorHint="@color/edit_text_highlight_hint_color"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/text_forget_password"
@@ -95,7 +117,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/auth_password_edit_text" />
+                app:layout_constraintTop_toBottomOf="@id/auth_password_text_layout" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_log_in"
