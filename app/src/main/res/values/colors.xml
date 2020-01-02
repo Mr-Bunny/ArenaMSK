@@ -3,4 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="auth_text_color_secondary">#828282</color>
+    <color name="auth_text_color_primary">#4F4F4F</color>
+    <color name="auth_button_color">#2F80ED</color>
 </resources>

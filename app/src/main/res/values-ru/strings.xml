@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_text_new_user">Новый пользователь?</string>
+    <string name="auth_create_text_new_user"><u>Зарегистрируйтесь</u></string>
+    <string name="auth_text_forget_password"><u>забыли пароль?</u></string>
+    <string name="sign_in">ВОЙТИ</string>
+    <string name="text_continue_without_registration"><u>Продолжить без регистрации</u></string>
+</resources>
