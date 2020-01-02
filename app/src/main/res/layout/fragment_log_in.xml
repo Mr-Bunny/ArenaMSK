@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
@@ -77,6 +76,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/auth_edit_text_background"
                     android:fontFamily="@font/montserrat_bold"
+                    android:inputType="textEmailAddress"
                     android:paddingStart="24dp"
                     android:paddingEnd="24dp"
                     android:textColor="@color/edit_text_hint_color"
@@ -89,6 +89,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleDrawable="@drawable/password_toggle"
                 android:hint="@string/edit_text_password_hint"
                 android:textColorHint="@color/edit_text_hint_color"
                 app:hintTextColor="@color/edit_text_highlight_hint_color"
@@ -98,6 +100,7 @@
                     android:id="@+id/auth_password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textPassword"
                     android:background="@drawable/auth_edit_text_background"
                     android:fontFamily="@font/montserrat_bold"
                     android:paddingStart="24dp"
