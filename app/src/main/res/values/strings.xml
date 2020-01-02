@@ -6,4 +6,6 @@
     <string name="auth_text_forget_password"><u>forget your password?</u></string>
     <string name="sign_in">Sign in</string>
     <string name="text_continue_without_registration"><u>Continue without registration</u></string>
+    <string name="edit_text_email_hint" translatable="false">EMAIL</string>
+    <string name="edit_text_password_hint" translatable="false">PASSWORD</string>
 </resources>
