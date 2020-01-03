@@ -11,8 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/image_description"
+        android:fitsSystemWindows="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/auth_background" />
+        android:src="@drawable/auth_background"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -89,20 +91,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleDrawable="@drawable/password_toggle"
                 android:hint="@string/edit_text_password_hint"
                 android:textColorHint="@color/edit_text_hint_color"
                 app:hintTextColor="@color/edit_text_highlight_hint_color"
-                app:layout_constraintTop_toBottomOf="@id/auth_email_text_layout">
+                app:layout_constraintTop_toBottomOf="@id/auth_email_text_layout"
+                app:passwordToggleDrawable="@drawable/password_toggle"
+                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/auth_password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
                     android:background="@drawable/auth_edit_text_background"
                     android:fontFamily="@font/montserrat_bold"
+                    android:inputType="textPassword"
                     android:paddingStart="24dp"
                     android:paddingEnd="24dp"
                     android:textColor="@color/edit_text_hint_color"

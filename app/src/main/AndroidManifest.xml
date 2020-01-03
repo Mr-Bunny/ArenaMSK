@@ -12,7 +12,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".AuthActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
