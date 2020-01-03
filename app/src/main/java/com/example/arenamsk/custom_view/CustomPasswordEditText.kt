@@ -1,12 +1,10 @@
 package com.example.arenamsk.custom_view
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.util.AttributeSet
 import com.example.arenamsk.R
-import kotlinx.android.synthetic.main.custom_email_edit_text.view.*
 
-class CustomEmailEditText: AbstractCustomEditText {
+class CustomPasswordEditText: AbstractCustomEditText {
 
     constructor(context: Context): super(context) {
         init()
@@ -21,7 +19,7 @@ class CustomEmailEditText: AbstractCustomEditText {
     }
 
     override fun init() {
-        inflate(context, R.layout.custom_email_edit_text, this)
+        inflate(context, R.layout.custom_password_edit_text, this)
 
         super.init()
     }
