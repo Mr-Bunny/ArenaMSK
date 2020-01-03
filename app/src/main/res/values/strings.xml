@@ -8,4 +8,7 @@
     <string name="text_continue_without_registration"><u>Continue without registration</u></string>
     <string name="edit_text_email_hint" translatable="false">EMAIL</string>
     <string name="edit_text_password_hint" translatable="false">PASSWORD</string>
+    <string name="text_toolbar_sign_up">Sign up</string>
+    <string name="text_sign_up">SIGN UP</string>
+    <string name="edit_text_name_hint">NAME</string>
 </resources>

@@ -8,6 +8,6 @@
     <color name="auth_button_color">#2F80ED</color>
     <color name="edit_text_hint_color">#333333</color>
     <color name="edit_text_highlight_hint_color">#99333333</color>
-    <color name="edit_text_password_toggle">#828282</color>
+    <color name="edit_text_password_toggle">@color/auth_text_color_secondary</color>
     <color name="edit_text_error_border">#EB5757</color>
 </resources>

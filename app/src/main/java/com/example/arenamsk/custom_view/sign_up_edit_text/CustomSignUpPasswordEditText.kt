@@ -1,10 +1,11 @@
-package com.example.arenamsk.custom_view
+package com.example.arenamsk.custom_view.sign_up_edit_text
 
 import android.content.Context
 import android.util.AttributeSet
 import com.example.arenamsk.R
+import com.example.arenamsk.custom_view.AbstractSignUpCustomEditText
 
-class CustomPasswordEditText: AbstractCustomEditText {
+class CustomSignUpPasswordEditText: AbstractSignUpCustomEditText {
 
     constructor(context: Context): super(context) {
         init()
@@ -19,7 +20,7 @@ class CustomPasswordEditText: AbstractCustomEditText {
     }
 
     override fun init() {
-        inflate(context, R.layout.custom_password_edit_text, this)
+        inflate(context, R.layout.custom_sign_up_password_edit_text, this)
 
         super.init()
     }

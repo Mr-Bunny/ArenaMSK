@@ -13,6 +13,15 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //TODO включать при регистрации и отключать при авторизации
+//        enableFullTransperentStatusBar()
+
+        val trans = supportFragmentManager.beginTransaction()
+        trans.add(R.id.auth_fragment_container, LogInFragment())
+        trans.commit()
+    }
+
+    private fun enableFullTransperentStatusBar() {
         if (Build.VERSION.SDK_INT in 19..20) {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
         }
@@ -23,10 +32,6 @@ class AuthActivity : AppCompatActivity() {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
             window.statusBarColor = Color.TRANSPARENT
         }
-
-        val trans = supportFragmentManager.beginTransaction()
-        trans.add(R.id.auth_fragment_container, LogInFragment())
-        trans.commit()
     }
 
     private fun setWindowFlag(bits: Int, on: Boolean) {

@@ -13,6 +13,6 @@ class LogInFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_log_in, container, false)
+        return inflater.inflate(R.layout.fragment_sign_up, container, false)
     }
 }
