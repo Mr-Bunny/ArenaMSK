@@ -62,29 +62,12 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_create_new_user" />
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.example.arenamsk.custom_view.CustomEmailEditText
                 android:id="@+id/auth_email_text_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="56dp"
-                android:hint="@string/edit_text_email_hint"
-                android:textColorHint="@color/edit_text_hint_color"
-                app:hintTextColor="@color/edit_text_highlight_hint_color"
-                app:layout_constraintTop_toBottomOf="@id/auth_logo_image">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/auth_email_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/auth_edit_text_background"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:inputType="textEmailAddress"
-                    android:paddingStart="24dp"
-                    android:paddingEnd="24dp"
-                    android:textColor="@color/edit_text_hint_color"
-                    android:textSize="12sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintTop_toBottomOf="@id/auth_logo_image"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/auth_password_text_layout"
@@ -102,7 +85,7 @@
                     android:id="@+id/auth_password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/auth_edit_text_background"
+                    android:background="@drawable/edit_text_empty_background"
                     android:fontFamily="@font/montserrat_bold"
                     android:inputType="textPassword"
                     android:paddingStart="24dp"

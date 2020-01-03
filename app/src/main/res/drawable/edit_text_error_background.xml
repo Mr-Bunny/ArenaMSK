@@ -6,7 +6,8 @@
     <solid
         android:color="#E6FFFFFF"/>
 
-    <size
-        android:width="343dp"
-        android:height="56dp"/>
+    <stroke
+        android:width="2dp"
+        android:color="@color/edit_text_error_border" />
+
 </shape>
