@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import com.example.arenamsk.R
 import kotlinx.android.synthetic.main.custom_email_edit_text.view.*
 
-abstract class AbstractCustomEditText: LinearLayout {
+abstract class AbstractCustomEditText : LinearLayout {
 
     companion object {
         enum class State {
@@ -30,11 +30,15 @@ abstract class AbstractCustomEditText: LinearLayout {
         }
 
 
-    constructor(context: Context): super(context)
+    constructor(context: Context) : super(context)
 
-    constructor(context: Context, attrs: AttributeSet): super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int): super(context, attrs, defStyle)
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
+        context,
+        attrs,
+        defStyle
+    )
 
     open fun init() {
         hint = custom_text_layout.hint.toString()
@@ -58,28 +62,39 @@ abstract class AbstractCustomEditText: LinearLayout {
     fun getText() = custom_edit_text.text.toString()
 
     private fun updateView() {
-        when(currentState) {
+        when (currentState) {
             State.EMPTY -> {
-                custom_edit_text.background = resources.getDrawable(R.drawable.edit_text_empty_background)
+                custom_edit_text.background =
+                    resources.getDrawable(R.drawable.edit_text_empty_background)
                 custom_text_layout.hint = hint
-                custom_text_layout.defaultHintTextColor = ColorStateList.valueOf(resources.getColor(
-                    R.color.edit_text_hint_color))
-                custom_text_layout.hintTextColor = ColorStateList.valueOf(resources.getColor(R.color.edit_text_highlight_hint_color))
+                custom_text_layout.defaultHintTextColor = ColorStateList.valueOf(
+                    resources.getColor(
+                        R.color.edit_text_hint_color
+                    )
+                )
+                custom_text_layout.hintTextColor =
+                    ColorStateList.valueOf(resources.getColor(R.color.edit_text_highlight_hint_color))
             }
 
             State.FILLED -> {
-                custom_edit_text.background = resources.getDrawable(R.drawable.edit_text_filled_background)
+                custom_edit_text.background =
+                    resources.getDrawable(R.drawable.edit_text_filled_background)
                 custom_text_layout.hint = hint
-                custom_text_layout.defaultHintTextColor = ColorStateList.valueOf(resources.getColor(
-                    R.color.edit_text_highlight_hint_color))
-                custom_text_layout.hintTextColor = ColorStateList.valueOf(resources.getColor(R.color.edit_text_highlight_hint_color))
+                custom_text_layout.defaultHintTextColor = ColorStateList.valueOf(
+                    resources.getColor(
+                        R.color.edit_text_highlight_hint_color
+                    )
+                )
+                custom_text_layout.hintTextColor =
+                    ColorStateList.valueOf(resources.getColor(R.color.edit_text_highlight_hint_color))
             }
 
             State.ERROR -> {
-                custom_edit_text.background = resources.getDrawable(R.drawable.edit_text_error_background)
+                custom_edit_text.background =
+                    resources.getDrawable(R.drawable.edit_text_error_background)
                 custom_text_layout.hint = errorHint
-                custom_text_layout.defaultHintTextColor = ColorStateList.valueOf(resources.getColor(
-                    R.color.edit_text_error_border))
+                custom_text_layout.defaultHintTextColor =
+                    ColorStateList.valueOf(resources.getColor(R.color.edit_text_hint_error))
             }
         }
     }

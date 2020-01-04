@@ -37,23 +37,23 @@ class LogInFragment : BaseFragment() {
     private fun handleLogInStatus(logInStatus: LogInStatus) {
         when (logInStatus) {
             LogInStatus.EMAIL_EMPTY -> {
-                auth_email_text_layout.setError("Поле не может быть пустым")
+                auth_email_text_layout.setError(getString(R.string.text_hint_empty_field_error))
             }
 
             LogInStatus.EMAIL_INCORRECT -> {
-                auth_email_text_layout.setError("Пожалуйста введите корректный e-mail адрес")
+                auth_email_text_layout.setError(getString(R.string.text_hint_email_incorrect_error))
             }
 
             LogInStatus.PASSWORD_EMPTY -> {
-                auth_password_text_layout.setError("Поле не может быть пустым")
+                auth_password_text_layout.setError(getString(R.string.text_hint_empty_field_error))
             }
 
             LogInStatus.PASSWORD_MIN_LENGTH_ERROR -> {
-                auth_password_text_layout.setError("Минимальная длина 6 символов")
+                auth_password_text_layout.setError(getString(R.string.text_hint_min_length_error))
             }
 
             LogInStatus.LOG_IN_FAIL -> {
-
+                showToast(getString(R.string.text_hint_sign_up_fail))
             }
 
             LogInStatus.LOG_IN_SUCCESS -> {

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">ArenaMSK</string>
     <string name="image_description" translatable="false">image</string>
+
+    <!--Auth-->
     <string name="auth_text_new_user">New user?</string>
     <string name="auth_create_text_new_user"><u>Sign up</u></string>
     <string name="auth_text_forget_password"><u>forget your password?</u></string>
@@ -12,4 +14,10 @@
     <string name="text_sign_up">SIGN UP</string>
     <string name="edit_text_name_hint">NAME</string>
     <string name="text_close_app_toast_hint">Please click BACK again to exit</string>
+    <string name="text_hint_sign_up_fail">Sign up failed</string>
+    <string name="text_hint_empty_field_error">FIELD CAN NOT BE EMPTY</string>
+    <string name="text_hint_email_incorrect_error">PLEASE ENTER A VALID EMAIL ADDRESS</string>
+    <string name="text_hint_min_length_error">MIN LENGTH IS 6 CHARACTERS</string>
+    <string name="text_hint_email_exist_error">EMAIL ALREADY EXISTS</string>
+
 </resources>

@@ -20,4 +20,8 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="HintTextInputLayoutSize" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">8sp</item>
+    </style>
+
 </resources>

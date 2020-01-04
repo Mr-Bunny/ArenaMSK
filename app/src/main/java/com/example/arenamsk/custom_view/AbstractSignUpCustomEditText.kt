@@ -55,6 +55,8 @@ abstract class AbstractSignUpCustomEditText: LinearLayout {
         currentState = State.ERROR
     }
 
+    fun getText() = custom_edit_text.text.toString()
+
     private fun updateView() {
         when(currentState) {
             State.EMPTY -> {
@@ -74,7 +76,7 @@ abstract class AbstractSignUpCustomEditText: LinearLayout {
             State.ERROR -> {
                 custom_edit_text.background = resources.getDrawable(R.drawable.edit_text_error_background)
                 custom_text_layout.hint = errorHint
-                custom_text_layout.defaultHintTextColor = ColorStateList.valueOf(resources.getColor(R.color.edit_text_error_border))
+                custom_text_layout.defaultHintTextColor = ColorStateList.valueOf(resources.getColor(R.color.edit_text_hint_error))
             }
         }
     }
