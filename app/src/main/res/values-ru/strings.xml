@@ -8,4 +8,5 @@
     <string name="text_toolbar_sign_up">Регистрация</string>
     <string name="text_sign_up">ЗАРЕГИСТРИРОВАТЬСЯ</string>
     <string name="edit_text_name_hint">ИМЯ</string>
+    <string name="text_close_app_toast_hint">Нажмите ещё раз для выхода</string>
 </resources>

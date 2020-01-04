@@ -26,8 +26,9 @@
 
                 <ImageView
                     android:id="@+id/toolbar_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:scaleType="centerInside"
                     android:contentDescription="@string/image_description"
                     android:src="@drawable/ic_arrow_left_dark"
                     app:layout_constraintBottom_toBottomOf="parent"

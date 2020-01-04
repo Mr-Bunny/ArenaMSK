@@ -1,48 +1,50 @@
 package com.example.arenamsk
 
-import android.graphics.Color
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
+import android.os.Handler
+import android.widget.Toast
 
 class AuthActivity : AppCompatActivity() {
+
+    companion object {
+        const val FRAGMENT_LOG_IN_TAG = "fragment_log_in"
+        const val FRAGMENT_SIGN_UP_TAG = "fragment_sign_up"
+    }
+
+    private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //TODO включать при регистрации и отключать при авторизации
-//        enableFullTransperentStatusBar()
-
-        val trans = supportFragmentManager.beginTransaction()
-        trans.add(R.id.auth_fragment_container, LogInFragment())
-        trans.commit()
+        openLogInFragment()
     }
 
-    private fun enableFullTransperentStatusBar() {
-        if (Build.VERSION.SDK_INT in 19..20) {
-            setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
+    override fun onBackPressed() {
+        supportFragmentManager.findFragmentByTag(FRAGMENT_SIGN_UP_TAG)?.let {
+            if (it.isVisible) {
+                supportFragmentManager.popBackStack()
+                return
+            }
         }
-        if (Build.VERSION.SDK_INT >= 19) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
-        if (Build.VERSION.SDK_INT >= 21) {
-            setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
-            window.statusBarColor = Color.TRANSPARENT
-        }
-    }
 
-    private fun setWindowFlag(bits: Int, on: Boolean) {
-        val win = window
-        val winParams = win.attributes
-        if (on) {
-            winParams.flags = winParams.flags or bits
+        if (doubleBackToExitPressedOnce) {
+            finishAffinity()
         } else {
-            winParams.flags = winParams.flags and bits.inv()
+            doubleBackToExitPressedOnce = true
+            Toast.makeText(this, getString(R.string.text_close_app_toast_hint), Toast.LENGTH_SHORT).show()
+
+            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
         }
-        win.attributes = winParams
     }
+
+    private fun openLogInFragment() {
+        with(supportFragmentManager.beginTransaction()) {
+            replace(R.id.auth_fragment_container, LogInFragment(), FRAGMENT_LOG_IN_TAG)
+            commit()
+        }
+    }
+
 
 }
