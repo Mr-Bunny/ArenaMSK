@@ -22,3 +22,7 @@ fun View.enable() {
 fun View.disable() {
     visibility = View.GONE
 }
+
+fun View.hide() {
+    visibility = View.INVISIBLE
+}

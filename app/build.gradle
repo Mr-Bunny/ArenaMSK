@@ -49,6 +49,9 @@ dependencies {
     //Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
+    //Circle image crop
+    implementation 'com.rori.zenvo.dragscalecircleview:dragscalecircleview:1.0.1'
+
     implementation "android.arch.lifecycle:runtime:1.1.1"
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

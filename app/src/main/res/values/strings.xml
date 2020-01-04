@@ -19,5 +19,6 @@
     <string name="text_hint_email_incorrect_error">PLEASE ENTER A VALID EMAIL ADDRESS</string>
     <string name="text_hint_min_length_error">MIN LENGTH IS 6 CHARACTERS</string>
     <string name="text_hint_email_exist_error">EMAIL ALREADY EXISTS</string>
+    <string name="text_add_photo">Add photo</string>
 
 </resources>
