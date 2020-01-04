@@ -23,6 +23,7 @@ class LogInFragment : BaseFragment() {
         btn_log_in.setOnClickListener {
             auth_email_text_layout.clearFocus()
             auth_password_text_layout.clearFocus()
+
             logInViewModel.startAuth(
                 auth_email_text_layout.getText(),
                 auth_password_text_layout.getText()

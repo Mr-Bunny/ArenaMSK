@@ -1,4 +1,4 @@
-package com.example.arenamsk.custom_view
+package com.example.arenamsk.custom_view.auth_edit_text
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -23,7 +23,8 @@ abstract class AbstractCustomEditText : LinearLayout {
     //Сохраняем сюда текст ошибки
     private var errorHint: String = ""
 
-    var currentState: State = State.EMPTY
+    var currentState: State =
+        State.EMPTY
         set(value) {
             field = value
             updateView()
@@ -56,7 +57,8 @@ abstract class AbstractCustomEditText : LinearLayout {
 
     fun setError(errorMsg: String) {
         this.errorHint = errorMsg
-        currentState = State.ERROR
+        currentState =
+            State.ERROR
     }
 
     fun getText() = custom_edit_text.text.toString()

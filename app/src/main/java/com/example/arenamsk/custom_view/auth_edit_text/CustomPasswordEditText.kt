@@ -3,9 +3,9 @@ package com.example.arenamsk.custom_view.auth_edit_text
 import android.content.Context
 import android.util.AttributeSet
 import com.example.arenamsk.R
-import com.example.arenamsk.custom_view.AbstractCustomEditText
 
-class CustomPasswordEditText: AbstractCustomEditText {
+class CustomPasswordEditText:
+    AbstractCustomEditText {
 
     constructor(context: Context): super(context) {
         init()
