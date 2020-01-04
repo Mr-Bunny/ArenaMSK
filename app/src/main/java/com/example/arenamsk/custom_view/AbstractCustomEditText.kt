@@ -55,6 +55,8 @@ abstract class AbstractCustomEditText: LinearLayout {
         currentState = State.ERROR
     }
 
+    fun getText() = custom_edit_text.text.toString()
+
     private fun updateView() {
         when(currentState) {
             State.EMPTY -> {

@@ -1,9 +1,11 @@
-package com.example.arenamsk
+package com.example.arenamsk.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
+import com.example.arenamsk.R
+import com.example.arenamsk.ui.auth.log_in.LogInFragment
 
 class AuthActivity : AppCompatActivity() {
 
@@ -41,7 +43,11 @@ class AuthActivity : AppCompatActivity() {
 
     private fun openLogInFragment() {
         with(supportFragmentManager.beginTransaction()) {
-            replace(R.id.auth_fragment_container, LogInFragment(), FRAGMENT_LOG_IN_TAG)
+            replace(
+                R.id.auth_fragment_container,
+                LogInFragment(),
+                FRAGMENT_LOG_IN_TAG
+            )
             commit()
         }
     }
