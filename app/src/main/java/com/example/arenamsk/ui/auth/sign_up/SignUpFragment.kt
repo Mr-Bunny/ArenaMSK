@@ -9,12 +9,14 @@ import com.example.arenamsk.utils.EnumUtils.SignUpStatus
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.arenamsk.ui.AuthActivity
 import com.example.arenamsk.ui.AuthActivity.Companion.GALLERY_PERMISSION_REQUEST_CODE
 import com.example.arenamsk.ui.AuthActivity.Companion.GALLERY_REQUEST_CODE
 import com.example.arenamsk.ui.base.BaseAuthFragment
+import com.example.arenamsk.utils.ImageUtils
 import com.example.arenamsk.utils.PermissionUtils
 import com.example.arenamsk.utils.enable
 import com.example.arenamsk.utils.hide
@@ -102,7 +104,8 @@ class SignUpFragment : BaseAuthFragment(), SignUpFragmentCallback {
             }
 
             SignUpStatus.SIGN_UP_SUCCESS -> {
-                openApp(activity as AuthActivity)
+                //openApp(activity as AuthActivity)
+                saveCroppedBitmap()
             }
         }
     }
@@ -131,5 +134,12 @@ class SignUpFragment : BaseAuthFragment(), SignUpFragmentCallback {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             GALLERY_PERMISSION_REQUEST_CODE
         )
+    }
+
+    private fun saveCroppedBitmap() {
+        with(ImageUtils) {
+            val croppedBitmap = createCircleBitmap(getImageFromView(circle_crop_image_view))
+            //TODO save avatar to server I guess
+        }
     }
 }
