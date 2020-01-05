@@ -18,6 +18,7 @@ import com.example.arenamsk.ui.base.BaseAuthFragment
 import com.example.arenamsk.utils.PermissionUtils
 import com.example.arenamsk.utils.enable
 import com.example.arenamsk.utils.hide
+import uk.co.senab.photoview.PhotoViewAttacher
 
 class SignUpFragment : BaseAuthFragment(), SignUpFragmentCallback {
 
@@ -64,6 +65,10 @@ class SignUpFragment : BaseAuthFragment(), SignUpFragmentCallback {
         text_add_photo.hide()
         avatar_view.enable()
         circle_crop_image_view.setImageBitmap(bitmap)
+
+        with(PhotoViewAttacher(circle_crop_image_view)) {
+            update()
+        }
     }
 
     private fun handleSignUpStatus(signUpStatus: SignUpStatus) {
