@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.example.arenamsk.ui.auth.log_in.LogInFragment
 import com.example.arenamsk.ui.auth.sign_up.SignUpFragmentCallback
 import android.graphics.BitmapFactory
+import com.example.arenamsk.utils.Constants.DOUBLE_CLICK_DELAY
 
 class AuthActivity : AppCompatActivity() {
 
@@ -47,7 +48,7 @@ class AuthActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
 
-            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, DOUBLE_CLICK_DELAY)
         }
     }
 

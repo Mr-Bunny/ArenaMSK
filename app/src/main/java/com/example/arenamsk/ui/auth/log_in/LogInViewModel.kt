@@ -1,7 +1,7 @@
 package com.example.arenamsk.ui.auth.log_in
 
 import android.util.Patterns
-import com.example.arenamsk.ui.auth.AuthConst.PASSWORD_LENGTH
+import com.example.arenamsk.utils.Constants.PASSWORD_LENGTH
 import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.EnumUtils.LogInStatus
 import com.example.arenamsk.utils.SingleLiveEvent
