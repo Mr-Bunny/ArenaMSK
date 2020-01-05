@@ -21,4 +21,10 @@
     <string name="text_hint_email_exist_error">EMAIL ALREADY EXISTS</string>
     <string name="text_add_photo">Add photo</string>
 
+    <!--Bottom navigation titles-->
+    <string name="title_menu_map">Map</string>
+    <string name="title_menu_places">Places</string>
+    <string name="title_menu_favourites">Favourites</string>
+    <string name="title_menu_profile">Profile</string>
+
 </resources>

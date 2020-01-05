@@ -18,4 +18,10 @@
     <string name="text_hint_email_exist_error">АККАУНТ С ТАКИМ EMAIL УЖЕ СУЩЕСТВУЕТ</string>
     <string name="text_add_photo">Добавить фото</string>
 
+    <!--Bottom navigation titles-->
+    <string name="title_menu_map">Карта</string>
+    <string name="title_menu_places">Площадки</string>
+    <string name="title_menu_favourites">Избранное</string>
+    <string name="title_menu_profile">Профиль</string>
+
 </resources>

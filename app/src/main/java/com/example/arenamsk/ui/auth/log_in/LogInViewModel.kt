@@ -17,6 +17,7 @@ class LogInViewModel : BaseViewModel() {
         if (checkForError(email, password)) return
 
         //TODO auth
+        logInStatus.value = LogInStatus.LOG_IN_SUCCESS
     }
 
     //returns true if something is empty or incorrect and false if all all right

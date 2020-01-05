@@ -5,20 +5,21 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.utils.EnumUtils.SignUpStatus
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.example.arenamsk.ui.AuthActivity
 import com.example.arenamsk.ui.AuthActivity.Companion.GALLERY_PERMISSION_REQUEST_CODE
 import com.example.arenamsk.ui.AuthActivity.Companion.GALLERY_REQUEST_CODE
+import com.example.arenamsk.ui.base.BaseAuthFragment
 import com.example.arenamsk.utils.PermissionUtils
 import com.example.arenamsk.utils.enable
 import com.example.arenamsk.utils.hide
 
-class SignUpFragment : BaseFragment(), SignUpFragmentCallback {
+class SignUpFragment : BaseAuthFragment(), SignUpFragmentCallback {
 
     private val signUpViewModel by lazy {
         ViewModelProviders.of(this).get(SignUpViewModel::class.java)
@@ -30,6 +31,9 @@ class SignUpFragment : BaseFragment(), SignUpFragmentCallback {
         toolbar_arrow.setOnClickListener { activity!!.onBackPressed() }
 
         text_add_photo.setOnClickListener { getPhotoFromGallery() }
+
+        //TODO add logic
+        text_without_registration.setOnClickListener { openApp(activity as AuthActivity) }
 
         btn_sign_up.setOnClickListener {
             name_edit_text.clearFocus()
@@ -93,7 +97,7 @@ class SignUpFragment : BaseFragment(), SignUpFragmentCallback {
             }
 
             SignUpStatus.SIGN_UP_SUCCESS -> {
-                //TODO open app
+                openApp(activity as AuthActivity)
             }
         }
     }

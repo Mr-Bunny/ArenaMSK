@@ -97,6 +97,11 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
+    fun openApp() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
     private fun openLogInFragment() {
         with(supportFragmentManager.beginTransaction()) {
             replace(

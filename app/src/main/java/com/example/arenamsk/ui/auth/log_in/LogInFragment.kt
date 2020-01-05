@@ -7,18 +7,23 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
 import com.example.arenamsk.ui.AuthActivity
 import com.example.arenamsk.ui.auth.sign_up.SignUpFragment
-import com.example.arenamsk.ui.base.BaseFragment
+import com.example.arenamsk.ui.base.BaseAuthFragment
 import com.example.arenamsk.utils.EnumUtils.LogInStatus
 import kotlinx.android.synthetic.main.fragment_log_in.*
 
-class LogInFragment : BaseFragment() {
+class LogInFragment : BaseAuthFragment() {
 
-    private val logInViewModel by lazy { ViewModelProviders.of(this).get(LogInViewModel::class.java) }
+    private val logInViewModel by lazy {
+        ViewModelProviders.of(this).get(LogInViewModel::class.java)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         text_create_new_user.setOnClickListener { openSignUpFragment() }
+
+        //TODO add logic
+        text_without_registration.setOnClickListener { openApp(activity as AuthActivity) }
 
         btn_log_in.setOnClickListener {
             auth_email_text_layout.clearFocus()
@@ -30,7 +35,8 @@ class LogInFragment : BaseFragment() {
             )
         }
 
-        logInViewModel.getLogInStatus().observe(viewLifecycleOwner, Observer { handleLogInStatus(it) })
+        logInViewModel.getLogInStatus()
+            .observe(viewLifecycleOwner, Observer { handleLogInStatus(it) })
     }
 
     override fun getLayout(): Int = R.layout.fragment_log_in
@@ -58,7 +64,7 @@ class LogInFragment : BaseFragment() {
             }
 
             LogInStatus.LOG_IN_SUCCESS -> {
-                //TODO open app
+                openApp(activity as AuthActivity)
             }
         }
     }

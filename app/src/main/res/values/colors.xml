@@ -11,4 +11,10 @@
     <color name="edit_text_password_toggle">@color/auth_text_color_secondary</color>
     <color name="edit_text_error_border">#EB5757</color>
     <color name="edit_text_hint_error">#B3EB5757</color>
+
+    <color name="bottom_image_checked">@color/auth_button_color</color>
+    <color name="bottom_image">#80828282</color>
+
+    <color name="bottom_text_checked">@color/edit_text_hint_color</color>
+    <color name="bottom_text">#80777777</color>
 </resources>

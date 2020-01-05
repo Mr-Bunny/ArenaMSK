@@ -16,6 +16,7 @@ class SignUpViewModel : BaseViewModel() {
         if (checkForError(name, email, password)) return
 
         //TODO sign up
+        signUpStatus.value = SignUpStatus.SIGN_UP_SUCCESS
     }
 
     private fun checkForError(name: String, email: String, password: String): Boolean {
