@@ -24,7 +24,7 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.arenamsk.R.layout.activity_main)
+        setContentView(com.example.arenamsk.R.layout.activity_auth)
 
         openLogInFragment()
     }
