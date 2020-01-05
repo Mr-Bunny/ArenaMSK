@@ -62,7 +62,7 @@ class SignUpFragment : BaseAuthFragment(), SignUpFragmentCallback {
 
     override fun galleryRequest(bitmap: Bitmap) {
         text_add_photo.hide()
-        circle_crop_image_view.enable()
+        avatar_view.enable()
         circle_crop_image_view.setImageBitmap(bitmap)
     }
 
