@@ -30,5 +30,6 @@
     <string name="text_title_place_address">Address:</string>
     <string name="text_btn_show_place_on_map">On a map</string>
     <string name="text_place_distance">%s km</string>
+    <string name="text_place_feedback_number">%s marks</string>
 
 </resources>

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="40dp"
     app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="3dp"
     app:elevation="6dp"
@@ -96,6 +95,7 @@
             tools:text="8.00–22.00" />
 
         <ImageButton
+            android:id="@+id/place_item_favourite_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/favourite_btn_selector"

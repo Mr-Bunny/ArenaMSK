@@ -27,5 +27,6 @@
     <string name="text_title_place_address">Адрес:</string>
     <string name="text_btn_show_place_on_map">На карте</string>
     <string name="text_place_distance">%s км</string>
+    <string name="text_place_feedback_number">%s оценки</string>
 
 </resources>
