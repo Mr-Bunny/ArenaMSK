@@ -3,18 +3,25 @@
     <color name="colorPrimary">#2F80ED</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="auth_text_color_secondary">#828282</color>
-    <color name="auth_text_color_primary">#4F4F4F</color>
-    <color name="auth_button_color">#2F80ED</color>
-    <color name="edit_text_hint_color">#333333</color>
+    <color name="text_color_grey_light">#828282</color>
+    <color name="auth_text_color_secondary">@color/text_color_grey_light</color>
+    <color name="text_color_grey">#4F4F4F</color>
+    <color name="auth_text_color_primary">@color/text_color_grey</color>
+    <color name="auth_button_color">@color/colorPrimary</color>
+    <color name="text_dark_grey">#333333</color>
+    <color name="edit_text_hint_color">@color/text_dark_grey</color>
     <color name="edit_text_highlight_hint_color">#99333333</color>
     <color name="edit_text_password_toggle">@color/auth_text_color_secondary</color>
     <color name="edit_text_error_border">#EB5757</color>
     <color name="edit_text_hint_error">#B3EB5757</color>
 
-    <color name="bottom_image_checked">@color/auth_button_color</color>
+    <color name="bottom_image_checked">@color/colorPrimary</color>
     <color name="bottom_image">#80828282</color>
 
     <color name="bottom_text_checked">@color/edit_text_hint_color</color>
     <color name="bottom_text">#80777777</color>
+
+    <color name="place_card_background_border">@color/colorPrimary</color>
+
+    <color name="rating_bar_star">#FFB800</color>
 </resources>

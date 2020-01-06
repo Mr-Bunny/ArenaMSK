@@ -20,6 +20,20 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="ShowMapButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textColor">@color/text_color_grey</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingStart">22dp</item>
+        <item name="android:paddingEnd">18dp</item>
+    </style>
+
     <style name="HintTextInputLayoutSize" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">8sp</item>
     </style>
