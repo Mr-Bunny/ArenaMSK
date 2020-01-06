@@ -4,7 +4,11 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.ui.places.viewpager.PlaceViewPagerAdapter
+import com.example.arenamsk.utils.disable
+import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.item_place_card.view.*
+
 
 class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -38,6 +42,27 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             )
 
             setOnClickListener { itemClickCallback.invoke(place) }
+
+            when {
+                place.imagesUrl.isEmpty() -> {
+                    place_item_view_pager.disable()
+                    place_item_view_pager_indicator.disable()
+                    return
+                }
+                place.imagesUrl.size == 1 -> {
+                    place_item_view_pager.enable()
+                    place_item_view_pager_indicator.disable()
+                }
+                else -> {
+                    place_item_view_pager.enable()
+                    place_item_view_pager_indicator.enable()
+                }
+            }
+
+            val adapter = PlaceViewPagerAdapter()
+            place_item_view_pager.adapter = adapter
+            adapter.setNewImages(place.imagesUrl as MutableList<String>)
+            place_item_view_pager_indicator.setViewPager(place_item_view_pager)
         }
     }
 }

@@ -26,7 +26,10 @@ class PlacesViewModel : BaseViewModel() {
             id = 1,
             rating = 3.0f,
             feedbackNumber = 52,
-            imagesUrl = emptyList()
+            imagesUrl = listOf("https://ns328286.ip-37-187-113.eu/ew/wallpapers/800x480/02167_800x480.jpg",
+                "https://ns328286.ip-37-187-113.eu/ew/wallpapers/800x480/02167_800x480.jpg",
+                "https://ns328286.ip-37-187-113.eu/ew/wallpapers/800x480/02167_800x480.jpg",
+                "https://ns328286.ip-37-187-113.eu/ew/wallpapers/800x480/02167_800x480.jpg")
         ),
         PlaceModel(
             title = "Клуб любителей пощикотать очко",
@@ -38,7 +41,7 @@ class PlacesViewModel : BaseViewModel() {
             id = 1,
             rating = 5.0f,
             feedbackNumber = 1488,
-            imagesUrl = emptyList()
+            imagesUrl = listOf("https://ns328286.ip-37-187-113.eu/ew/wallpapers/800x480/02167_800x480.jpg")
         ),
         PlaceModel(
             title = "«Клуб тенниса»",

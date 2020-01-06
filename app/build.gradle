@@ -62,7 +62,7 @@ dependencies {
     //RatingBar
     implementation 'com.iarcuschin:simpleratingbar:0.1.5'
     //CircleIndicator
-    implementation 'me.relex:circleindicator:1.2.2'
+    implementation 'me.relex:circleindicator:2.1.4'
 
     implementation "android.arch.lifecycle:runtime:1.1.1"
     implementation "android.arch.lifecycle:extensions:1.1.1"

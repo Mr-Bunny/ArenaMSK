@@ -14,15 +14,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
         android:paddingBottom="16dp">
 
         <TextView
             android:id="@+id/place_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
             android:textColor="@color/text_dark_grey"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -98,6 +98,7 @@
             android:id="@+id/place_item_favourite_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/favourite_btn_selector"
             android:contentDescription="@string/image_description"
             app:layout_constraintBottom_toBottomOf="@id/place_item_work_time_text"
@@ -132,6 +133,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/place_item_show_map_btn"
             style="@style/ShowMapButton"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="29dp"
             android:text="@string/text_btn_show_place_on_map"
             app:cornerRadius="25dp"
@@ -181,12 +183,39 @@
             android:id="@+id/place_item_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="24dp"
             android:textColor="@color/text_color_grey"
             android:textSize="14sp"
-            android:layout_marginTop="26dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/place_item_show_map_btn"
-            tools:text="2 крытых корта премиум классас профессиональным покрытием хард, комфортным освещением, оборудованные системой вентиляциии кондиционирования" />
+            tools:text="@string/text_place_description_plug" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/place_item_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="168dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/place_item_description" />
+
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/place_item_view_pager_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:visibility="gone"
+            app:ci_drawable="@drawable/ic_circle_indicator_selected"
+            app:ci_drawable_unselected="@drawable/ic_circle_indicator_unselected"
+            app:ci_animator="@anim/scale_with_alpha"
+            app:ci_height="6dp"
+            app:ci_width="6dp"
+            app:layout_constraintBottom_toBottomOf="@id/place_item_view_pager"
+            app:layout_constraintLeft_toLeftOf="@id/place_item_view_pager"
+            app:layout_constraintRight_toRightOf="@id/place_item_view_pager" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
