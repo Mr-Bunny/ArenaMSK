@@ -100,11 +100,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:background="@null"
-            app:srcCompat="@drawable/favourite_btn_selector"
             android:contentDescription="@string/image_description"
             app:layout_constraintBottom_toBottomOf="@id/place_item_work_time_text"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/place_item_feedback_count_text" />
+            app:layout_constraintTop_toTopOf="@id/place_item_feedback_count_text"
+            app:srcCompat="@drawable/favourite_btn_selector" />
 
         <TextView
             android:id="@+id/place_item_address_title"
@@ -122,13 +122,14 @@
             android:id="@+id/place_item_address_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:paddingEnd="40dp"
             android:textColor="@color/text_color_grey"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/place_item_address_title"
-            app:layout_constraintLeft_toRightOf="@id/place_item_address_title"
-            app:layout_constraintTop_toTopOf="@id/place_item_address_title"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="@id/place_item_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/place_item_address_title"
             tools:text="ул. Комсомольская, д. 2, корп. 1" />
 
         <com.google.android.material.button.MaterialButton
@@ -142,7 +143,7 @@
             app:iconGravity="textEnd"
             app:iconPadding="7dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/place_item_address_title"
+            app:layout_constraintTop_toBottomOf="@id/place_item_address_text"
             app:strokeColor="@color/colorPrimary"
             app:strokeWidth="1dp" />
 
@@ -164,13 +165,12 @@
             android:id="@+id/place_item_btn_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="22dp"
+            android:layout_marginTop="8dp"
             app:backgroundTint="@color/colorPrimary"
             app:elevation="0dp"
             app:fabSize="mini"
-            app:layout_constraintBottom_toBottomOf="@id/place_item_distance_text"
-            app:layout_constraintLeft_toRightOf="@id/place_item_distance_text"
-            app:layout_constraintTop_toTopOf="@id/place_item_distance_text"
+            app:layout_constraintLeft_toLeftOf="@id/place_item_show_map_btn"
+            app:layout_constraintTop_toBottomOf="@id/place_item_show_map_btn"
             app:maxImageSize="16dp"
             app:srcCompat="@drawable/ic_calendar"
             app:tint="@android:color/white" />
@@ -200,7 +200,7 @@
             android:textColor="@color/text_color_grey"
             android:textSize="14sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/place_item_show_map_btn"
+            app:layout_constraintTop_toBottomOf="@id/place_item_btn_calendar"
             tools:text="@string/text_place_description_plug" />
 
         <androidx.viewpager2.widget.ViewPager2
