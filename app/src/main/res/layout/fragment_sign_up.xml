@@ -159,16 +159,16 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/password_edit_text" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_without_registration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:drawableEnd="@drawable/ic_arrow_right_dark"
                 android:drawablePadding="16dp"
                 android:text="@string/text_continue_without_registration"
                 android:textColor="@color/auth_text_color_secondary"
                 android:textSize="14sp"
+                app:drawableEndCompat="@drawable/ic_arrow_right_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

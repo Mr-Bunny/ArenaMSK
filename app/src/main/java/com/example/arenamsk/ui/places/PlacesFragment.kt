@@ -2,6 +2,7 @@ package com.example.arenamsk.ui.places
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,9 @@ class PlacesFragment : BaseFragment() {
                 placeAdapter.setNewList(it)
             })
         }
+
+        ViewCompat.setElevation(place_app_bar, resources.getDimension(R.dimen.app_bar_elevation))
+        ViewCompat.setElevation(edit_text_search, resources.getDimension(R.dimen.app_bar_elevation))
     }
 
     private fun initRecycler() {
