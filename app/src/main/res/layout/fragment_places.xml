@@ -19,7 +19,8 @@
             app:contentInsetStart="0dp"
             app:layout_scrollFlags="scroll|snap|enterAlways">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!--Если исопльзовать constraint то из-за tagView появляется сверху какой-то отступ-->
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -28,22 +29,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="24dp"
                     app:backgroundTint="@android:color/white"
                     app:elevation="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_filter"
                     app:tint="@color/colorPrimary" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edit_text_search"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/place_filter_button"
                     android:layout_marginStart="23dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_toEndOf="@id/place_filter_button"
                     android:background="@drawable/search_edit_text_background"
                     android:drawablePadding="22dp"
                     android:elevation="2dp"
@@ -56,21 +55,15 @@
                     android:paddingBottom="16dp"
                     android:textColor="@color/text_dark_grey"
                     android:textSize="12sp"
-                    app:drawableEndCompat="@drawable/ic_search"
-                    app:layout_constraintBottom_toBottomOf="@id/place_filter_button"
-                    app:layout_constraintLeft_toRightOf="@id/place_filter_button"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/place_filter_button" />
+                    app:drawableEndCompat="@drawable/ic_search" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/place_filter_button"
                     android:layout_marginStart="8dp"
-                    android:clipToPadding="false"
                     android:overScrollMode="never"
-                    android:scrollbars="none"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/place_filter_button">
+                    android:scrollbars="none">
 
                     <LinearLayout
                         android:id="@+id/place_tag_container"
@@ -80,7 +73,7 @@
 
                 </HorizontalScrollView>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
