@@ -8,6 +8,10 @@ class PlacesViewModel : BaseViewModel() {
 
     private var placesLiveData = MutableLiveData<MutableList<PlaceModel>>()
 
+    init {
+        loadPlaces()
+    }
+
     fun loadPlaces() {
         placesLiveData.value = getTestPlaces()
     }

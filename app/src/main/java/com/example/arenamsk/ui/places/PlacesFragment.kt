@@ -28,12 +28,9 @@ class PlacesFragment : BaseFragment(), TagSelectedCallback {
 
         initRecycler()
 
-        with(placesViewModel) {
-            loadPlaces()
-            getPlacesLiveData().observe(this@PlacesFragment, Observer {
-                placeAdapter.setNewList(it)
-            })
-        }
+        placesViewModel.getPlacesLiveData().observe(this@PlacesFragment, Observer {
+            placeAdapter.setNewList(it)
+        })
 
         ViewCompat.setElevation(place_app_bar, resources.getDimension(R.dimen.app_bar_elevation))
 
