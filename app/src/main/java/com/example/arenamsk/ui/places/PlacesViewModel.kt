@@ -8,7 +8,7 @@ class PlacesViewModel : BaseViewModel() {
 
     private var placesLiveData = MutableLiveData<MutableList<PlaceModel>>()
 
-    fun getPlaces() {
+    fun loadPlaces() {
         placesLiveData.value = getTestPlaces()
     }
 

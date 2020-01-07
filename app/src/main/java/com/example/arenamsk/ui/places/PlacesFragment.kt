@@ -29,7 +29,7 @@ class PlacesFragment : BaseFragment(), TagSelectedCallback {
         initRecycler()
 
         with(placesViewModel) {
-            getPlaces()
+            loadPlaces()
             getPlacesLiveData().observe(this@PlacesFragment, Observer {
                 placeAdapter.setNewList(it)
             })
@@ -37,12 +37,7 @@ class PlacesFragment : BaseFragment(), TagSelectedCallback {
 
         ViewCompat.setElevation(place_app_bar, resources.getDimension(R.dimen.app_bar_elevation))
 
-        place_tag_container.removeAllViews()
-        place_tag_container.addView(TagView(context!!, 1, "Все виды"))
-        place_tag_container.addView(TagView(context!!, 2, "Баскетбол"))
-        place_tag_container.addView(TagView(context!!, 3, "Футбол"))
-        place_tag_container.addView(TagView(context!!, 4, "Теннис"))
-        place_tag_container.addView(TagView(context!!, 5, "Волейбол"))
+        initTags()
     }
 
     override fun tagWasSelected(isSelected: Boolean, tagId: Int) {
@@ -57,6 +52,15 @@ class PlacesFragment : BaseFragment(), TagSelectedCallback {
             LinearLayoutManager.VERTICAL,
             false
         )
+    }
+
+    private fun initTags() {
+        place_tag_container.removeAllViews()
+        place_tag_container.addView(TagView(context!!, 1, "Все виды"))
+        place_tag_container.addView(TagView(context!!, 2, "Баскетбол"))
+        place_tag_container.addView(TagView(context!!, 3, "Футбол"))
+        place_tag_container.addView(TagView(context!!, 4, "Теннис"))
+        place_tag_container.addView(TagView(context!!, 5, "Волейбол"))
     }
 
     private fun itemClickCallback(place: PlaceModel) {

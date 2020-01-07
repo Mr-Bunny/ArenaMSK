@@ -28,5 +28,6 @@
     <string name="text_btn_show_place_on_map">На карте</string>
     <string name="text_place_distance">%s км</string>
     <string name="text_place_feedback_number">%s оценки</string>
+    <string name="text_fragment_favourites_title">Избранное</string>
 
 </resources>
