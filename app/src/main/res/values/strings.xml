@@ -31,7 +31,8 @@
     <string name="text_btn_show_place_on_map">On a map</string>
     <string name="text_place_distance">%s km</string>
     <string name="text_place_feedback_number">%s marks</string>
-    <string name="text_place_description_plug">2 крытых корта премиум классас профессиональным покрытием хард, комфортным освещением, оборудованные системой вентиляциии кондиционирования</string>
+    <string name="text_place_description_plug" translatable="false">2 крытых корта премиум классас профессиональным покрытием хард, комфортным освещением, оборудованные системой вентиляциии кондиционирования</string>
     <string name="text_fragment_favourites_title">Favourites</string>
+    <string name="text_filter_fragment_title">Filter</string>
 
 </resources>

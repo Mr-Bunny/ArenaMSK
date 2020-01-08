@@ -1,6 +1,7 @@
 package com.example.arenamsk.ui.places
 
 import androidx.lifecycle.MutableLiveData
+import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseViewModel
 
@@ -8,15 +9,21 @@ class PlacesViewModel : BaseViewModel() {
 
     private var placesLiveData = MutableLiveData<MutableList<PlaceModel>>()
 
+    private var filterLiveData = MutableLiveData<PlaceFilterModel>()
+
     init {
         loadPlaces()
     }
 
-    fun loadPlaces() {
+    private fun loadPlaces() {
         placesLiveData.value = getTestPlaces()
+
+        //TODO при изменении фильтра, делать новый запрос, отменяя старый с учетом фильтров
     }
 
     fun getPlacesLiveData() = placesLiveData
+
+    fun getFilterLiveData() = filterLiveData
 
     //TODO test - remove after get real data from server
     private fun getTestPlaces(): MutableList<PlaceModel> = mutableListOf(

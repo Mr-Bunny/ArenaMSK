@@ -29,5 +29,6 @@
     <string name="text_place_distance">%s км</string>
     <string name="text_place_feedback_number">%s оценки</string>
     <string name="text_fragment_favourites_title">Избранное</string>
+    <string name="text_filter_fragment_title">Фильтр</string>
 
 </resources>
