@@ -24,4 +24,6 @@
     <color name="place_card_background_border">@color/colorPrimary</color>
 
     <color name="rating_bar_star">#FFB800</color>
+
+    <color name="filter_divider_blue">#332F80ED</color>
 </resources>

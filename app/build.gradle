@@ -64,6 +64,8 @@ dependencies {
     implementation 'com.iarcuschin:simpleratingbar:0.1.5'
     //CircleIndicator
     implementation 'me.relex:circleindicator:2.1.4'
+    //RangeBar
+    implementation 'com.github.Jay-Goo:RangeSeekBar:3.0.0'
 
     implementation "android.arch.lifecycle:runtime:1.1.1"
     implementation "android.arch.lifecycle:extensions:1.1.1"

@@ -38,13 +38,39 @@
         <item name="android:paddingEnd">18dp</item>
     </style>
 
+    <style name="FilterShowButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_marginTop">12dp</item>
+    </style>
+
+
+    <style name="FilterResetButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+
     <style name="HintTextInputLayoutSize" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">8sp</item>
     </style>
 
-    <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
+    <style name="FullScreenDialogStyle" parent="AppTheme">
         <item name="android:windowNoTitle">true</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
 
         <!-- Set this to true if you want Full Screen without status bar -->
         <item name="android:windowFullscreen">false</item>
@@ -54,6 +80,22 @@
         <item name="android:windowBackground">@android:color/white</item>
 
         <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="FilterText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_color_grey_light</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="FilterTextSubtitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>
