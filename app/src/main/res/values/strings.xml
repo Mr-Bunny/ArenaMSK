@@ -33,6 +33,25 @@
     <string name="text_place_feedback_number">%s marks</string>
     <string name="text_place_description_plug" translatable="false">2 крытых корта премиум классас профессиональным покрытием хард, комфортным освещением, оборудованные системой вентиляциии кондиционирования</string>
     <string name="text_fragment_favourites_title">Favourites</string>
+
+    <!--Filter-->
     <string name="text_filter_fragment_title">Filter</string>
+    <string name="text_filter_title_sport_type">Sport</string>
+    <string name="text_filter_title_district">District</string>
+    <string name="text_filter_title_micro_district">Micro district</string>
+    <string name="text_filter_title_metro">Metro</string>
+    <string name="text_filter_title_place_type">Type of site</string>
+    <string name="text_filter_place_type_open">Open</string>
+    <string name="text_filter_place_type_closed">Close</string>
+    <string name="text_filter_title_additional">Additionally</string>
+    <string name="text_filter_parking">Parking</string>
+    <string name="text_filter_inventory">Inventory</string>
+    <string name="text_filter_locker">Lockers</string>
+    <string name="text_filter_bath">Shower</string>
+    <string name="text_filter_up_to">Up to</string>
+    <string name="text_filter_from">From</string>
+    <string name="text_filter_founded_places">Founded %s places</string>
+    <string name="text_filter_show_btn">Show</string>
+    <string name="text_filter_reset_btn">Reset</string>
 
 </resources>

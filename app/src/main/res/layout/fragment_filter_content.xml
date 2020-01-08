@@ -24,67 +24,107 @@
 
             <TextView
                 style="@style/FilterTextSubtitle"
-                android:text="Вид спорта" />
+                android:text="@string/text_filter_title_sport_type" />
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/spinner_sport_type_filter"
-                style="@style/FilterText"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp" />
+                android:padding="1dp"
+                android:layout_marginTop="13dp"
+                android:background="@drawable/filter_spinner_background">
+
+                <org.angmarch.views.NiceSpinner
+                    android:id="@+id/spinner_sport_type_filter"
+                    style="@style/FilterText"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/filter_spinner_background"
+                    app:arrowDrawable="@drawable/ic_spinner_arrow" />
+
+            </LinearLayout>
 
             <TextView
                 style="@style/FilterTextSubtitle"
                 android:layout_marginTop="20dp"
-                android:text="Район" />
+                android:text="@string/text_filter_title_district" />
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/spinner_district_filter"
-                style="@style/FilterText"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp" />
+                android:padding="1dp"
+                android:layout_marginTop="13dp"
+                android:background="@drawable/filter_spinner_background">
+
+                <org.angmarch.views.NiceSpinner
+                    android:id="@+id/spinner_district_filter"
+                    style="@style/FilterText"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/filter_spinner_background"
+                    app:arrowDrawable="@drawable/ic_spinner_arrow" />
+
+            </LinearLayout>
 
             <TextView
                 style="@style/FilterTextSubtitle"
                 android:layout_marginTop="20dp"
-                android:text="Микрорайон" />
+                android:text="@string/text_filter_title_micro_district" />
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/spinner_micro_district_filter"
-                style="@style/FilterText"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp" />
+                android:padding="1dp"
+                android:layout_marginTop="13dp"
+                android:background="@drawable/filter_spinner_background">
+
+                <org.angmarch.views.NiceSpinner
+                    android:id="@+id/spinner_micro_district_filter"
+                    style="@style/FilterText"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/filter_spinner_background"
+                    app:arrowDrawable="@drawable/ic_spinner_arrow" />
+
+            </LinearLayout>
 
             <TextView
                 style="@style/FilterTextSubtitle"
                 android:layout_marginTop="20dp"
-                android:text="Метро" />
+                android:text="@string/text_filter_title_metro" />
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/spinner_metro_filter"
-                style="@style/FilterText"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp" />
+                android:padding="1dp"
+                android:layout_marginTop="13dp"
+                android:background="@drawable/filter_spinner_background">
+
+                <org.angmarch.views.NiceSpinner
+                    android:id="@+id/spinner_metro_filter"
+                    style="@style/FilterText"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/filter_spinner_background"
+                    app:arrowDrawable="@drawable/ic_spinner_arrow" />
+
+            </LinearLayout>
 
             <TextView
                 style="@style/FilterTextSubtitle"
                 android:layout_marginTop="28dp"
-                android:text="Тип площадки" />
+                android:text="@string/text_filter_title_place_type" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 style="@style/FilterText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Открытая" />
+                android:text="@string/text_filter_place_type_open" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 style="@style/FilterText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Крытая" />
+                android:text="@string/text_filter_place_type_closed" />
 
             <View
                 android:layout_width="match_parent"
@@ -97,32 +137,32 @@
             <TextView
                 style="@style/FilterTextSubtitle"
                 android:layout_marginTop="28dp"
-                android:text="Дополнительно" />
+                android:text="@string/text_filter_title_additional" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 style="@style/FilterText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:text="Парковка" />
+                android:text="@string/text_filter_parking" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 style="@style/FilterText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Инвентарь" />
+                android:text="@string/text_filter_inventory" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 style="@style/FilterText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Раздевалки" />
+                android:text="@string/text_filter_locker" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 style="@style/FilterText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Душевые" />
+                android:text="@string/text_filter_bath" />
 
             <View
                 android:layout_width="match_parent"
@@ -147,7 +187,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="От"
+                    android:text="@string/text_filter_from"
                     android:textColor="@color/text_color_grey"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -173,7 +213,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="До"
+                    android:text="@string/text_filter_up_to"
                     android:textColor="@color/text_color_grey"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="@id/filter_end_price_edit_text"
@@ -198,7 +238,7 @@
                     android:id="@+id/filter_price_range_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
+                    app:rsb_gravity="center"
                     app:layout_constraintTop_toBottomOf="@id/filter_start_price_edit_text"
                     app:rsb_indicator_show_mode="alwaysHide"
                     app:rsb_max="100000.00"
@@ -230,7 +270,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Найдено"
+                android:text="@string/text_filter_founded_places"
                 android:textColor="#BDBDBD"
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -239,7 +279,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/filter_btn_show"
                 style="@style/FilterShowButton"
-                android:text="Показать"
+                android:text="@string/text_filter_show_btn"
                 app:backgroundTint="@color/auth_button_color"
                 app:cornerRadius="25dp"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -250,7 +290,7 @@
                 android:id="@+id/filter_btn_reset"
                 style="@style/FilterResetButton"
                 android:layout_width="match_parent"
-                android:text="Сбросить"
+                android:text="@string/text_filter_reset_btn"
                 app:cornerRadius="25dp"
                 app:layout_constraintTop_toBottomOf="@id/filter_btn_show"
                 app:strokeColor="@color/colorPrimary"

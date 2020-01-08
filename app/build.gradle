@@ -66,6 +66,8 @@ dependencies {
     implementation 'me.relex:circleindicator:2.1.4'
     //RangeBar
     implementation 'com.github.Jay-Goo:RangeSeekBar:3.0.0'
+    //Spinner
+    implementation 'com.github.arcadefire:nice-spinner:1.4.4'
 
     implementation "android.arch.lifecycle:runtime:1.1.1"
     implementation "android.arch.lifecycle:extensions:1.1.1"

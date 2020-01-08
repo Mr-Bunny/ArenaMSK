@@ -29,6 +29,25 @@
     <string name="text_place_distance">%s км</string>
     <string name="text_place_feedback_number">%s оценки</string>
     <string name="text_fragment_favourites_title">Избранное</string>
+
+    <!--Filter-->
     <string name="text_filter_fragment_title">Фильтр</string>
+    <string name="text_filter_title_sport_type">Вид спорта</string>
+    <string name="text_filter_title_district">Район</string>
+    <string name="text_filter_title_micro_district">Микрорайон</string>
+    <string name="text_filter_title_metro">Метро</string>
+    <string name="text_filter_title_place_type">Тип площадки</string>
+    <string name="text_filter_place_type_open">Открытая</string>
+    <string name="text_filter_place_type_closed">Крытая</string>
+    <string name="text_filter_title_additional">Дополнительно</string>
+    <string name="text_filter_parking">Парковка</string>
+    <string name="text_filter_inventory">Инвентарь</string>
+    <string name="text_filter_locker">Раздевалки</string>
+    <string name="text_filter_bath">Душевые</string>
+    <string name="text_filter_up_to">До</string>
+    <string name="text_filter_from">От</string>
+    <string name="text_filter_founded_places">Найдено %s мест</string>
+    <string name="text_filter_show_btn">Показать</string>
+    <string name="text_filter_reset_btn">Сбросить</string>
 
 </resources>

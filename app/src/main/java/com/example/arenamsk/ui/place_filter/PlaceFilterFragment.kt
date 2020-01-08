@@ -57,6 +57,8 @@ class PlaceFilterFragment : DialogFragment(), LifecycleOwner {
         })
 
         updateUI()
+
+        close_filter_btn.setOnClickListener { dismiss() }
     }
 
     //TODO на основе placeFilterModel выставляем UI
