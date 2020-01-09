@@ -54,4 +54,12 @@
     <string name="text_filter_show_btn">Show</string>
     <string name="text_filter_reset_btn">Reset</string>
 
+    <!--Profile-->
+    <string name="text_profile_item_edit">Edit profile</string>
+    <string name="text_profile_item_booked">Booked</string>
+    <string name="text_profile_item_notifications">Notifications</string>
+    <string name="text_profile_item_settings">Settings</string>
+    <string name="text_profile_item_contact">Contact us</string>
+    <string name="text_profile_item_exit">Quit</string>
+
 </resources>
