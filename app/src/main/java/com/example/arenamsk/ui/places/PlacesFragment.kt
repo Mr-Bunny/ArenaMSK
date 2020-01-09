@@ -37,8 +37,6 @@ class PlacesFragment : BaseFragment(), TagSelectedCallback {
             placeAdapter.setNewList(it)
         })
 
-        ViewCompat.setElevation(place_app_bar, resources.getDimension(R.dimen.app_bar_elevation))
-
         initTags()
 
         place_filter_button.setOnClickListener { openFilterFragment() }
