@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/place_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:fitsSystemWindows="true">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="scroll|snap|enterAlways">
+
+            <!--Если исопльзовать constraint то из-за tagView появляется сверху какой-то отступ-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/place_fragment_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/place_filter_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:backgroundTint="@android:color/white"
+                        app:elevation="4dp"
+                        android:layout_margin="2dp"
+                        app:srcCompat="@drawable/ic_filter"
+                        app:tint="@color/colorPrimary" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/edit_text_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="23dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/search_edit_text_background"
+                        android:drawablePadding="22dp"
+                        android:elevation="2dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingStart="22dp"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="16dp"
+                        android:textColor="@color/text_dark_grey"
+                        android:textSize="12sp"
+                        app:drawableEndCompat="@drawable/ic_search" />
+
+                </LinearLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/place_fragment_header"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    android:paddingStart="8dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/place_tag_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+
+                </HorizontalScrollView>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_places"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
