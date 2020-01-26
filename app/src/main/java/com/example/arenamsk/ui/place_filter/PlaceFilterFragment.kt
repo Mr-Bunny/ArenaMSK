@@ -13,12 +13,12 @@ import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.ui.places.PlacesViewModel
 import kotlinx.android.synthetic.main.fragment_filter.*
 
-class PlaceFilterFragment : DialogFragment(), LifecycleOwner {
+class PlaceFilterFragment private constructor(): DialogFragment(), LifecycleOwner {
 
     companion object {
         const val FILTER_MODEL_TAG = "filter_tag"
 
-        fun createInstance(): PlaceFilterFragment {
+        fun getInstance(): PlaceFilterFragment {
             return PlaceFilterFragment()
         }
     }
@@ -28,8 +28,6 @@ class PlaceFilterFragment : DialogFragment(), LifecycleOwner {
     }
 
     private val placeFilterModel by lazy { placesViewModel.getFilterLiveData().value ?: PlaceFilterModel() }
-
-    private lateinit var filterModel: PlaceFilterModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

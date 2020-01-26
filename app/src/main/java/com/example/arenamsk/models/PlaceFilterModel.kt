@@ -4,6 +4,8 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+//TODO тут должны быть настройки: вид спорта, метро, открытая площадка или нет и т.п.
+// на основе этого и сортируем список
 @Parcelize
 data class PlaceFilterModel(
     @SerializedName("title")

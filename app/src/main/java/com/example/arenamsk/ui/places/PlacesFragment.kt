@@ -2,16 +2,14 @@ package com.example.arenamsk.ui.places
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.arenamsk.R
 import com.example.arenamsk.custom_view.TagView
-import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
+import com.example.arenamsk.ui.place_detail.PlaceDetailFragment
 import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
 import com.example.arenamsk.ui.places.adapter.PlacesAdapter
 import kotlinx.android.synthetic.main.fragment_places.*
@@ -25,6 +23,7 @@ class PlacesFragment : BaseFragment(), TagSelectedCallback {
     }
 
     private var placeFilterFragment: PlaceFilterFragment? = null
+    private var placeDetailFragment: PlaceDetailFragment? = null
 
     override fun getLayout(): Int = R.layout.fragment_places
 
@@ -66,12 +65,14 @@ class PlacesFragment : BaseFragment(), TagSelectedCallback {
     }
 
     private fun itemClickCallback(place: PlaceModel) {
-        //TODO open fragment
+        placeDetailFragment?.dismiss()
+        placeDetailFragment = PlaceDetailFragment.getInstance(place)
+        placeDetailFragment?.show(activity!!.supportFragmentManager, PlaceDetailFragment.PLACE_DETAIL_TAG)
     }
 
     private fun openFilterFragment() {
         placeFilterFragment?.dismiss()
-        placeFilterFragment = PlaceFilterFragment.createInstance()
+        placeFilterFragment = PlaceFilterFragment.getInstance()
         placeFilterFragment?.show(activity!!.supportFragmentManager, PlaceFilterFragment.FILTER_MODEL_TAG)
     }
 
