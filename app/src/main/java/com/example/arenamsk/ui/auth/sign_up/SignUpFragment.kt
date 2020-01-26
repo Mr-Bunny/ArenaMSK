@@ -9,9 +9,9 @@ import com.example.arenamsk.utils.EnumUtils.SignUpStatus
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.example.arenamsk.R
 import com.example.arenamsk.ui.AuthActivity
 import com.example.arenamsk.ui.AuthActivity.Companion.GALLERY_PERMISSION_REQUEST_CODE
 import com.example.arenamsk.ui.AuthActivity.Companion.GALLERY_REQUEST_CODE
@@ -22,7 +22,7 @@ import com.example.arenamsk.utils.enable
 import com.example.arenamsk.utils.hide
 import uk.co.senab.photoview.PhotoViewAttacher
 
-class SignUpFragment : BaseAuthFragment(), SignUpFragmentCallback {
+class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragmentCallback {
 
     private val signUpViewModel by lazy {
         ViewModelProviders.of(this).get(SignUpViewModel::class.java)
@@ -53,8 +53,6 @@ class SignUpFragment : BaseAuthFragment(), SignUpFragmentCallback {
         signUpViewModel.getSignUpStatus()
             .observe(viewLifecycleOwner, Observer { handleSignUpStatus(it) })
     }
-
-    override fun getLayout(): Int = com.example.arenamsk.R.layout.fragment_sign_up
 
     override fun galleryPermissionGranted() {
         openGallery()

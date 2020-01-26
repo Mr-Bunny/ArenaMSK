@@ -11,15 +11,13 @@ import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.places.adapter.PlacesAdapter
 import kotlinx.android.synthetic.main.fragment_favourites.*
 
-class FavouritesFragment : BaseFragment() {
+class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
 
     private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback) }
 
     private val favouritesViewModel by lazy {
         ViewModelProviders.of(this).get(FavouritesViewModel::class.java)
     }
-
-    override fun getLayout(): Int = R.layout.fragment_favourites
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

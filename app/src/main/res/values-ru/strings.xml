@@ -58,4 +58,11 @@
     <string name="text_profile_item_contact">Напишите нам</string>
     <string name="text_profile_item_exit">Выход</string>
 
+    <!--Place detail-->
+    <string-array name="place_detail_view_pager_titles">
+        <item>Информация</item>
+        <item>Фотографии</item>
+        <item>Отзывы</item>
+    </string-array>
+
 </resources>

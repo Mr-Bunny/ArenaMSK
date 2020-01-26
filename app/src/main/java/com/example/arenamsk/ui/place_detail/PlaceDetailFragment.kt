@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.ui.place_detail.adapter.PlaceDetailViewPagerAdapter
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.fragment_place_detail.*
 
@@ -13,7 +14,7 @@ class PlaceDetailFragment private constructor() : DialogFragment(), LifecycleOwn
 
     companion object {
         const val PLACE_DETAIL_TAG = "place_detail_tag"
-        private const val PLACE_DETAIL_ARG_TAG = "place_detail_arg_tag"
+        const val PLACE_DETAIL_ARG_TAG = "place_detail_arg_tag"
 
         fun getInstance(place: PlaceModel? = null): PlaceDetailFragment {
             place?.let {
@@ -72,7 +73,7 @@ class PlaceDetailFragment private constructor() : DialogFragment(), LifecycleOwn
                 }
 
                 if (scrollRange + verticalOffset == 0) {
-                    place_detail_toolbar.title = "Теннисный корт"
+                    place_detail_toolbar.title = place.title
                     isShow = true
                 } else if(isShow) {
                     place_detail_toolbar.title = " "
@@ -82,5 +83,10 @@ class PlaceDetailFragment private constructor() : DialogFragment(), LifecycleOwn
         })
 
         place_detail_title.text = place.title
+
+        with(place_detail_view_pager) {
+            adapter = PlaceDetailViewPagerAdapter(place, childFragmentManager)
+            place_detail_tab_layout.setupWithViewPager(this)
+        }
     }
 }

@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 
-abstract class BaseFragment: Fragment(), LifecycleOwner {
+abstract class BaseFragment(private val layoutId: Int): Fragment(), LifecycleOwner {
 
     private var toast: Toast? = null
 
@@ -17,7 +17,7 @@ abstract class BaseFragment: Fragment(), LifecycleOwner {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(getLayout(), container, false)
+        return inflater.inflate(layoutId, container, false)
     }
 
     override fun onDestroyView() {
@@ -25,8 +25,6 @@ abstract class BaseFragment: Fragment(), LifecycleOwner {
 
         super.onDestroyView()
     }
-
-    abstract fun getLayout(): Int
 
     protected fun showToast(msg: String) {
         toast?.cancel()

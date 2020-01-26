@@ -11,7 +11,7 @@ import com.example.arenamsk.ui.base.BaseAuthFragment
 import com.example.arenamsk.utils.EnumUtils.LogInStatus
 import kotlinx.android.synthetic.main.fragment_log_in.*
 
-class LogInFragment : BaseAuthFragment() {
+class LogInFragment : BaseAuthFragment(R.layout.fragment_log_in) {
 
     private val logInViewModel by lazy {
         ViewModelProviders.of(this).get(LogInViewModel::class.java)
@@ -38,8 +38,6 @@ class LogInFragment : BaseAuthFragment() {
         logInViewModel.getLogInStatus()
             .observe(viewLifecycleOwner, Observer { handleLogInStatus(it) })
     }
-
-    override fun getLayout(): Int = R.layout.fragment_log_in
 
     private fun handleLogInStatus(logInStatus: LogInStatus) {
         when (logInStatus) {

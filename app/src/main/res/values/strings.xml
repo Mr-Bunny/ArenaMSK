@@ -62,4 +62,11 @@
     <string name="text_profile_item_contact">Contact us</string>
     <string name="text_profile_item_exit">Quit</string>
 
+    <!--Place detail-->
+    <string-array name="place_detail_view_pager_titles">
+        <item>Info</item>
+        <item>Photos</item>
+        <item>Reviews</item>
+    </string-array>
+
 </resources>

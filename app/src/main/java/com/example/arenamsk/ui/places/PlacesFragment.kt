@@ -14,7 +14,7 @@ import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
 import com.example.arenamsk.ui.places.adapter.PlacesAdapter
 import kotlinx.android.synthetic.main.fragment_places.*
 
-class PlacesFragment : BaseFragment(), TagSelectedCallback {
+class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallback {
 
     private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback) }
 
@@ -24,8 +24,6 @@ class PlacesFragment : BaseFragment(), TagSelectedCallback {
 
     private var placeFilterFragment: PlaceFilterFragment? = null
     private var placeDetailFragment: PlaceDetailFragment? = null
-
-    override fun getLayout(): Int = R.layout.fragment_places
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
