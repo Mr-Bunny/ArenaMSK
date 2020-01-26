@@ -38,6 +38,7 @@
             app:layout_constraintTop_toTopOf="@id/place_item_rating_text"
             app:srb_borderColor="@color/rating_bar_star"
             app:srb_fillColor="@color/rating_bar_star"
+            app:srb_isIndicator="true"
             app:srb_rating="3"
             app:srb_starBorderWidth="3"
             app:srb_starSize="13dp"

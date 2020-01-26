@@ -1,15 +1,13 @@
 package com.example.arenamsk.ui.place_detail
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
+import com.google.android.material.appbar.AppBarLayout
+import kotlinx.android.synthetic.main.fragment_place_detail.*
 
 class PlaceDetailFragment private constructor() : DialogFragment(), LifecycleOwner {
 
@@ -59,6 +57,30 @@ class PlaceDetailFragment private constructor() : DialogFragment(), LifecycleOwn
     }
 
     private fun updateUI() {
+        //Get Place from args if null dismiss fragment
+        val place: PlaceModel = arguments?.getParcelable(PLACE_DETAIL_ARG_TAG) ?: PlaceModel().also { dismiss() }
 
+        place_detail_toolbar.setNavigationOnClickListener { this@PlaceDetailFragment.dismiss() }
+
+        place_detail_app_bar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+            var isShow = true
+            var scrollRange = -1
+
+            override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout!!.totalScrollRange
+                }
+
+                if (scrollRange + verticalOffset == 0) {
+                    place_detail_toolbar.title = "Теннисный корт"
+                    isShow = true
+                } else if(isShow) {
+                    place_detail_toolbar.title = " "
+                    isShow = false
+                }
+            }
+        })
+
+        place_detail_title.text = place.title
     }
 }

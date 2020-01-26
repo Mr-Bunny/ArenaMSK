@@ -38,6 +38,7 @@
             app:layout_constraintTop_toTopOf="@id/place_item_rating_text"
             app:srb_borderColor="@color/rating_bar_star"
             app:srb_fillColor="@color/rating_bar_star"
+            app:srb_isIndicator="true"
             app:srb_rating="3"
             app:srb_starBorderWidth="3"
             app:srb_starSize="13dp"
@@ -100,11 +101,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:background="@null"
-            app:srcCompat="@drawable/favourite_btn_selector"
             android:contentDescription="@string/image_description"
             app:layout_constraintBottom_toBottomOf="@id/place_item_work_time_text"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/place_item_feedback_count_text" />
+            app:layout_constraintTop_toTopOf="@id/place_item_feedback_count_text"
+            app:srcCompat="@drawable/favourite_btn_selector" />
 
         <TextView
             android:id="@+id/place_item_address_title"
@@ -123,10 +124,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:paddingEnd="80dp"
             android:textColor="@color/text_color_grey"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:paddingEnd="80dp"
             app:layout_constraintBottom_toBottomOf="@id/place_item_address_title"
             app:layout_constraintLeft_toRightOf="@id/place_item_address_title"
             app:layout_constraintTop_toTopOf="@id/place_item_address_title"

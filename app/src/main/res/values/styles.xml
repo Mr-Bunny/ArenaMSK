@@ -113,4 +113,8 @@
         <item name="android:background">?selectableItemBackground</item>
     </style>
 
+    <style name="MontserratBoldTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+    </style>
+
 </resources>
