@@ -27,4 +27,6 @@
 
     <color name="filter_divider_blue">#332F80ED</color>
     <color name="place_detail_toolbar_foreground">#4D021004</color>
+
+    <color name="place_info_text">#994F4F4F</color>
 </resources>
