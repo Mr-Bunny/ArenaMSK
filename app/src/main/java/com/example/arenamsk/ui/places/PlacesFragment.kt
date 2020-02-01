@@ -44,22 +44,26 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
     }
 
     private fun initRecycler() {
-        recycler_places.setHasFixedSize(true)
-        recycler_places.adapter = placeAdapter
-        recycler_places.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.VERTICAL,
-            false
-        )
+        with(recycler_places) {
+            setHasFixedSize(true)
+            adapter = placeAdapter
+            layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+        }
     }
 
     private fun initTags() {
-        place_tag_container.removeAllViews()
-        place_tag_container.addView(TagView(context!!, 1, "Все виды"))
-        place_tag_container.addView(TagView(context!!, 2, "Баскетбол"))
-        place_tag_container.addView(TagView(context!!, 3, "Футбол"))
-        place_tag_container.addView(TagView(context!!, 4, "Теннис"))
-        place_tag_container.addView(TagView(context!!, 5, "Волейбол"))
+        with(place_tag_container) {
+            removeAllViews()
+            addView(TagView(context!!, 1, "Все виды"))
+            addView(TagView(context!!, 2, "Баскетбол"))
+            addView(TagView(context!!, 3, "Футбол"))
+            addView(TagView(context!!, 4, "Теннис"))
+            addView(TagView(context!!, 5, "Волейбол"))
+        }
     }
 
     private fun itemClickCallback(place: PlaceModel) {
