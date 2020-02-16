@@ -1,9 +1,11 @@
 package com.example.arenamsk.ui.place_detail_feedback
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.View
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
@@ -11,7 +13,6 @@ import com.example.arenamsk.ui.place_detail.PlaceDetailFragment.Companion.PLACE_
 import com.example.arenamsk.ui.place_detail_feedback.adapter.PlaceDetailFeedbackAdapter
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
-import kotlinx.android.synthetic.main.fragment_place_detail.*
 import kotlinx.android.synthetic.main.fragment_place_detail_feedback.*
 
 class PlaceDetailFeedbackFragment private constructor() :
@@ -39,16 +40,17 @@ class PlaceDetailFeedbackFragment private constructor() :
         initRecycler()
 
         //Show feedback of place
-        val place: PlaceModel = arguments?.getParcelable(PLACE_DETAIL_ARG_TAG) ?: PlaceModel()
+        with(arguments?.getParcelable(PLACE_DETAIL_ARG_TAG) ?: PlaceModel()) {
+            feedbackAdapter.setNewList(feedbackList)
 
-        with(place.feedbackList) {
-            if (isNullOrEmpty()) {
-                feedback_no_reviews_text.enable()
-                recycler_feedback.disable()
-            } else {
-                feedback_no_reviews_text.disable()
-                recycler_feedback.enable()
-                feedbackAdapter.setNewList(this)
+            //Если бронировали и отзывов нет
+            if (inHistory && feedbackList.isNullOrEmpty()) {
+                //TODO set OnClick to the feedback_no_reviews_text
+                feedback_no_reviews_text_send_text_view.enable()
+            } else if (!inHistory && feedbackList.isNullOrEmpty()) { //Если не бронировали и отзывов нет
+                feedback_no_reviews_text_view.enable()
+            } else if (inHistory && feedbackList.isNotEmpty()) { //Если бронировали и есть отзывы
+                feedback_button.enable()
             }
         }
     }

@@ -93,6 +93,7 @@ class PlacesViewModel : BaseViewModel() {
         PlaceModel(
             title = "«Клуб тенниса»",
             isFavourite = false,
+            inHistory = true,
             description = "2 крытых корта премиум класса \nс профессиональным покрытием хард, комфортным освещением, оборудованные системой вентиляции и кондиционирования",
             workTime = "8.00–22.00",
             address = "ул. Комсомольская, д. 2, корп. 1",
