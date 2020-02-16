@@ -60,6 +60,8 @@
     <string name="text_total_area_title">Общая площадь</string>
     <string name="number_of_places_text">Количество площадок</string>
     <string name="book_button_text">ЗАБРОНИРОВАТЬ</string>
+    <string name="text_recommendation">Рекомендую</string>
+    <string name="text_no_review_yet">Отзывов ещё нет</string>
 
     <!--Place detail-->
     <string-array name="place_detail_view_pager_titles">

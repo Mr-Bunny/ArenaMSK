@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingEnd="6dp"
+    android:paddingBottom="35dp">
+
+    <TextView
+        android:id="@+id/feedback_author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_bold"
+        android:textColor="@color/text_color_grey"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/feedback_date"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Владислав" />
+
+    <TextView
+        android:id="@+id/feedback_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/feedback_author"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/feedback_author"
+        app:layout_constraintVertical_bias="1"
+        tools:text="12 июня 2019" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/feedback_recommendation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawablePadding="4dp"
+        android:orientation="vertical"
+        android:text="@string/text_recommendation"
+        android:textColor="@color/text_color_grey_light"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_recommendation_red"
+        app:layout_constraintLeft_toLeftOf="@id/feedback_author"
+        app:layout_constraintRight_toLeftOf="@id/feedback_rating"
+        app:layout_constraintTop_toTopOf="@id/feedback_rating"/>
+
+    <com.iarcuschin.simpleratingbar.SimpleRatingBar
+        android:id="@+id/feedback_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/feedback_author"
+        app:srb_borderColor="@color/rating_bar_star"
+        app:srb_fillColor="@color/rating_bar_star"
+        app:srb_isIndicator="true"
+        app:srb_rating="3"
+        app:srb_starBorderWidth="3"
+        app:srb_starSize="13dp"
+        app:srb_stepSize="2" />
+
+    <TextView
+        android:id="@+id/feedback_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="6dp"
+        android:textColor="@color/text_color_grey"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/feedback_rating"
+        tools:text="Расположенный в живописном месте Минска, на берегу Цнянского водохранилища,
+        клуб тенниса благодаря тёплой атмосфере собирает любителей этого вида спорта не только из Минска.
+         Отличные корты в зале и на улице, корты для пляжного тенниса, тренажёрный зал,солярий,
+         сауна, занятия йогой, пилатесом, приветливый персонал понравятся любому" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

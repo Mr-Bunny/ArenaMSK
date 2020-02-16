@@ -1,6 +1,7 @@
 package com.example.arenamsk.ui.places
 
 import androidx.lifecycle.MutableLiveData
+import com.example.arenamsk.models.FeedbackModel
 import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseViewModel
@@ -30,6 +31,7 @@ class PlacesViewModel : BaseViewModel() {
         PlaceModel(
             title = "Теннисный корт «Клуб тенниса»",
             isFavourite = false,
+            inHistory = true,
             description = "2 крытых корта премиум класса \nс профессиональным покрытием хард, комфортным освещением, оборудованные системой вентиляции и кондиционирования",
             workTime = "8.00–22.00",
             address = "ул. Комсомольская, д. 2, корп. 1",
@@ -37,10 +39,28 @@ class PlacesViewModel : BaseViewModel() {
             id = 1,
             rating = 3.0f,
             feedbackNumber = 52,
-            imagesUrl = listOf("https://ns328286.ip-37-187-113.eu/ew/wallpapers/800x480/02167_800x480.jpg",
+            feedbackList = listOf(
+                FeedbackModel(
+                    "Валентина Валентиновна",
+                    "12 июня 2019",
+                    true,
+                    4.5f,
+                    "Расположенный в живописном месте Минска, на берегу Цнянского водохранилища,\n" +
+                            "клуб тенниса благодаря тёплой атмосфере собирает любителей этого вида спорта не только из Минска.\n" +
+                            "Отличные корты в зале и на улице, корты для пляжного тенниса, тренажёрный зал,солярий,\n" +
+                            "сауна, занятия йогой, пилатесом, приветливый персонал понравятся любому"
+                ),
+                FeedbackModel("Иван", "12 июня 2019", false, 5f, "Нормасное место, рекомендую!"),
+                FeedbackModel("Игорь", "12 июня 2019", false, 3f, "Нормасное место, рекомендую!"),
+                FeedbackModel("Андроид", "12 июня 2019", true, 2f, "Нормасное место, рекомендую!"),
+                FeedbackModel("Олег", "12 июня 2019", false, 1f, "Нормасное место, рекомендую!")
+            ),
+            imagesUrl = listOf(
                 "https://ns328286.ip-37-187-113.eu/ew/wallpapers/800x480/02167_800x480.jpg",
                 "https://ns328286.ip-37-187-113.eu/ew/wallpapers/800x480/02167_800x480.jpg",
-                "https://ns328286.ip-37-187-113.eu/ew/wallpapers/800x480/02167_800x480.jpg")
+                "https://ns328286.ip-37-187-113.eu/ew/wallpapers/800x480/02167_800x480.jpg",
+                "https://ns328286.ip-37-187-113.eu/ew/wallpapers/800x480/02167_800x480.jpg"
+            )
         ),
         PlaceModel(
             title = "Клуб любителей пощикотать очко",
@@ -52,6 +72,22 @@ class PlacesViewModel : BaseViewModel() {
             id = 1,
             rating = 5.0f,
             feedbackNumber = 1488,
+            feedbackList = listOf(
+                FeedbackModel(
+                    "Валентина Валентиновна",
+                    "12 июня 2019",
+                    true,
+                    4.5f,
+                    "Расположенный в живописном месте Минска, на берегу Цнянского водохранилища,\n" +
+                            "клуб тенниса благодаря тёплой атмосфере собирает любителей этого вида спорта не только из Минска.\n" +
+                            "Отличные корты в зале и на улице, корты для пляжного тенниса, тренажёрный зал,солярий,\n" +
+                            "cауна, занятия йогой, пилатесом, приветливый персонал понравятся любому"
+                ),
+                FeedbackModel("Иван", "12 июня 2019", false, 5f, "Нормасное место, рекомендую!"),
+                FeedbackModel("Игорь", "12 июня 2019", false, 3f, "Нормасное место, рекомендую!"),
+                FeedbackModel("Андроид", "12 июня 2019", true, 2f, "Нормасное место, рекомендую!"),
+                FeedbackModel("Олег", "12 июня 2019", false, 1f, "Нормасное место, рекомендую!")
+            ),
             imagesUrl = listOf("https://ns328286.ip-37-187-113.eu/ew/wallpapers/800x480/02167_800x480.jpg")
         ),
         PlaceModel(

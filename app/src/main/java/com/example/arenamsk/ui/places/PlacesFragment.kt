@@ -60,9 +60,10 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
             removeAllViews()
             addView(TagView(context!!, 1, "Все виды"))
             addView(TagView(context!!, 2, "Баскетбол"))
-            addView(TagView(context!!, 3, "Футбол"))
-            addView(TagView(context!!, 4, "Теннис"))
-            addView(TagView(context!!, 5, "Волейбол"))
+            addView(TagView(context!!, 3, "Мини-футбол"))
+            addView(TagView(context!!, 4, "Футбол"))
+            addView(TagView(context!!, 5, "Теннис"))
+            addView(TagView(context!!, 6, "Волейбол"))
         }
     }
 

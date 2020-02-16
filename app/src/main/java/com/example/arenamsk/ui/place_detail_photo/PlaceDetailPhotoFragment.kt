@@ -33,9 +33,8 @@ class PlaceDetailPhotoFragment : BaseFragment(R.layout.fragment_place_detail_pho
 
         initRecycler()
 
-        //Get Place from args if null dismiss fragment
+        //Show Place photos from args
         val place: PlaceModel = arguments?.getParcelable(PLACE_DETAIL_ARG_TAG) ?: PlaceModel()
-
         photoAdapter.setNewList(place.imagesUrl)
     }
 
