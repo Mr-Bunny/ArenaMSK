@@ -64,6 +64,18 @@
         <item name="android:layout_marginTop">8dp</item>
     </style>
 
+    <style name="FeedbackButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
     <style name="HintTextInputLayoutSize" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">8sp</item>
     </style>

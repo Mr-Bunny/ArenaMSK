@@ -3,6 +3,7 @@ package com.example.arenamsk.ui.place_detail_feedback
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
@@ -10,6 +11,7 @@ import com.example.arenamsk.ui.place_detail.PlaceDetailFragment.Companion.PLACE_
 import com.example.arenamsk.ui.place_detail_feedback.adapter.PlaceDetailFeedbackAdapter
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
+import kotlinx.android.synthetic.main.fragment_place_detail.*
 import kotlinx.android.synthetic.main.fragment_place_detail_feedback.*
 
 class PlaceDetailFeedbackFragment private constructor() :

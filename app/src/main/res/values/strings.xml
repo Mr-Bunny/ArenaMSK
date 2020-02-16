@@ -73,5 +73,6 @@
     <string name="book_button_text">BOOK</string>
     <string name="text_recommendation">Recommend</string>
     <string name="text_no_review_yet">No reviews yet</string>
+    <string name="text_send_feedback_button">SEND FEEDBACK</string>
 
 </resources>

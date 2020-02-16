@@ -1,30 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.place_detail_feedback.PlaceDetailFeedbackFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_feedback"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
         android:clipToPadding="false"
         android:paddingStart="16dp"
         android:paddingTop="27dp"
-        android:paddingEnd="16dp" />
+        android:paddingEnd="16dp"
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/feedback_no_reviews_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_marginTop="32dp"
-        android:textSize="14sp"
         android:gravity="center_horizontal"
+        android:text="@string/text_no_review_yet"
         android:textColor="@color/text_color_grey"
-        android:text="@string/text_no_review_yet"/>
+        android:textSize="14sp"
+        android:visibility="gone" />
 
-</LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/feedback_button"
+        style="@style/FeedbackButton"
+        android:layout_margin="16dp"
+        app:backgroundTint="@android:color/white"
+        android:text="@string/text_send_feedback_button"
+        app:cornerRadius="25dp"
+        app:layout_anchor="@id/recycler_feedback"
+        app:layout_anchorGravity="bottom|center_horizontal"
+        app:strokeColor="@color/colorPrimary"
+        app:strokeWidth="1dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
