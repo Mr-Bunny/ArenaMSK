@@ -13,9 +13,9 @@
     <string name="text_close_app_toast_hint">Нажмите ещё раз для выхода</string>
     <string name="text_hint_sign_up_fail">Не удалось зарегистрироваться</string>
     <string name="text_hint_empty_field_error">ПОЛЕ НЕ МОЖЕТ БЫТЬ ПУСТЫМ</string>
-    <string name="text_hint_email_incorrect_error">ПОЖАЛУЙСТА ВВЕДИТЕ КОРРЕКТНЫЙ EMAIL АДРЕС</string>
+    <string name="text_hint_email_incorrect_error">ПОЖАЛУЙСТА ВВЕДИТЕ КОРРЕКТНЫЙ EMAIL АДРЕС ИЛИ ТЕЛЕФОН</string>
     <string name="text_hint_min_length_error">МИНИМАЛЬНАЯ ДЛИНА 6 СИМВОЛОВ</string>
-    <string name="text_hint_email_exist_error">АККАУНТ С ТАКИМ EMAIL УЖЕ СУЩЕСТВУЕТ</string>
+    <string name="text_hint_email_exist_error">АККАУНТ С ТАКИМ EMAIL (ТЕЛЕФОНОМ) УЖЕ СУЩЕСТВУЕТ</string>
     <string name="text_add_photo">Добавить фото</string>
 
     <!--Bottom navigation titles-->

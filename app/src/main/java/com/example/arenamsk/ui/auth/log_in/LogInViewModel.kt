@@ -28,7 +28,7 @@ class LogInViewModel : BaseViewModel() {
                 return true
             }
 
-            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() && !phoneIsCorrect(email) -> {
                 logInStatus.value = LogInStatus.EMAIL_INCORRECT
                 return true
             }
@@ -47,6 +47,10 @@ class LogInViewModel : BaseViewModel() {
                 return false
             }
         }
+    }
+
+    private fun phoneIsCorrect(phone: String): Boolean {
+        return phone.length == 10
     }
 
 }
