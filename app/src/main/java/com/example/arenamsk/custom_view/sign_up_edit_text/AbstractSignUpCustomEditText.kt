@@ -55,13 +55,13 @@ abstract class AbstractSignUpCustomEditText : LinearLayout {
         }
     }
 
+    open fun getText() = custom_edit_text.text.toString()
+
     fun setError(errorMsg: String) {
         this.errorHint = errorMsg
         currentState =
             State.ERROR
     }
-
-    fun getText() = custom_edit_text.text.toString()
 
     private fun updateView() {
         when (currentState) {
