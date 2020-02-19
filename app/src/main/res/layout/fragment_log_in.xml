@@ -36,6 +36,7 @@
                 android:layout_marginTop="51dp"
                 android:gravity="center"
                 android:text="@string/auth_text_new_user"
+                android:fontFamily="@font/montserrat_bold"
                 android:textColor="@color/auth_text_color_secondary"
                 android:textSize="12sp"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text="@string/auth_create_text_new_user"
                 android:textColor="@color/auth_text_color_primary"
                 android:textSize="14sp"
