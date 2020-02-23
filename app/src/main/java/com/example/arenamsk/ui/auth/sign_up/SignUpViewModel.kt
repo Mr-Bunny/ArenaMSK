@@ -31,7 +31,7 @@ class SignUpViewModel : BaseViewModel() {
                 return true
             }
 
-            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() && !phoneIsCorrect(email) -> {
                 signUpStatus.value = SignUpStatus.EMAIL_INCORRECT
                 return true
             }
@@ -50,6 +50,10 @@ class SignUpViewModel : BaseViewModel() {
                 return false
             }
         }
+    }
+
+    private fun phoneIsCorrect(phone: String): Boolean {
+        return phone.length == 11 && (phone.toIntOrNull() == null)
     }
 
 }

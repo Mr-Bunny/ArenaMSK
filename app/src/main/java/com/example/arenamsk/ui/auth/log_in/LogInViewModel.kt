@@ -50,7 +50,7 @@ class LogInViewModel : BaseViewModel() {
     }
 
     private fun phoneIsCorrect(phone: String): Boolean {
-        return phone.length == 10
+        return phone.length == 11 && (phone.toIntOrNull() == null)
     }
 
 }
