@@ -9,7 +9,9 @@
     <string name="text_continue_without_registration"><u>Продолжить без регистрации</u></string>
     <string name="text_toolbar_sign_up">Регистрация</string>
     <string name="text_sign_up">ЗАРЕГИСТРИРОВАТЬСЯ</string>
-    <string name="edit_text_name_hint">ИМЯ</string>
+    <string name="edit_text_name_hint">Имя</string>
+    <string name="edit_text_email_hint">Эл. почта/Телефон</string>
+    <string name="edit_text_password_hint">Пароль</string>
     <string name="text_close_app_toast_hint">Нажмите ещё раз для выхода</string>
     <string name="text_hint_sign_up_fail">Не удалось зарегистрироваться</string>
     <string name="text_hint_empty_field_error">ПОЛЕ НЕ МОЖЕТ БЫТЬ ПУСТЫМ</string>
