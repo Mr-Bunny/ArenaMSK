@@ -42,7 +42,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             }
 
             startActivity(Intent(activity, AuthActivity::class.java))
-            activity?.finishAffinity()
+            activity?.finish()
         }
     }
 }

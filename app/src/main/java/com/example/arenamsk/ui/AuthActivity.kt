@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.example.arenamsk.ui.auth.log_in.LogInFragment
 import com.example.arenamsk.ui.auth.sign_up.SignUpFragmentCallback
 import android.graphics.BitmapFactory
+import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.utils.Constants.DOUBLE_CLICK_DELAY
 
 class AuthActivity : AppCompatActivity() {
@@ -27,7 +28,11 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(com.example.arenamsk.R.layout.activity_auth)
 
-        openLogInFragment()
+        if (AuthUtils.isUserAuthorized()) {
+            openApp()
+        } else {
+            openLogInFragment()
+        }
     }
 
     override fun onBackPressed() {
