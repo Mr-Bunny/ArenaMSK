@@ -9,7 +9,9 @@ import com.example.arenamsk.network.utils.RetrofitFactory
 import okhttp3.MultipartBody
 
 object RemoteDataSource {
-    private val service: ApiService = RetrofitFactory.getApiService()
+    private val service: ApiService
+        get() = RetrofitFactory.getApiService()
+
     private val authService: ApiService = RetrofitFactory.getAuthApiService()
 
     /** Auth */

@@ -104,6 +104,11 @@ class LogInViewModel : BaseAuthViewModel() {
 
     //Авторизация успешна, мы получили токены
     private fun logInSuccess(response: UpdatedTokensModel) {
+        with(AuthUtils) {
+            saveAuthToken(response.accessToken)
+            saveRefreshToken(response.refreshToken)
+        }
+
         repository.getAccountInfo(
             success = {
                 launch(Dispatchers.IO) {
@@ -112,8 +117,6 @@ class LogInViewModel : BaseAuthViewModel() {
 
                     //Сохраняем токены и ставим флаг, что авторизированы
                     with(AuthUtils) {
-                        saveAuthToken(response.accessToken)
-                        saveRefreshToken(response.refreshToken)
                         setUserIsAuthorized(true)
                         setUserIsDefault(false)
                     }

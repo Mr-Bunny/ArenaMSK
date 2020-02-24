@@ -28,7 +28,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         CoroutineScope(Dispatchers.IO).launch {
             LocalDataSource.getUserData()?.let {
                 withContext(Dispatchers.Main) {
-                    if (it.imageUrl.isNotEmpty()) {
+                    if (it.imageUrl?.isNotEmpty() == true) {
                         Picasso.get()
                             .load(it.imageUrl)
                             .error(R.drawable.auth_background)

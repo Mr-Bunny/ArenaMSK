@@ -14,14 +14,14 @@ data class User(
     var userId: Int = -1,
 
     @SerializedName("firstName")
-    var firstName: String = "",
+    var firstName: String? = "",
 
     @SerializedName("number")
-    var number: String = "",
+    var number: String? = "",
 
     @SerializedName("imageUrl")
-    var imageUrl: String = "",
+    var imageUrl: String? = "",
 
     @SerializedName("email")
-    var email: String = ""
+    var email: String? = ""
 ): Parcelable

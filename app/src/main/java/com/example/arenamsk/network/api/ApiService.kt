@@ -24,7 +24,7 @@ interface ApiService {
     @POST("api/v1/auth/sign-in/")
     suspend fun postLogInRequest(@Body logInModel: LogInUserModel): Response<UpdatedTokensModel>
 
-    @GET("/api/v1/account")
+    @GET("/api/v1/account/")
     suspend fun getUserAccountInfo(): Response<User>
 
     @GET("closed")

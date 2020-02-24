@@ -6,11 +6,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
 object OkHttpProvider {
-    private var okHttpClient: OkHttpClient? = null
-
-    fun getInstance(isAuth: Boolean = false) = okHttpClient ?: synchronized(this) {
-        okHttpClient ?: provideClient(isAuth)
-    }
+    fun getInstance(isAuth: Boolean = false) = provideClient(isAuth)
 
     private fun provideClient(isAuth: Boolean): OkHttpClient {
         val builder = OkHttpClient.Builder()
@@ -28,7 +24,7 @@ object OkHttpProvider {
                 val headers = request
                     .headers()
                     .newBuilder()
-                    .add("Authorization", "Bearer " + AuthUtils.getAuthToken())
+                    .add("Authorization", "Bearer ${AuthUtils.getAuthToken()}")
                     .build()
                 request = request.newBuilder().headers(headers).build()
                 it.proceed(request)
