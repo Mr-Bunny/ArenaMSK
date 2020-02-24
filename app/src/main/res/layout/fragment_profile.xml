@@ -33,10 +33,10 @@
             android:layout_marginBottom="21dp"
             android:contentDescription="@string/image_description"
             android:scaleType="centerCrop"
+            android:src="@drawable/auth_background"
             app:layout_constraintLeft_toLeftOf="@id/profile_title"
             app:layout_constraintTop_toBottomOf="@id/profile_title"
-            app:riv_oval="true"
-            tools:src="@drawable/auth_background" />
+            app:riv_oval="true"/>
 
         <TextView
             android:id="@+id/profile_user_name"

@@ -36,8 +36,7 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
 
         text_add_photo.setOnClickListener { getPhotoFromGallery() }
 
-        //TODO add logic
-        text_without_registration.setOnClickListener { openApp(activity as AuthActivity) }
+        text_without_registration.setOnClickListener { signUpViewModel.skipAuth() }
 
         btn_sign_up.setOnClickListener {
             name_edit_text.clearFocus()

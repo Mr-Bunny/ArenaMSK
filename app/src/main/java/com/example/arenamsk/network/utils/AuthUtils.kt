@@ -26,8 +26,17 @@ object AuthUtils {
         manager.saveValue(SharedPreferenceManager.KEY.IS_USER_AUTHORIZED, isAuthorized)
     }
 
+    fun setUserIsDefault(isDefault: Boolean) {
+        manager.saveValue(SharedPreferenceManager.KEY.IS_USER_DEFAULT, isDefault)
+    }
+
     fun isUserAuthorized(): Boolean = manager.getBooleanValue(
         SharedPreferenceManager.KEY.IS_USER_AUTHORIZED,
+        false
+    ) as Boolean
+
+    fun isUserDefault(): Boolean = manager.getBooleanValue(
+        SharedPreferenceManager.KEY.IS_USER_DEFAULT,
         false
     ) as Boolean
 

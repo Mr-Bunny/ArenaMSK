@@ -10,15 +10,15 @@ import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.network.utils.AuthUtils.emptyErrorHandler
 import com.example.arenamsk.repositories.AuthRepository
 import com.example.arenamsk.room.tables.User
+import com.example.arenamsk.ui.base.BaseAuthViewModel
 import com.example.arenamsk.utils.Constants.PASSWORD_LENGTH
-import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.EnumUtils.SignUpStatus
 import com.example.arenamsk.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SignUpViewModel : BaseViewModel() {
+class SignUpViewModel : BaseAuthViewModel() {
 
     private val signUpStatus = SingleLiveEvent<SignUpStatus>()
 
@@ -28,7 +28,32 @@ class SignUpViewModel : BaseViewModel() {
 
     private var image: ByteArray? = null
 
+    private val errorHandler = object : RequestErrorHandler {
+        override suspend fun networkUnavailableError() {
+            signUpStatus.value = SignUpStatus.NETWORK_OFFLINE
+        }
+
+        override suspend fun requestFailedError(error: ApiError?) {
+            signUpStatus.value = SignUpStatus.SIGN_UP_FAIL
+        }
+
+        override suspend fun requestSuccessButResponseIsNull() {
+            signUpStatus.value = SignUpStatus.SIGN_UP_FAIL
+        }
+
+        override suspend fun timeoutException() {
+            signUpStatus.value = SignUpStatus.SIGN_UP_FAIL
+        }
+    }
+
     fun getSignUpStatus() = signUpStatus
+
+    override fun skipAuth() {
+        //Открываем приложение
+        signUpStatus.value = SignUpStatus.SIGN_UP_SUCCESS
+
+        super.skipAuth()
+    }
 
     fun startSignUp(name: String, email: String, password: String, image: ByteArray?) {
         if (checkForError(name, email, password)) return
@@ -86,24 +111,6 @@ class SignUpViewModel : BaseViewModel() {
         return phone.length == 11 && (phone.toIntOrNull() == null)
     }
 
-    private val errorHandler = object : RequestErrorHandler {
-        override suspend fun networkUnavailableError() {
-            signUpStatus.value = SignUpStatus.NETWORK_OFFLINE
-        }
-
-        override suspend fun requestFailedError(error: ApiError?) {
-            signUpStatus.value = SignUpStatus.SIGN_UP_FAIL
-        }
-
-        override suspend fun requestSuccessButResponseIsNull() {
-            signUpStatus.value = SignUpStatus.SIGN_UP_FAIL
-        }
-
-        override suspend fun timeoutException() {
-            signUpStatus.value = SignUpStatus.SIGN_UP_FAIL
-        }
-    }
-
     //Регистрация успешна, мы получили userId
     private fun signUpSuccess(response: User) {
         val logInUserModel = LogInUserModel(
@@ -132,6 +139,7 @@ class SignUpViewModel : BaseViewModel() {
                         saveAuthToken(it.accessToken)
                         saveRefreshToken(it.refreshToken)
                         setUserIsAuthorized(true)
+                        setUserIsDefault(false)
                     }
 
                     //Загружаем аватарку на сервер

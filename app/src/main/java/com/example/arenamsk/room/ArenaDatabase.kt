@@ -27,8 +27,7 @@ abstract class ArenaDatabase : RoomDatabase() {
                     ctx.applicationContext,
                     ArenaDatabase::class.java,
                     DATABASE_NAME
-                )
-                    .build()
+                ).build()
             }
 
             return instance!!

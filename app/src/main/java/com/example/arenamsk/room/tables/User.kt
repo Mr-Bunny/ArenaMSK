@@ -2,6 +2,7 @@ package com.example.arenamsk.room.tables
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -9,6 +10,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "userTable")
 data class User(
     @SerializedName("id")
+    @PrimaryKey
     var userId: Int = -1,
 
     @SerializedName("firstName")

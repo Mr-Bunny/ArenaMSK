@@ -5,25 +5,49 @@ import com.example.arenamsk.datasources.LocalDataSource
 import com.example.arenamsk.network.models.ApiError
 import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.network.models.auth.LogInUserModel
-import com.example.arenamsk.network.models.auth.SignUpUserModel
 import com.example.arenamsk.network.models.auth.UpdatedTokensModel
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.repositories.AuthRepository
+import com.example.arenamsk.ui.base.BaseAuthViewModel
 import com.example.arenamsk.utils.Constants.PASSWORD_LENGTH
-import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.EnumUtils.LogInStatus
 import com.example.arenamsk.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LogInViewModel : BaseViewModel() {
+class LogInViewModel : BaseAuthViewModel() {
 
     private val logInStatus = SingleLiveEvent<LogInStatus>()
 
     private val repository = AuthRepository.getInstance()
 
+    private val errorHandler = object : RequestErrorHandler {
+        override suspend fun networkUnavailableError() {
+            logInStatus.value = LogInStatus.NETWORK_OFFLINE
+        }
+
+        override suspend fun requestFailedError(error: ApiError?) {
+            logInStatus.value = LogInStatus.LOG_IN_FAIL
+        }
+
+        override suspend fun requestSuccessButResponseIsNull() {
+            logInStatus.value = LogInStatus.LOG_IN_FAIL
+        }
+
+        override suspend fun timeoutException() {
+            logInStatus.value = LogInStatus.LOG_IN_FAIL
+        }
+    }
+
     fun getLogInStatus() = logInStatus
+
+    override fun skipAuth() {
+        //Открываем приложение
+        logInStatus.value = LogInStatus.LOG_IN_SUCCESS
+
+        super.skipAuth()
+    }
 
     //Try to make registration request
     fun startAuth(email: String, password: String) {
@@ -78,24 +102,6 @@ class LogInViewModel : BaseViewModel() {
         return phone.length == 11 && (phone.toIntOrNull() == null)
     }
 
-    private val errorHandler = object : RequestErrorHandler {
-        override suspend fun networkUnavailableError() {
-            logInStatus.value = LogInStatus.NETWORK_OFFLINE
-        }
-
-        override suspend fun requestFailedError(error: ApiError?) {
-            logInStatus.value = LogInStatus.LOG_IN_FAIL
-        }
-
-        override suspend fun requestSuccessButResponseIsNull() {
-            logInStatus.value = LogInStatus.LOG_IN_FAIL
-        }
-
-        override suspend fun timeoutException() {
-            logInStatus.value = LogInStatus.LOG_IN_FAIL
-        }
-    }
-
     //Авторизация успешна, мы получили токены
     private fun logInSuccess(response: UpdatedTokensModel) {
         repository.getAccountInfo(
@@ -109,6 +115,7 @@ class LogInViewModel : BaseViewModel() {
                         saveAuthToken(response.accessToken)
                         saveRefreshToken(response.refreshToken)
                         setUserIsAuthorized(true)
+                        setUserIsDefault(false)
                     }
 
                     //Открываем приложение

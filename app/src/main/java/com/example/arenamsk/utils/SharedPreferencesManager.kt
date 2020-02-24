@@ -81,6 +81,7 @@ class SharedPreferenceManager private constructor() {
 
     object KEY {
         const val IS_USER_AUTHORIZED = "is_user_authorized"
+        const val IS_USER_DEFAULT = "is_user_default"
         const val USER_EMAIL = "email"
         const val AUTH_TOKEN = "auth_token"
         const val REFRESH_TOKEN = "refresh_token"

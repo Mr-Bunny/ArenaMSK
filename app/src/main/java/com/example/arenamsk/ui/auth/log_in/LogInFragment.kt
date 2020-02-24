@@ -22,8 +22,7 @@ class LogInFragment : BaseAuthFragment(R.layout.fragment_log_in) {
 
         text_create_new_user.setOnClickListener { openSignUpFragment() }
 
-        //TODO add logic
-        text_without_registration.setOnClickListener { openApp(activity as AuthActivity) }
+        text_without_registration.setOnClickListener { logInViewModel.skipAuth() }
 
         btn_log_in.setOnClickListener {
             auth_email_text_layout.clearFocus()
