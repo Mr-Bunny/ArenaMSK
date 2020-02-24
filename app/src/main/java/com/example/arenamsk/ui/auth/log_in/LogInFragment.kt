@@ -58,11 +58,15 @@ class LogInFragment : BaseAuthFragment(R.layout.fragment_log_in) {
             }
 
             LogInStatus.LOG_IN_FAIL -> {
-                showToast(getString(R.string.text_hint_sign_up_fail))
+                showToast(getString(R.string.text_hint_log_in_fail))
             }
 
             LogInStatus.LOG_IN_SUCCESS -> {
                 openApp(activity as AuthActivity)
+            }
+
+            LogInStatus.NETWORK_OFFLINE -> {
+                showToast(R.string.network_offline_text)
             }
         }
     }

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--Toasts-->
+    <string name="network_offline_text">Проверьте подключение к интернету</string>
+
     <!--Auth-->
     <string name="auth_text_new_user">Новый пользователь?</string>
     <string name="auth_create_text_new_user"><u>Зарегистрируйтесь</u></string>
@@ -9,11 +12,12 @@
     <string name="text_continue_without_registration"><u>Продолжить без регистрации</u></string>
     <string name="text_toolbar_sign_up">Регистрация</string>
     <string name="text_sign_up">ЗАРЕГИСТРИРОВАТЬСЯ</string>
-    <string name="edit_text_name_hint">Имя</string>
-    <string name="edit_text_email_hint">Эл. почта/Телефон</string>
-    <string name="edit_text_password_hint">Пароль</string>
+    <string name="edit_text_name_hint">ИМЯ</string>
+    <string name="edit_text_email_hint">ЭЛ.ПОЧТА/ТЕЛЕФОН</string>
+    <string name="edit_text_password_hint">ПАРОЛЬ</string>
     <string name="text_close_app_toast_hint">Нажмите ещё раз для выхода</string>
     <string name="text_hint_sign_up_fail">Не удалось зарегистрироваться</string>
+    <string name="text_hint_log_in_fail">Не удалось войти в аккаунт</string>
     <string name="text_hint_empty_field_error">ПОЛЕ НЕ МОЖЕТ БЫТЬ ПУСТЫМ</string>
     <string name="text_hint_email_incorrect_error">ПОЖАЛУЙСТА ВВЕДИТЕ КОРРЕКТНЫЙ EMAIL АДРЕС ИЛИ ТЕЛЕФОН</string>
     <string name="text_hint_min_length_error">МИНИМАЛЬНАЯ ДЛИНА 6 СИМВОЛОВ</string>

@@ -30,4 +30,9 @@ abstract class BaseFragment(private val layoutId: Int): Fragment(), LifecycleOwn
         toast?.cancel()
         toast = Toast.makeText(context, msg, Toast.LENGTH_LONG).apply { show() }
     }
+
+    protected fun showToast(msgId: Int) {
+        toast?.cancel()
+        toast = Toast.makeText(context, msgId, Toast.LENGTH_LONG).apply { show() }
+    }
 }

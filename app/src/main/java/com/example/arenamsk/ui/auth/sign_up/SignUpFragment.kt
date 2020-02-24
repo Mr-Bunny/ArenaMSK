@@ -1,26 +1,27 @@
 package com.example.arenamsk.ui.auth.sign_up
 
 import android.Manifest
-import android.os.Bundle
-import android.view.View
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.example.arenamsk.utils.EnumUtils.SignUpStatus
-import kotlinx.android.synthetic.main.fragment_sign_up.*
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
+import android.os.Bundle
+import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
 import com.example.arenamsk.ui.AuthActivity
 import com.example.arenamsk.ui.AuthActivity.Companion.GALLERY_PERMISSION_REQUEST_CODE
 import com.example.arenamsk.ui.AuthActivity.Companion.GALLERY_REQUEST_CODE
 import com.example.arenamsk.ui.base.BaseAuthFragment
+import com.example.arenamsk.utils.EnumUtils.SignUpStatus
 import com.example.arenamsk.utils.ImageUtils
 import com.example.arenamsk.utils.PermissionUtils
 import com.example.arenamsk.utils.enable
 import com.example.arenamsk.utils.hide
+import kotlinx.android.synthetic.main.fragment_sign_up.*
 import uk.co.senab.photoview.PhotoViewAttacher
+import java.io.ByteArrayOutputStream
 
 class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragmentCallback {
 
@@ -46,7 +47,8 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
             signUpViewModel.startSignUp(
                 name_edit_text.getText(),
                 email_edit_text.getText(),
-                password_edit_text.getText()
+                password_edit_text.getText(),
+                getAvatar()
             )
         }
 
@@ -102,8 +104,7 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
             }
 
             SignUpStatus.SIGN_UP_SUCCESS -> {
-                //openApp(activity as AuthActivity)
-                saveCroppedBitmap()
+                openApp(activity as AuthActivity)
             }
         }
     }
@@ -134,10 +135,21 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
         )
     }
 
-    private fun saveCroppedBitmap() {
-        with(ImageUtils) {
-            val croppedBitmap = createCircleBitmap(getImageFromView(circle_crop_image_view))
-            //TODO save avatar to server I guess
-        }
+    private fun getAvatar(): ByteArray? {
+        //Если не была выбрана никакая фотография
+        if (avatar_view.visibility != View.VISIBLE) return null
+
+        val croppedAvatar = ImageUtils.createCircleBitmap(
+            ImageUtils.getImageFromView(
+                circle_crop_image_view
+            )
+        )
+
+        val stream = ByteArrayOutputStream()
+        croppedAvatar.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        val byteArray: ByteArray = stream.toByteArray()
+        croppedAvatar.recycle()
+
+        return byteArray
     }
 }

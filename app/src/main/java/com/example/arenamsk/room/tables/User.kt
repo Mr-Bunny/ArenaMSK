@@ -1,0 +1,25 @@
+package com.example.arenamsk.room.tables
+
+import android.os.Parcelable
+import androidx.room.Entity
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+@Entity(tableName = "userTable")
+data class User(
+    @SerializedName("id")
+    var userId: Int = -1,
+
+    @SerializedName("firstName")
+    var firstName: String = "",
+
+    @SerializedName("number")
+    var number: String = "",
+
+    @SerializedName("imageUrl")
+    var imageUrl: String = "",
+
+    @SerializedName("email")
+    var email: String = ""
+): Parcelable

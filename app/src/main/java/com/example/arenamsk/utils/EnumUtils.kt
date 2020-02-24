@@ -10,7 +10,8 @@ object EnumUtils {
         PASSWORD_MIN_LENGTH_ERROR,
         EMAIL_EXIST,
         SIGN_UP_FAIL,
-        SIGN_UP_SUCCESS
+        SIGN_UP_SUCCESS,
+        NETWORK_OFFLINE
     }
 
     enum class LogInStatus {
@@ -19,6 +20,7 @@ object EnumUtils {
         PASSWORD_EMPTY,
         PASSWORD_MIN_LENGTH_ERROR,
         LOG_IN_FAIL,
-        LOG_IN_SUCCESS
+        LOG_IN_SUCCESS,
+        NETWORK_OFFLINE
     }
 }

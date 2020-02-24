@@ -1,14 +1,27 @@
 package com.example.arenamsk.ui.auth.log_in
 
 import android.util.Patterns
+import com.example.arenamsk.datasources.LocalDataSource
+import com.example.arenamsk.network.models.ApiError
+import com.example.arenamsk.network.models.RequestErrorHandler
+import com.example.arenamsk.network.models.auth.LogInUserModel
+import com.example.arenamsk.network.models.auth.SignUpUserModel
+import com.example.arenamsk.network.models.auth.UpdatedTokensModel
+import com.example.arenamsk.network.utils.AuthUtils
+import com.example.arenamsk.repositories.AuthRepository
 import com.example.arenamsk.utils.Constants.PASSWORD_LENGTH
 import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.EnumUtils.LogInStatus
 import com.example.arenamsk.utils.SingleLiveEvent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LogInViewModel : BaseViewModel() {
 
     private val logInStatus = SingleLiveEvent<LogInStatus>()
+
+    private val repository = AuthRepository.getInstance()
 
     fun getLogInStatus() = logInStatus
 
@@ -16,8 +29,20 @@ class LogInViewModel : BaseViewModel() {
     fun startAuth(email: String, password: String) {
         if (checkForError(email, password)) return
 
-        //TODO auth
-        logInStatus.value = LogInStatus.LOG_IN_SUCCESS
+        //true если это телефон, false если email
+        if (phoneIsCorrect(email)) {
+            repository.startLogIn(
+                LogInUserModel(number = email, password = password),
+                success = ::logInSuccess,
+                errorHandler = errorHandler
+            )
+        } else {
+            repository.startLogIn(
+                LogInUserModel(email = email, password = password),
+                success = ::logInSuccess,
+                errorHandler = errorHandler
+            )
+        }
     }
 
     //returns true if something is empty or incorrect and false if all all right
@@ -53,4 +78,46 @@ class LogInViewModel : BaseViewModel() {
         return phone.length == 11 && (phone.toIntOrNull() == null)
     }
 
+    private val errorHandler = object : RequestErrorHandler {
+        override suspend fun networkUnavailableError() {
+            logInStatus.value = LogInStatus.NETWORK_OFFLINE
+        }
+
+        override suspend fun requestFailedError(error: ApiError?) {
+            logInStatus.value = LogInStatus.LOG_IN_FAIL
+        }
+
+        override suspend fun requestSuccessButResponseIsNull() {
+            logInStatus.value = LogInStatus.LOG_IN_FAIL
+        }
+
+        override suspend fun timeoutException() {
+            logInStatus.value = LogInStatus.LOG_IN_FAIL
+        }
+    }
+
+    //Авторизация успешна, мы получили токены
+    private fun logInSuccess(response: UpdatedTokensModel) {
+        repository.getAccountInfo(
+            success = {
+                launch(Dispatchers.IO) {
+                    //Сохраняем в БД данные пользователя
+                    LocalDataSource.saveUserData(it)
+
+                    //Сохраняем токены и ставим флаг, что авторизированы
+                    with(AuthUtils) {
+                        saveAuthToken(response.accessToken)
+                        saveRefreshToken(response.refreshToken)
+                        setUserIsAuthorized(true)
+                    }
+
+                    //Открываем приложение
+                    withContext(Dispatchers.Main) {
+                        logInStatus.value = LogInStatus.LOG_IN_SUCCESS
+                    }
+                }
+            },
+            errorHandler = errorHandler
+        )
+    }
 }
