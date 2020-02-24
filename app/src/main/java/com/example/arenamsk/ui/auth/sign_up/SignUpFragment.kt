@@ -44,9 +44,9 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
             password_edit_text.clearFocus()
 
             signUpViewModel.startSignUp(
-                name_edit_text.getText(),
-                email_edit_text.getText(),
-                password_edit_text.getText(),
+                name_edit_text.getText().trim(),
+                email_edit_text.getText().trim(),
+                password_edit_text.getText().trim(),
                 getAvatar()
             )
         }

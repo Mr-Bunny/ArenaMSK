@@ -29,8 +29,8 @@ class LogInFragment : BaseAuthFragment(R.layout.fragment_log_in) {
             auth_password_text_layout.clearFocus()
 
             logInViewModel.startAuth(
-                auth_email_text_layout.getText(),
-                auth_password_text_layout.getText()
+                auth_email_text_layout.getText().trim(),
+                auth_password_text_layout.getText().trim()
             )
         }
 
