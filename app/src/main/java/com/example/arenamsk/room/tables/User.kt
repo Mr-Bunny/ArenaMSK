@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "userTable")
 data class User(
-    @SerializedName("id")
+    @SerializedName("userId")
     @PrimaryKey
     var userId: Int = -1,
 

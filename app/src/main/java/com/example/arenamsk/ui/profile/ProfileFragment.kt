@@ -26,16 +26,18 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
         //Setup name
         CoroutineScope(Dispatchers.IO).launch {
-            val user = LocalDataSource.getUserData()
+            LocalDataSource.getUserData()?.let {
+                withContext(Dispatchers.Main) {
+                    if (it.imageUrl.isNotEmpty()) {
+                        Picasso.get()
+                            .load(it.imageUrl)
+                            .error(R.drawable.auth_background)
+                            .placeholder(R.drawable.auth_background)
+                            .into(profile_avatar)
+                    }
 
-            withContext(Dispatchers.Main) {
-                Picasso.get()
-                    .load(user?.imageUrl)
-                    .error(R.drawable.auth_background)
-                    .placeholder(R.drawable.auth_background)
-                    .into(profile_avatar)
-
-                profile_user_name.text = user?.firstName ?: Constants.DEFAULT_USER_NAME
+                    profile_user_name.text = it.firstName
+                }
             }
         }
 
