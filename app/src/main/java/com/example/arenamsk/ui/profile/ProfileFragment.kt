@@ -11,6 +11,7 @@ import com.example.arenamsk.ui.AuthActivity
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.utils.Constants
 import com.example.arenamsk.utils.disable
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.coroutines.*
 
@@ -25,9 +26,16 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
         //Setup name
         CoroutineScope(Dispatchers.IO).launch {
-            val username = LocalDataSource.getUserData()?.firstName ?: Constants.DEFAULT_USER_NAME
+            val user = LocalDataSource.getUserData()
+
             withContext(Dispatchers.Main) {
-                profile_user_name.text = username
+                Picasso.get()
+                    .load(user?.imageUrl)
+                    .error(R.drawable.auth_background)
+                    .placeholder(R.drawable.auth_background)
+                    .into(profile_avatar)
+
+                profile_user_name.text = user?.firstName ?: Constants.DEFAULT_USER_NAME
             }
         }
 
