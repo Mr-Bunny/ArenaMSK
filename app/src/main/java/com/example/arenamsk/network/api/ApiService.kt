@@ -19,7 +19,7 @@ interface ApiService {
 
     @Multipart
     @POST("api/v1/account/upload/avatar/")
-    suspend fun uploadAvatar(@Part image: MultipartBody.Part): Response<String>
+    suspend fun uploadAvatar(@Part file: MultipartBody.Part): Response<String>
 
     @POST("api/v1/auth/sign-in/")
     suspend fun postLogInRequest(@Body logInModel: LogInUserModel): Response<UpdatedTokensModel>

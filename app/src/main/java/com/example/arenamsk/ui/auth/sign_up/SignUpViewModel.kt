@@ -1,5 +1,6 @@
 package com.example.arenamsk.ui.auth.sign_up
 
+import android.graphics.Bitmap
 import android.util.Patterns
 import com.example.arenamsk.datasources.LocalDataSource
 import com.example.arenamsk.network.models.ApiError
@@ -26,7 +27,7 @@ class SignUpViewModel : BaseAuthViewModel() {
 
     private lateinit var user: SignUpUserModel
 
-    private var image: ByteArray? = null
+    private var image: Bitmap? = null
 
     private val errorHandler = object : RequestErrorHandler {
         override suspend fun networkUnavailableError() {
@@ -55,7 +56,7 @@ class SignUpViewModel : BaseAuthViewModel() {
         super.skipAuth()
     }
 
-    fun startSignUp(name: String, email: String, password: String, image: ByteArray?) {
+    fun startSignUp(name: String, email: String, password: String, image: Bitmap?) {
         if (checkForError(name, email, password)) return
 
         this.image = image

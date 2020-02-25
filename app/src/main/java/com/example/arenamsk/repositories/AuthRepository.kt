@@ -1,5 +1,6 @@
 package com.example.arenamsk.repositories
 
+import android.graphics.Bitmap
 import com.example.arenamsk.datasources.RemoteDataSource
 import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.network.models.auth.LogInUserModel
@@ -7,10 +8,13 @@ import com.example.arenamsk.network.models.auth.SignUpUserModel
 import com.example.arenamsk.network.models.auth.UpdatedTokensModel
 import com.example.arenamsk.network.utils.BaseRepository
 import com.example.arenamsk.room.tables.User
+import com.example.arenamsk.utils.ImageUtils
 import com.google.gson.JsonObject
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import java.io.File
+
 
 class AuthRepository private constructor() : BaseRepository() {
 
@@ -34,14 +38,20 @@ class AuthRepository private constructor() : BaseRepository() {
     )
 
     fun uploadAvatar(
-        image: ByteArray,
+        image: Bitmap,
         success: (response: String) -> Unit,
         errorHandler: RequestErrorHandler
     ) = makeRequest(
         call = {
-            val imagePart = RequestBody.create(MediaType.parse("image/jpeg"), image)
-            val imageMultipart = MultipartBody.Part.createFormData("image", System.currentTimeMillis().toString(), imagePart)
-            RemoteDataSource.uploadAvatar(imageMultipart)
+            val file = ImageUtils.createFileFromBitmap(image)
+
+            val filePart = MultipartBody.Part.createFormData(
+                "file",
+                file.name,
+                RequestBody.create(MediaType.parse("image/*"), file)
+            )
+
+            RemoteDataSource.uploadAvatar(filePart)
         },
         success = success,
         errorHandler = errorHandler

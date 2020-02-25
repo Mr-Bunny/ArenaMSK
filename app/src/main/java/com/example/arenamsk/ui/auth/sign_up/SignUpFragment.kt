@@ -21,7 +21,6 @@ import com.example.arenamsk.utils.enable
 import com.example.arenamsk.utils.hide
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import uk.co.senab.photoview.PhotoViewAttacher
-import java.io.ByteArrayOutputStream
 
 class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragmentCallback {
 
@@ -134,21 +133,14 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
         )
     }
 
-    private fun getAvatar(): ByteArray? {
+    private fun getAvatar(): Bitmap? {
         //Если не была выбрана никакая фотография
         if (avatar_view.visibility != View.VISIBLE) return null
 
-        val croppedAvatar = ImageUtils.createCircleBitmap(
+        return ImageUtils.createCircleBitmap(
             ImageUtils.getImageFromView(
                 circle_crop_image_view
             )
         )
-
-        val stream = ByteArrayOutputStream()
-        croppedAvatar.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        val byteArray: ByteArray = stream.toByteArray()
-        croppedAvatar.recycle()
-
-        return byteArray
     }
 }
