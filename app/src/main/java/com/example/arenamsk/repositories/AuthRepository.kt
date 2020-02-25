@@ -6,6 +6,7 @@ import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.network.models.auth.LogInUserModel
 import com.example.arenamsk.network.models.auth.SignUpUserModel
 import com.example.arenamsk.network.models.auth.UpdatedTokensModel
+import com.example.arenamsk.network.models.auth.UserImageUrl
 import com.example.arenamsk.network.utils.BaseRepository
 import com.example.arenamsk.room.tables.User
 import com.example.arenamsk.utils.ImageUtils
@@ -39,7 +40,7 @@ class AuthRepository private constructor() : BaseRepository() {
 
     fun uploadAvatar(
         image: Bitmap,
-        success: (response: String) -> Unit,
+        success: (response: UserImageUrl) -> Unit,
         errorHandler: RequestErrorHandler
     ) = makeRequest(
         call = {

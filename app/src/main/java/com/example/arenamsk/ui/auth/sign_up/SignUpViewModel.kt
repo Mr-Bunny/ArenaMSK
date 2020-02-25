@@ -1,12 +1,14 @@
 package com.example.arenamsk.ui.auth.sign_up
 
 import android.graphics.Bitmap
+import android.util.Log
 import android.util.Patterns
 import com.example.arenamsk.datasources.LocalDataSource
 import com.example.arenamsk.network.models.ApiError
 import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.network.models.auth.LogInUserModel
 import com.example.arenamsk.network.models.auth.SignUpUserModel
+import com.example.arenamsk.network.models.auth.UpdatedTokensModel
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.network.utils.AuthUtils.emptyErrorHandler
 import com.example.arenamsk.repositories.AuthRepository
@@ -136,27 +138,10 @@ class SignUpViewModel : BaseAuthViewModel() {
                     }
 
                     //Сохраняем токены и ставим флаг, что авторизированы
-                    with(AuthUtils) {
-                        saveAuthToken(it.accessToken)
-                        saveRefreshToken(it.refreshToken)
-                        setUserIsAuthorized(true)
-                        setUserIsDefault(false)
-                    }
+                    saveAuthTokens(it)
 
                     //Загружаем аватарку на сервер
-                    image?.let {
-                        repository.uploadAvatar(
-                            image = it,
-                            success = {
-                                //Сохраняем ссылку на аватарку в БД
-                                user.imageUrl = it
-                                launch(Dispatchers.IO) {
-                                    LocalDataSource.updateUserData(user)
-                                }
-                            },
-                            errorHandler = emptyErrorHandler
-                        )
-                    }
+                    uploadAvatar(user)
 
                     //Открываем приложение
                     withContext(Dispatchers.Main) {
@@ -165,5 +150,30 @@ class SignUpViewModel : BaseAuthViewModel() {
                 }
             }, errorHandler = errorHandler
         )
+    }
+
+    private fun saveAuthTokens(tokens: UpdatedTokensModel) {
+        with(AuthUtils) {
+            saveAuthToken(tokens.accessToken)
+            saveRefreshToken(tokens.refreshToken)
+            setUserIsAuthorized(true)
+            setUserIsDefault(false)
+        }
+    }
+
+    private fun uploadAvatar(user: User) {
+        image?.let {
+            repository.uploadAvatar(
+                image = it,
+                success = { imageLinkModel ->
+                    //Сохраняем ссылку на аватарку в БД
+                    user.imageUrl = imageLinkModel.imageUrl
+                    launch(Dispatchers.IO) {
+                        LocalDataSource.updateUserData(user)
+                    }
+                },
+                errorHandler = emptyErrorHandler
+            )
+        }
     }
 }
