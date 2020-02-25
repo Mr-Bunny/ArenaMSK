@@ -137,10 +137,13 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
         //Если не была выбрана никакая фотография
         if (avatar_view.visibility != View.VISIBLE) return null
 
-        return ImageUtils.createCircleBitmap(
-            ImageUtils.getImageFromView(
-                circle_crop_image_view
-            )
+        return ImageUtils.getImageFromView(
+            circle_crop_image_view
         )
+//        return ImageUtils.createCircleBitmap(
+//            ImageUtils.getImageFromView(
+//                circle_crop_image_view
+//            )
+//        )
     }
 }
