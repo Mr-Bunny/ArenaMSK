@@ -16,7 +16,7 @@ object NetworkUtils {
 
     fun getErrorMessageFromErrorBody(errorBody: ResponseBody): String = try {
         val jObj = JSONObject(errorBody.string())
-        jObj.getString("Message")
+        jObj.getString("message")
     } catch (ex: Exception) {
         ApiError.DEFAULT_ERROR_MESSAGE
     }

@@ -67,6 +67,10 @@ class LogInFragment : BaseAuthFragment(R.layout.fragment_log_in) {
             LogInStatus.NETWORK_OFFLINE -> {
                 showToast(R.string.network_offline_text)
             }
+
+            LogInStatus.BAD_CREDENTIALS -> {
+                showToast(R.string.bad_credentials_error)
+            }
         }
     }
 

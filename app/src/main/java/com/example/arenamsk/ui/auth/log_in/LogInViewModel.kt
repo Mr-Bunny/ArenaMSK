@@ -9,6 +9,7 @@ import com.example.arenamsk.network.models.auth.UpdatedTokensModel
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.repositories.AuthRepository
 import com.example.arenamsk.ui.base.BaseAuthViewModel
+import com.example.arenamsk.utils.Constants.BAD_CREDENTIALS
 import com.example.arenamsk.utils.Constants.PASSWORD_LENGTH
 import com.example.arenamsk.utils.EnumUtils.LogInStatus
 import com.example.arenamsk.utils.SingleLiveEvent
@@ -28,7 +29,11 @@ class LogInViewModel : BaseAuthViewModel() {
         }
 
         override suspend fun requestFailedError(error: ApiError?) {
-            logInStatus.value = LogInStatus.LOG_IN_FAIL
+            logInStatus.value = if (error?.message == BAD_CREDENTIALS) {
+                LogInStatus.LOG_IN_FAIL
+            } else {
+                LogInStatus.BAD_CREDENTIALS
+            }
         }
 
         override suspend fun requestSuccessButResponseIsNull() {

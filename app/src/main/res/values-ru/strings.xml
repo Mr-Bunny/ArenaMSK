@@ -23,6 +23,7 @@
     <string name="text_hint_min_length_error">МИНИМАЛЬНАЯ ДЛИНА 6 СИМВОЛОВ</string>
     <string name="text_hint_email_exist_error">АККАУНТ С ТАКИМ EMAIL (ТЕЛЕФОНОМ) УЖЕ СУЩЕСТВУЕТ</string>
     <string name="text_add_photo">Добавить фото</string>
+    <string name="bad_credentials_error">Проверьте введенные данные</string>
 
     <!--Bottom navigation titles-->
     <string name="title_menu_map">Карта</string>

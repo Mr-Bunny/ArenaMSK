@@ -24,6 +24,7 @@
     <string name="text_hint_min_length_error">MIN LENGTH IS 6 CHARACTERS</string>
     <string name="text_hint_email_exist_error">EMAIL ALREADY EXISTS</string>
     <string name="text_add_photo">Add photo</string>
+    <string name="bad_credentials_error">Check your input data</string>
 
     <!--Bottom navigation titles-->
     <string name="title_menu_map">Map</string>

@@ -20,6 +20,7 @@ object EnumUtils {
         PASSWORD_EMPTY,
         PASSWORD_MIN_LENGTH_ERROR,
         LOG_IN_FAIL,
+        BAD_CREDENTIALS,
         LOG_IN_SUCCESS,
         NETWORK_OFFLINE
     }
