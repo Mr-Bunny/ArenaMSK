@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -85,14 +86,13 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.card.MaterialCardView
+            <RelativeLayout
                 android:id="@+id/avatar_view"
                 android:layout_width="167dp"
                 android:layout_height="167dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:visibility="invisible"
-                app:cardCornerRadius="8dp"
                 app:layout_constraintBottom_toBottomOf="@id/text_add_photo"
                 app:layout_constraintLeft_toLeftOf="@id/text_add_photo"
                 app:layout_constraintRight_toRightOf="@id/text_add_photo"
@@ -113,17 +113,9 @@
                     android:clickable="false"
                     android:contentDescription="@string/image_description"
                     android:focusable="false"
-                    app:srcCompat="@drawable/ic_cage" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clickable="false"
-                    android:contentDescription="@string/image_description"
-                    android:focusable="false"
                     app:srcCompat="@drawable/ic_grey_foreground" />
 
-            </com.google.android.material.card.MaterialCardView>
+            </RelativeLayout>
 
             <com.example.arenamsk.custom_view.sign_up_edit_text.CustomSignUpNameEditText
                 android:id="@+id/name_edit_text"

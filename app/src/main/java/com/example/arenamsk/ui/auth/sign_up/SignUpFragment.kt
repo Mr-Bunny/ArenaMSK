@@ -62,10 +62,9 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
     override fun galleryRequest(bitmap: Bitmap) {
         text_add_photo.hide()
         avatar_view.enable()
-        circle_crop_image_view.setImageBitmap(bitmap)
-
-        with(PhotoViewAttacher(circle_crop_image_view)) {
-            update()
+        with(circle_crop_image_view) {
+            setImageBitmap(bitmap)
+            PhotoViewAttacher(this).update()
         }
     }
 
@@ -97,6 +96,10 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
 
             SignUpStatus.SIGN_UP_FAIL -> {
                 showToast(getString(R.string.text_hint_sign_up_fail))
+            }
+
+            SignUpStatus.NETWORK_OFFLINE -> {
+                showToast(R.string.network_offline_text)
             }
 
             SignUpStatus.SIGN_UP_SUCCESS -> {
@@ -132,12 +135,10 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
     }
 
     private fun getAvatar(): Bitmap? {
-        //Если не была выбрана никакая фотография
-        if (avatar_view.visibility != View.VISIBLE) return null
-
-        return ImageUtils.getImageFromView(
-            circle_crop_image_view
-        )
+        //Если не была выбрана никакая фотография возвращаем null, иначе фотку
+        with(circle_crop_image_view) {
+            return if (visibility != View.VISIBLE) null else ImageUtils.getImageFromView(this)
+        }
 //        return ImageUtils.createCircleBitmap(
 //            ImageUtils.getImageFromView(
 //                circle_crop_image_view
