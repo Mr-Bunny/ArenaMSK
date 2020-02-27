@@ -35,8 +35,6 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
 
         text_add_photo.setOnClickListener { getPhotoFromGallery() }
 
-        text_without_registration.setOnClickListener { signUpViewModel.skipAuth() }
-
         btn_sign_up.setOnClickListener {
             name_edit_text.clearFocus()
             email_edit_text.clearFocus()
