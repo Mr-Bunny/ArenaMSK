@@ -7,4 +7,5 @@ object Constants {
 
     /** Auth errors */
     const val BAD_CREDENTIALS = "Unauthorized: Bad credentials"
+    const val EMAIL_ALREADY_EXISTS = "Email is already in use!"
 }

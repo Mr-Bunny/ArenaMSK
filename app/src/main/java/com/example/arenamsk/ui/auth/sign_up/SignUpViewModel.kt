@@ -14,6 +14,7 @@ import com.example.arenamsk.network.utils.AuthUtils.emptyErrorHandler
 import com.example.arenamsk.repositories.AuthRepository
 import com.example.arenamsk.room.tables.User
 import com.example.arenamsk.ui.base.BaseAuthViewModel
+import com.example.arenamsk.utils.Constants.EMAIL_ALREADY_EXISTS
 import com.example.arenamsk.utils.Constants.PASSWORD_LENGTH
 import com.example.arenamsk.utils.EnumUtils.SignUpStatus
 import com.example.arenamsk.utils.SingleLiveEvent
@@ -37,7 +38,11 @@ class SignUpViewModel : BaseAuthViewModel() {
         }
 
         override suspend fun requestFailedError(error: ApiError?) {
-            signUpStatus.value = SignUpStatus.SIGN_UP_FAIL
+            signUpStatus.value = if (error?.message == EMAIL_ALREADY_EXISTS) {
+                SignUpStatus.EMAIL_EXIST
+            } else {
+                SignUpStatus.SIGN_UP_FAIL
+            }
         }
 
         override suspend fun requestSuccessButResponseIsNull() {

@@ -30,9 +30,9 @@ class LogInViewModel : BaseAuthViewModel() {
 
         override suspend fun requestFailedError(error: ApiError?) {
             logInStatus.value = if (error?.message == BAD_CREDENTIALS) {
-                LogInStatus.LOG_IN_FAIL
-            } else {
                 LogInStatus.BAD_CREDENTIALS
+            } else {
+                LogInStatus.LOG_IN_FAIL
             }
         }
 

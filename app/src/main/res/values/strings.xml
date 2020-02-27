@@ -24,7 +24,7 @@
     <string name="text_hint_empty_field_error">FIELD CAN NOT BE EMPTY</string>
     <string name="text_hint_email_incorrect_error">PLEASE ENTER A VALID EMAIL ADDRESS OR PHONE</string>
     <string name="text_hint_min_length_error">MIN LENGTH IS 6 CHARACTERS</string>
-    <string name="text_hint_email_exist_error">EMAIL ALREADY EXISTS</string>
+    <string name="text_hint_email_exist_error">Account with that email (phone number) already exists</string>
     <string name="text_add_photo">Add photo</string>
     <string name="bad_credentials_error">Check your input data</string>
 

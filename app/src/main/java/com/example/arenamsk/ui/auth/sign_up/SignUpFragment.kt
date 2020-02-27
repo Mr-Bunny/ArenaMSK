@@ -74,31 +74,31 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
     private fun handleSignUpStatus(signUpStatus: SignUpStatus) {
         when (signUpStatus) {
             SignUpStatus.USERNAME_EMPTY -> {
-                name_edit_text.setError(getString(com.example.arenamsk.R.string.text_hint_empty_field_error))
+                name_edit_text.setError(getString(R.string.text_hint_empty_field_error))
             }
 
             SignUpStatus.EMAIL_EMPTY -> {
-                email_edit_text.setError(getString(com.example.arenamsk.R.string.text_hint_empty_field_error))
+                email_edit_text.setError(getString(R.string.text_hint_empty_field_error))
             }
 
             SignUpStatus.EMAIL_INCORRECT -> {
-                email_edit_text.setError(getString(com.example.arenamsk.R.string.text_hint_email_incorrect_error))
+                email_edit_text.setError(getString(R.string.text_hint_email_incorrect_error))
             }
 
             SignUpStatus.PASSWORD_EMPTY -> {
-                password_edit_text.setError(getString(com.example.arenamsk.R.string.text_hint_empty_field_error))
+                password_edit_text.setError(getString(R.string.text_hint_empty_field_error))
             }
 
             SignUpStatus.PASSWORD_MIN_LENGTH_ERROR -> {
-                password_edit_text.setError(getString(com.example.arenamsk.R.string.text_hint_min_length_error))
+                password_edit_text.setError(getString(R.string.text_hint_min_length_error))
             }
 
             SignUpStatus.EMAIL_EXIST -> {
-                email_edit_text.setError(getString(com.example.arenamsk.R.string.text_hint_email_exist_error))
+                showToast(getString(R.string.text_hint_email_exist_error))
             }
 
             SignUpStatus.SIGN_UP_FAIL -> {
-                showToast(getString(com.example.arenamsk.R.string.text_hint_sign_up_fail))
+                showToast(getString(R.string.text_hint_sign_up_fail))
             }
 
             SignUpStatus.SIGN_UP_SUCCESS -> {
