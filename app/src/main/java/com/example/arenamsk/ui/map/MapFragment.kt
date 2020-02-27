@@ -6,8 +6,13 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.places.PlacesViewModel
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 
-class MapFragment : BaseFragment(R.layout.fragment_map) {
+class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
+
+    private var mMap: GoogleMap? = null
 
     private val mapViewModel by lazy {
         ViewModelProviders.of(this).get(MapViewModel::class.java)
@@ -20,5 +25,12 @@ class MapFragment : BaseFragment(R.layout.fragment_map) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap?) {
+        mMap = googleMap
     }
 }

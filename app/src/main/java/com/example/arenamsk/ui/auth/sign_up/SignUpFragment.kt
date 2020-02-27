@@ -110,7 +110,7 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
     private fun getPhotoFromGallery() {
         PermissionUtils.checkForPermission(
             activity!!,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
             ::openGallery,
             ::requestExternalStoragePermission
         )
@@ -128,7 +128,7 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
     private fun requestExternalStoragePermission() {
         PermissionUtils.requestForPermission(
             activity!!,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
             GALLERY_PERMISSION_REQUEST_CODE
         )
     }

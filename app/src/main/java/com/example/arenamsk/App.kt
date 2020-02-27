@@ -1,9 +1,9 @@
 package com.example.arenamsk
 
-import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.multidex.MultiDexApplication
 
-class App : Application() {
+class App : MultiDexApplication() {
 
     companion object {
         private lateinit var instance: App

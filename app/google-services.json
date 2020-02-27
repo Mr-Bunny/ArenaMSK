@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "862525657495",
+    "firebase_url": "https://arenamsk.firebaseio.com",
+    "project_id": "arenamsk",
+    "storage_bucket": "arenamsk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862525657495:android:5309760868e4df9655b4d2",
+        "android_client_info": {
+          "package_name": "com.example.arenamsk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862525657495-v2svgptobovubm7l8nvh07d9fsls9qph.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.arenamsk",
+            "certificate_hash": "a7f3d03c4f005ea2cc299ed7b3c690445f1c6ade"
+          }
+        },
+        {
+          "client_id": "862525657495-ci5s92re0eikpg3pdvmkol7krlpkdtm8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMSJaG5NWoCJzbWtcqs9WdYX2IkgL1Svg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "862525657495-ci5s92re0eikpg3pdvmkol7krlpkdtm8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
