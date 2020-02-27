@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import com.example.arenamsk.R
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.custom_sign_up_email_edit_text.view.*
 
 class CustomSignUpEmailEditText:
@@ -29,7 +30,7 @@ class CustomSignUpEmailEditText:
     }
 
     override fun getText(): String {
-        with(custom_edit_text) {
+        with(custom_sign_up_email_edit_text) {
             return if (text.toString().startsWith("+")) {
                 text.toString().substring(3)
             } else {
@@ -37,4 +38,6 @@ class CustomSignUpEmailEditText:
             }
         }
     }
+
+    override fun getEditText(): TextInputEditText = custom_sign_up_email_edit_text
 }

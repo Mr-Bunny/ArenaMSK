@@ -3,6 +3,8 @@ package com.example.arenamsk.custom_view.sign_up_edit_text
 import android.content.Context
 import android.util.AttributeSet
 import com.example.arenamsk.R
+import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.custom_sign_up_password_edit_text.view.*
 
 class CustomSignUpPasswordEditText:
     AbstractSignUpCustomEditText {
@@ -24,4 +26,6 @@ class CustomSignUpPasswordEditText:
 
         super.init()
     }
+
+    override fun getEditText(): TextInputEditText = custom_sign_up_password_edit_text
 }

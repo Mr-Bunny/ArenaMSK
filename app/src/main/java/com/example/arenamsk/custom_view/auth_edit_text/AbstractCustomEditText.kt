@@ -3,13 +3,15 @@ package com.example.arenamsk.custom_view.auth_edit_text
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import com.example.arenamsk.R
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.custom_email_edit_text.view.*
 
 abstract class AbstractCustomEditText : LinearLayout {
 
-    companion object {
+    protected companion object {
         enum class State {
             EMPTY,
             FILLED,
@@ -18,12 +20,12 @@ abstract class AbstractCustomEditText : LinearLayout {
     }
 
     //Сохраняем сюда текст подсказки
-    private var hint: String = ""
+    protected var hint: String = ""
 
     //Сохраняем сюда текст ошибки
-    private var errorHint: String = ""
+    protected var errorHint: String = ""
 
-    var currentState: State =
+    protected var currentState: State =
         State.EMPTY
         set(value) {
             field = value
@@ -41,13 +43,15 @@ abstract class AbstractCustomEditText : LinearLayout {
         defStyle
     )
 
+    abstract fun getEditText(): TextInputEditText
+
     open fun init() {
         hint = custom_text_layout.hint.toString()
 
-        custom_edit_text.setOnFocusChangeListener { _, hasFocus ->
+        getEditText().setOnFocusChangeListener { _, hasFocus ->
             currentState = if (hasFocus) {
                 State.FILLED
-            } else if (!hasFocus && custom_edit_text.text.toString().isEmpty()) {
+            } else if (!hasFocus && getEditText().text.toString().isEmpty()) {
                 State.EMPTY
             } else {
                 State.FILLED
@@ -55,18 +59,12 @@ abstract class AbstractCustomEditText : LinearLayout {
         }
     }
 
-    open fun getText() = custom_edit_text.text.toString()
+    open fun getText() = getEditText().text.toString()
 
-    fun setError(errorMsg: String) {
-        this.errorHint = errorMsg
-        currentState =
-            State.ERROR
-    }
-
-    private fun updateView() {
+    protected open fun updateView() {
         when (currentState) {
             State.EMPTY -> {
-                custom_edit_text.background =
+                getEditText().background =
                     resources.getDrawable(R.drawable.edit_text_empty_background)
                 custom_text_layout.hint = hint
                 custom_text_layout.defaultHintTextColor = ColorStateList.valueOf(
@@ -79,7 +77,7 @@ abstract class AbstractCustomEditText : LinearLayout {
             }
 
             State.FILLED -> {
-                custom_edit_text.background =
+                getEditText().background =
                     resources.getDrawable(R.drawable.edit_text_filled_background)
                 custom_text_layout.hint = hint
                 custom_text_layout.defaultHintTextColor = ColorStateList.valueOf(
@@ -92,12 +90,18 @@ abstract class AbstractCustomEditText : LinearLayout {
             }
 
             State.ERROR -> {
-                custom_edit_text.background =
+                getEditText().background =
                     resources.getDrawable(R.drawable.edit_text_error_background)
                 custom_text_layout.hint = errorHint
                 custom_text_layout.defaultHintTextColor =
                     ColorStateList.valueOf(resources.getColor(R.color.edit_text_hint_error))
             }
         }
+    }
+
+    fun setError(errorMsg: String) {
+        this.errorHint = errorMsg
+        currentState =
+            State.ERROR
     }
 }
