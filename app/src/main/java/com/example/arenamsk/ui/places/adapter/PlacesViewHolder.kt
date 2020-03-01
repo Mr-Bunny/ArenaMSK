@@ -12,7 +12,9 @@ import kotlinx.android.synthetic.main.item_place_card.view.*
 
 class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(place: PlaceModel, itemClickCallback: (meetUpId: PlaceModel) -> Unit) {
+    fun bind(place: PlaceModel,
+             itemClickCallback: (meetUpId: PlaceModel) -> Unit,
+             itemBookingClickCallback: (place : PlaceModel) -> Unit) {
         with(itemView) {
             place_item_title.text = place.title
             place_item_description.text = place.description
@@ -42,6 +44,8 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             )
 
             setOnClickListener { itemClickCallback.invoke(place) }
+
+            place_item_btn_calendar.setOnClickListener { itemBookingClickCallback.invoke(place) }
 
             when {
                 place.imagesUrl.isEmpty() -> {

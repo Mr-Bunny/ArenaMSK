@@ -9,6 +9,7 @@ import com.example.arenamsk.R
 import com.example.arenamsk.custom_view.TagView
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
+import com.example.arenamsk.ui.base.PlaceDialogFragment
 import com.example.arenamsk.ui.place_detail.PlaceDetailFragment
 import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
 import com.example.arenamsk.ui.places.adapter.PlacesAdapter
@@ -16,14 +17,14 @@ import kotlinx.android.synthetic.main.fragment_places.*
 
 class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallback {
 
-    private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback) }
+    private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback, ::itemBookingClickCallback) }
 
     private val placesViewModel by lazy {
         ViewModelProviders.of(this).get(PlacesViewModel::class.java)
     }
 
     private var placeFilterFragment: PlaceFilterFragment? = null
-    private var placeDetailFragment: PlaceDetailFragment? = null
+    private var placeDetailFragment: PlaceDialogFragment? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -67,10 +68,18 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
         }
     }
 
+    private fun itemBookingClickCallback(place: PlaceModel) {
+        openPlaceDetail(place, true)
+    }
+
     private fun itemClickCallback(place: PlaceModel) {
+        openPlaceDetail(place)
+    }
+
+    private fun openPlaceDetail(place: PlaceModel, openBooking: Boolean = false) {
         placeDetailFragment?.dismiss()
-        placeDetailFragment = PlaceDetailFragment.getInstance(place)
-        placeDetailFragment?.show(activity!!.supportFragmentManager, PlaceDetailFragment.PLACE_DETAIL_TAG)
+        placeDetailFragment = PlaceDialogFragment.getInstance(place, openBooking)
+        placeDetailFragment?.show(activity!!.supportFragmentManager, PlaceDialogFragment.PLACE_DIALOG_FRAGMENT_TAG)
     }
 
     private fun openFilterFragment() {

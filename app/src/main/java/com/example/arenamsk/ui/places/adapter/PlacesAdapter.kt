@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
 
-class PlacesAdapter(private val itemClickCallback: (meetUp : PlaceModel) -> Unit) : RecyclerView.Adapter<PlacesViewHolder>() {
+class PlacesAdapter(private val itemClickCallback: (place : PlaceModel) -> Unit,
+                    private val itemBookingClickCallback: (place : PlaceModel) -> Unit) : RecyclerView.Adapter<PlacesViewHolder>() {
 
     private val places: MutableList<PlaceModel> = mutableListOf()
 
@@ -17,7 +18,7 @@ class PlacesAdapter(private val itemClickCallback: (meetUp : PlaceModel) -> Unit
     }
 
     override fun onBindViewHolder(holderScreen: PlacesViewHolder, position: Int) {
-        holderScreen.bind(places[position], itemClickCallback)
+        holderScreen.bind(places[position], itemClickCallback, itemBookingClickCallback)
     }
 
     override fun getItemCount(): Int = places.size

@@ -8,9 +8,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.arenamsk.R
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.booking.adapter.PlaceBookingAdapter
+import com.example.arenamsk.utils.ActionEvent.OpenCalendar
 import kotlinx.android.synthetic.main.fragment_place_booking.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking) {
+
+    companion object {
+        const val PLACE_BOOKING_TAG = "place_booking_tag"
+        const val PLACE_BOOKING_ARG_TAG = "place_booking_arg_tag"
+    }
 
     private val placeBookingAdapter by lazy { PlaceBookingAdapter(::itemClickCallback) }
 
@@ -28,6 +36,22 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking) {
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        EventBus.getDefault().unregister(this)
+
+        super.onStop()
+    }
+
+    @Subscribe
+    fun openCalendar(event: OpenCalendar) {
+        showToast("TEST2")
+    }
 
     private fun initRecycler() {
         with(recycler_place_booking) {
