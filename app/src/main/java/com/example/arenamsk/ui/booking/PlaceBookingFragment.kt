@@ -50,7 +50,6 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking) {
 
     @Subscribe
     fun openCalendar(event: OpenCalendar) {
-        showToast("TEST2")
     }
 
     private fun initRecycler() {
