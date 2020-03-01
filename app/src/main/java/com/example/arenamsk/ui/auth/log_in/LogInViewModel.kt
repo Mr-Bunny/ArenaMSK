@@ -19,10 +19,12 @@ import kotlinx.coroutines.withContext
 
 class LogInViewModel : BaseAuthViewModel() {
 
+    /** Статус авторизации */
     private val logInStatus = SingleLiveEvent<LogInStatus>()
 
     private val repository = AuthRepository.getInstance()
 
+    /** Обработчик ошибок запроса */
     private val errorHandler = object : RequestErrorHandler {
         override suspend fun networkUnavailableError() {
             logInStatus.value = LogInStatus.NETWORK_OFFLINE
@@ -47,6 +49,7 @@ class LogInViewModel : BaseAuthViewModel() {
 
     fun getLogInStatus() = logInStatus
 
+    /** Пропускаем авторизацию */
     override fun skipAuth() {
         //Открываем приложение
         logInStatus.value = LogInStatus.LOG_IN_SUCCESS
@@ -54,7 +57,7 @@ class LogInViewModel : BaseAuthViewModel() {
         super.skipAuth()
     }
 
-    //Try to make registration request
+    /** Авторизация */
     fun startAuth(email: String, password: String) {
         if (checkForError(email, password)) return
 
@@ -74,7 +77,7 @@ class LogInViewModel : BaseAuthViewModel() {
         }
     }
 
-    //returns true if something is empty or incorrect and false if all all right
+    /** Проверяем введенные данные на корректность */
     private fun checkForError(email: String, password: String): Boolean {
         when {
             email.isEmpty() -> {
@@ -103,17 +106,21 @@ class LogInViewModel : BaseAuthViewModel() {
         }
     }
 
+    /** Проверяем корректностьномера телефона
+     * Он должен состоять только из цифр и иметь 11 символов
+     * Пример корректного ноемра 70000000000 */
     private fun phoneIsCorrect(phone: String): Boolean {
         return phone.length == 11 && (phone.toIntOrNull() == null)
     }
 
-    //Авторизация успешна, мы получили токены
+    /** Авторизация успешна, мы получили токены */
     private fun logInSuccess(response: UpdatedTokensModel) {
         with(AuthUtils) {
             saveAuthToken(response.accessToken)
             saveRefreshToken(response.refreshToken)
         }
 
+        //Подгружаем информацию о пользователе
         repository.getAccountInfo(
             success = {
                 launch(Dispatchers.IO) {

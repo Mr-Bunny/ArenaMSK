@@ -7,7 +7,7 @@ data class SignUpUserModel(
     var firstName: String = "",
 
     @SerializedName("email")
-    var email: String = "",
+    var email: String? = "",
 
     @SerializedName("number")
     var number: String = "",

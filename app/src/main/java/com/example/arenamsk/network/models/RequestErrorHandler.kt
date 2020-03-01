@@ -1,19 +1,19 @@
 package com.example.arenamsk.network.models
 
 interface RequestErrorHandler {
-    /** If network is unavailable. */
+    /** Если нет подключения к интернету */
     suspend fun networkUnavailableError()
 
     /**
-     * Request failed.
+     * Запрос не выполнился
      *
-     * @param error Instance of ApiError class if exists.
+     * @param error Экземпляр ошибки с подробными сведениями
      */
     suspend fun requestFailedError(error: ApiError? = null)
 
-    /** Request timeout exception. */
+    /** Таймаут */
     suspend fun timeoutException()
 
-    /** Request was success but response was null. */
+    /** Запрос выполнился, но вернул null */
     suspend fun requestSuccessButResponseIsNull()
 }

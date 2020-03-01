@@ -24,6 +24,7 @@ import kotlinx.coroutines.withContext
 
 class SignUpViewModel : BaseAuthViewModel() {
 
+    /** Статус регистрации */
     private val signUpStatus = SingleLiveEvent<SignUpStatus>()
 
     private val repository = AuthRepository.getInstance()
@@ -32,6 +33,7 @@ class SignUpViewModel : BaseAuthViewModel() {
 
     private var image: Bitmap? = null
 
+    /** Обработчик ошибок запроса */
     private val errorHandler = object : RequestErrorHandler {
         override suspend fun networkUnavailableError() {
             signUpStatus.value = SignUpStatus.NETWORK_OFFLINE
@@ -56,13 +58,7 @@ class SignUpViewModel : BaseAuthViewModel() {
 
     fun getSignUpStatus() = signUpStatus
 
-    override fun skipAuth() {
-        //Открываем приложение
-        signUpStatus.value = SignUpStatus.SIGN_UP_SUCCESS
-
-        super.skipAuth()
-    }
-
+    /** Регистрация */
     fun startSignUp(name: String, email: String, password: String, image: Bitmap?) {
         if (checkForError(name, email, password)) return
 
@@ -70,7 +66,7 @@ class SignUpViewModel : BaseAuthViewModel() {
 
         //true если это телефон, false если email
         user = if (phoneIsCorrect(email)) {
-            SignUpUserModel(firstName = name, number = email, password = password)
+            SignUpUserModel(firstName = name, email = null, number = email, password = password)
         } else {
             SignUpUserModel(firstName = name, email = email, password = password)
         }.also {
@@ -82,6 +78,7 @@ class SignUpViewModel : BaseAuthViewModel() {
         }
     }
 
+    /** Проверяем на ошибки введеные пользователем значения */
     private fun checkForError(name: String, email: String, password: String): Boolean {
         when {
             name.isEmpty() -> {
@@ -115,14 +112,17 @@ class SignUpViewModel : BaseAuthViewModel() {
         }
     }
 
+    /** Проверяем корректностьномера телефона
+     * Он должен состоять только из цифр и иметь 11 символов
+     * Пример корректного ноемра 70000000000 */
     private fun phoneIsCorrect(phone: String): Boolean {
         return phone.length == 11 && (phone.toIntOrNull() == null)
     }
 
-    //Регистрация успешна, мы получили userId
+    /** Регистрация успешна, мы получили userId */
     private fun signUpSuccess(response: User) {
         val logInUserModel = LogInUserModel(
-            email = user.email,
+            email = user.email ?: "",
             number = user.number,
             password = user.password
         )
@@ -136,7 +136,7 @@ class SignUpViewModel : BaseAuthViewModel() {
                     val user = User(
                         userId = response.userId,
                         firstName = user.firstName,
-                        email = user.email,
+                        email = user.email ?: "",
                         number = user.number
                     ).also {
                         LocalDataSource.saveUserData(it)
@@ -157,6 +157,7 @@ class SignUpViewModel : BaseAuthViewModel() {
         )
     }
 
+    /** Сохраняем полученные токены в SharedPreferences */
     private fun saveAuthTokens(tokens: UpdatedTokensModel) {
         with(AuthUtils) {
             saveAuthToken(tokens.accessToken)
@@ -166,7 +167,10 @@ class SignUpViewModel : BaseAuthViewModel() {
         }
     }
 
+
+    /** Запрос на загрузку аватарки пользователя */
     private fun uploadAvatar(user: User) {
+        //Выполняем запрос только, если пользователь выбрал картинку
         image?.let {
             repository.uploadAvatar(
                 image = it,

@@ -139,6 +139,7 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
         with(circle_crop_image_view) {
             return if (visibility != View.VISIBLE) null else ImageUtils.getImageFromView(this)
         }
+        //Ниже код, если нужно получить обрезанный по кругу bitmap
 //        return ImageUtils.createCircleBitmap(
 //            ImageUtils.getImageFromView(
 //                circle_crop_image_view

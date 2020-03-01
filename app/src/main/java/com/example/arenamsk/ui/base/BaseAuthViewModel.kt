@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 
 abstract class BaseAuthViewModel: BaseViewModel() {
 
+    /** Пропускаем авторизацию */
     open fun skipAuth() {
         launch(Dispatchers.IO) {
             //Сохраняем в БД данные пользователя
