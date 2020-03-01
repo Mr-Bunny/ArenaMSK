@@ -63,7 +63,7 @@ class PlacesViewModel : BaseViewModel() {
             )
         ),
         PlaceModel(
-            title = "Клуб любителей пощикотать очко",
+            title = "Клуб любителей",
             isFavourite = true,
             description = "2 крытых корта премиум класса",
             workTime = "6.00–22.00",
@@ -71,7 +71,7 @@ class PlacesViewModel : BaseViewModel() {
             distance = 0.5f,
             id = 1,
             rating = 5.0f,
-            feedbackNumber = 1488,
+            feedbackNumber = 188,
             feedbackList = listOf(
                 FeedbackModel(
                     "Валентина Валентиновна",
