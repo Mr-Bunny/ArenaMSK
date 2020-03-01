@@ -1,5 +1,6 @@
 package com.example.arenamsk.ui.base
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,8 @@ import com.example.arenamsk.ui.booking.PlaceBookingFragment
 import com.example.arenamsk.ui.booking.PlaceBookingFragment.Companion.PLACE_BOOKING_ARG_TAG
 import com.example.arenamsk.ui.place_detail.PlaceDetailFragment
 import com.example.arenamsk.ui.place_detail.PlaceDetailFragment.Companion.PLACE_DETAIL_ARG_TAG
-import com.example.arenamsk.utils.ActionEvent.*
+import com.example.arenamsk.utils.ActionEvent.OpenBookingEvent
+import com.example.arenamsk.utils.ActionEvent.OpenCalendar
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import com.google.android.material.appbar.AppBarLayout
@@ -53,6 +55,15 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
         super.onCreate(savedInstanceState)
 
         setStyle(STYLE_NORMAL, R.style.FullScreenDialogStyle)
+    }
+
+    //Переопределяем onBackPressed, он должен вызывать тот же метод, что и слушатель кнопки назад в тулбаре
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return object : Dialog(activity!!, theme) {
+            override fun onBackPressed() {
+                backBtnPressed()
+            }
+        }
     }
 
     override fun onCreateView(
