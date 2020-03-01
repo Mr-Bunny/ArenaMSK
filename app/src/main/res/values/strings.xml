@@ -83,4 +83,7 @@
     <string name="text_no_review_yet_send_first">No reviews yet\n<u>Send first feedback</u></string>
     <string name="text_send_feedback_button">SEND FEEDBACK</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
