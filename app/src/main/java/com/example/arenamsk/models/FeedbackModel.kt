@@ -6,13 +6,13 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class FeedbackModel(
-    @SerializedName("author_name")
+    @SerializedName("authorName")
     val authorName: String = "",
 
-    @SerializedName("date")
+    @SerializedName("reviewDate")
     val date: String = "",
 
-    @SerializedName("is_recommendation")
+    @SerializedName("isRecommended")
     val isRecommendation: Boolean = false,
 
     @SerializedName("rating")

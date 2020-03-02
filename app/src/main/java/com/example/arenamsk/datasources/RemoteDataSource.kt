@@ -25,5 +25,7 @@ object RemoteDataSource {
 
     suspend fun getAccountInfo() = service.getUserAccountInfo()
 
-    suspend fun testClosed() = service.testClosed()
+    /** Places */
+    suspend fun getPlaces() = service.getPLaces()
+
 }

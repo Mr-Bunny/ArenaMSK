@@ -6,22 +6,25 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class PlaceModel(
-    @SerializedName("title")
+    @SerializedName("name")
     val title: String = "",
 
-    @SerializedName("is_favourite")
+    @SerializedName("is_favourite") //not
     val isFavourite: Boolean = false,
 
-    @SerializedName("in_history")
+    @SerializedName("in_history") //not
     val inHistory: Boolean = false,
 
     @SerializedName("description")
     val description: String = "",
 
-    @SerializedName("work_time")
-    val workTime: String = "",
+    @SerializedName("workDayStartAt")
+    val workDayStartAt: String = "",
 
-    @SerializedName("address")
+    @SerializedName("workDayEndAt")
+    val workDayEndAt: String = "",
+
+    @SerializedName("address") //not
     val address: String = "",
 
     @SerializedName("distance")
@@ -30,40 +33,40 @@ data class PlaceModel(
     @SerializedName("id")
     val id: Int = -1,
 
-    @SerializedName("rating")
+    @SerializedName("rating") //not
     val rating: Float = 0.0f,
 
-    @SerializedName("feedback_number")
+    @SerializedName("feedback_number") //not
     val feedbackNumber: Int = 0,
 
-    @SerializedName("imageUrl")
+    @SerializedName("images")
     val imagesUrl: List<String> = emptyList(),
 
     @SerializedName("phone_numbers")
-    val phoneNumbersList: List<String> = emptyList(),
+    val phoneNumbersList: List<String> = emptyList(), //edit
 
-    @SerializedName("total_area")
+    @SerializedName("area")
     val totalArea: Int = 0,
 
-    @SerializedName("number_of_places")
+    @SerializedName("numberOfPlace")
     val numberOfPlaces: Int = 0,
 
-    @SerializedName("has_parking")
+    @SerializedName("hasParking")
     val hasParking: Boolean = false,
 
-    @SerializedName("has_inventory")
+    @SerializedName("hasInventory")
     val hasInventory: Boolean = false,
 
-    @SerializedName("open_field")
+    @SerializedName("openField")
     val openField: Boolean = false,
 
-    @SerializedName("has_lockers")
+    @SerializedName("hasLockers")
     val hasLockers: Boolean = false,
 
-    @SerializedName("has_baths")
+    @SerializedName("hasBaths")
     val hasBaths: Boolean = false,
 
-    @SerializedName("feedback_list")
+    @SerializedName("reviews")
     val feedbackList: List<FeedbackModel> = emptyList()
 
 ) : Parcelable

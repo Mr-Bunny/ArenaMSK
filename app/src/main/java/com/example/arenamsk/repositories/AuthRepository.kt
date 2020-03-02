@@ -77,13 +77,4 @@ class AuthRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
-    fun test(
-        success: (response: JsonObject) -> Unit,
-        errorHandler: RequestErrorHandler
-    ) = makeRequest(
-        call = { RemoteDataSource.testClosed() },
-        success = success,
-        errorHandler = errorHandler
-    )
-
 }

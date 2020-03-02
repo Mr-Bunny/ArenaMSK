@@ -1,5 +1,6 @@
 package com.example.arenamsk.network.api
 
+import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.auth.*
 import com.example.arenamsk.room.tables.User
 import com.google.gson.JsonObject
@@ -24,7 +25,7 @@ interface ApiService {
     @GET("api/v1/account/")
     suspend fun getUserAccountInfo(): Response<User>
 
-    @GET("closed")
-    suspend fun testClosed(): Response<JsonObject>
+    @GET("api/v1/place/")
+    suspend fun getPLaces(): Response<List<PlaceModel>>
 
 }

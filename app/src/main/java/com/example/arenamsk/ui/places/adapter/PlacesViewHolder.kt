@@ -26,7 +26,7 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 place.feedbackNumber.toString()
             )
 
-            place_item_work_time_text.text = place.workTime
+            //place_item_work_time_text.text = place.workTime
 
             place_item_address_text.text = place.address
 
