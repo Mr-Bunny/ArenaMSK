@@ -71,6 +71,9 @@
     <string name="text_no_review_yet">Отзывов ещё нет</string>
     <string name="text_no_review_yet_send_first">Отзывов ещё нет\n<u>Оставить отзыв первым</u></string>
     <string name="text_send_feedback_button">ОТПРАВИТЬ ОТЗЫВ</string>
+    <string name="booking_section_time">Время</string>
+    <string name="booking_section_price">Стоимость, RUB</string>
+    <string name="booking_section_status">Статус</string>
 
     <!--Place detail-->
     <string-array name="place_detail_view_pager_titles">

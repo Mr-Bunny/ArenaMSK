@@ -29,4 +29,6 @@
     <color name="place_detail_toolbar_foreground">#4D021004</color>
 
     <color name="place_info_text">#994F4F4F</color>
+    <color name="booking_date_title">#E64F4F4F</color>
+    <color name="booking_section_title">#CC828282</color>
 </resources>
