@@ -135,21 +135,8 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
 
     //Определяем в каком диапозоне число
     private fun getValueFromSeekBar(value: Int): Int {
-        var startRange = 0f
-        var endRange = 999f
-        var result = -1f
-
-        do {
-            if (value in startRange..endRange) {
-                result = startRange
-                break
-            } else {
-                startRange += 1000f
-                endRange += 1000f
-            }
-        } while (result == -1f)
-
-        return result.toInt()
+        val steps = value / 1000
+        return if (steps < 1) 0 else steps * 1000
     }
 
     //TODO при изменении фильтра, мы меняем значения в placeFilterModel
