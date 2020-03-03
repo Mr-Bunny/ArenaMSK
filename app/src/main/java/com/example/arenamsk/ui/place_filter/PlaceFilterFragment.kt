@@ -1,6 +1,8 @@
 package com.example.arenamsk.ui.place_filter
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +13,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.ui.places.PlacesViewModel
+import com.jaygoo.widget.OnRangeChangedListener
+import com.jaygoo.widget.RangeSeekBar
 import kotlinx.android.synthetic.main.fragment_filter.*
+import kotlinx.android.synthetic.main.fragment_filter_content.*
 
-class PlaceFilterFragment private constructor(): DialogFragment(), LifecycleOwner {
+class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwner {
 
     companion object {
         const val FILTER_MODEL_TAG = "filter_tag"
@@ -27,7 +32,9 @@ class PlaceFilterFragment private constructor(): DialogFragment(), LifecycleOwne
         ViewModelProviders.of(this).get(PlacesViewModel::class.java)
     }
 
-    private val placeFilterModel by lazy { placesViewModel.getFilterLiveData().value ?: PlaceFilterModel() }
+    private val placeFilterModel by lazy {
+        placesViewModel.getFilterLiveData().value ?: PlaceFilterModel()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +68,88 @@ class PlaceFilterFragment private constructor(): DialogFragment(), LifecycleOwne
 
     //TODO на основе placeFilterModel выставляем UI
     private fun updateUI() {
+//        filter_start_price_edit_text.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(p0: Editable?) {
+//            }
+//
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//            }
+//
+//            override fun onTextChanged(price: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                val priceFrom = if (price.isNullOrEmpty()) 0.0f else price.toString().toFloat()
+//
+//                filter_price_range_bar.setProgress(
+//                    priceFrom,
+//                    filter_end_price_edit_text.text.toString().toFloat()
+//                )
+//            }
+//        })
+//
+//        filter_end_price_edit_text.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(p0: Editable?) {
+//            }
+//
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//            }
+//
+//            override fun onTextChanged(price: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                val priceTo = if (price.isNullOrEmpty()) 0.0f else price.toString().toFloat()
+//
+//                filter_price_range_bar.setProgress(
+//                    filter_start_price_edit_text.text.toString().toFloat(),
+//                    priceTo
+//                )
+//            }
+//        })
 
+        filter_price_range_bar.setProgress(0f, 100000f)
+
+        filter_price_range_bar.setOnRangeChangedListener(object : OnRangeChangedListener {
+            override fun onRangeChanged(
+                view: RangeSeekBar?,
+                leftValue: Float,
+                rightValue: Float,
+                isFromUser: Boolean
+            ) {
+                //Если число делится на тысячу без остатка, то выставляем его,
+                //иначе считаем ближайшее число, которое делится на 1000 без остатка
+                filter_start_price_edit_text.setText(
+                    if (leftValue.toInt() % 1000f != 0f) getValueFromSeekBar(
+                        leftValue.toInt()
+                    ).toString() else leftValue.toInt().toString()
+                )
+                filter_end_price_edit_text.setText(
+                    if (rightValue.toInt() % 1000f != 0f) getValueFromSeekBar(
+                        rightValue.toInt()
+                    ).toString() else rightValue.toInt().toString()
+                )
+            }
+
+            override fun onStartTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {
+            }
+
+            override fun onStopTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {
+            }
+        })
+    }
+
+    //Определяем в каком диапозоне число
+    private fun getValueFromSeekBar(value: Int): Int {
+        var startRange = 0f
+        var endRange = 999f
+        var result = -1f
+
+        do {
+            if (value in startRange..endRange) {
+                result = startRange
+                break
+            } else {
+                startRange += 1000f
+                endRange += 1000f
+            }
+        } while (result == -1f)
+
+        return result.toInt()
     }
 
     //TODO при изменении фильтра, мы меняем значения в placeFilterModel
