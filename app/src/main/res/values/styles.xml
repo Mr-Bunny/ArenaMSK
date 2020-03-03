@@ -51,6 +51,18 @@
         <item name="android:layout_marginTop">12dp</item>
     </style>
 
+    <style name="FilterBookingButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
     <style name="FilterResetButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textSize">12sp</item>
         <item name="android:layout_width">match_parent</item>

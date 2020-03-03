@@ -86,5 +86,7 @@
     <string name="booking_section_time">Time</string>
     <string name="booking_section_price">Price,\nRUB</string>
     <string name="booking_section_status">Status</string>
+    <string name="booking_status_free">Free</string>
+    <string name="booking_status_not_free">Not free</string>
 
 </resources>

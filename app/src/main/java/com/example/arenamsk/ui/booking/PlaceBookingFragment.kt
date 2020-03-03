@@ -64,7 +64,6 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking) {
         }
     }
 
-
     private fun itemClickCallback() {
         //TODO сохранять кликнутый item
     }

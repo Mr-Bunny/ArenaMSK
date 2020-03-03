@@ -15,7 +15,7 @@ class PlaceBookingAdapter(private val itemClickCallback: () -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceBookingViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_place_card, parent, false)
+        val view = inflater.inflate(R.layout.item_place_booking, parent, false)
         return PlaceBookingViewHolder(view)
     }
 
