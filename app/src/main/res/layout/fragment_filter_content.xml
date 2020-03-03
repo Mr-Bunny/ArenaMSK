@@ -46,50 +46,6 @@
             <TextView
                 style="@style/FilterTextSubtitle"
                 android:layout_marginTop="20dp"
-                android:text="@string/text_filter_title_district" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="1dp"
-                android:layout_marginTop="13dp"
-                android:background="@drawable/filter_spinner_background">
-
-                <org.angmarch.views.NiceSpinner
-                    android:id="@+id/spinner_district_filter"
-                    style="@style/FilterText"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@drawable/filter_spinner_background"
-                    app:arrowDrawable="@drawable/ic_spinner_arrow" />
-
-            </LinearLayout>
-
-            <TextView
-                style="@style/FilterTextSubtitle"
-                android:layout_marginTop="20dp"
-                android:text="@string/text_filter_title_micro_district" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="1dp"
-                android:layout_marginTop="13dp"
-                android:background="@drawable/filter_spinner_background">
-
-                <org.angmarch.views.NiceSpinner
-                    android:id="@+id/spinner_micro_district_filter"
-                    style="@style/FilterText"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@drawable/filter_spinner_background"
-                    app:arrowDrawable="@drawable/ic_spinner_arrow" />
-
-            </LinearLayout>
-
-            <TextView
-                style="@style/FilterTextSubtitle"
-                android:layout_marginTop="20dp"
                 android:text="@string/text_filter_title_metro" />
 
             <LinearLayout

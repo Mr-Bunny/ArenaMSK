@@ -41,12 +41,12 @@ class PlacesViewModel : BaseViewModel() {
     }
 
     private fun loadPlaces() {
-//        repository.getPlaces(
-//            success = ::getPlacesSuccess,
-//            errorHandler = errorHandler
-//        )
+        repository.getPlaces(
+            success = ::getPlacesSuccess,
+            errorHandler = errorHandler
+        )
 
-        getPlacesSuccess(getTestPlaces())
+        //getPlacesSuccess(getTestPlaces())
 
         //TODO при изменении фильтра, делать новый запрос, отменяя старый с учетом фильтров
     }
