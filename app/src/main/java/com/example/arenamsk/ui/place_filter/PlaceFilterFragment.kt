@@ -22,14 +22,17 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
 
     companion object {
         const val FILTER_MODEL_TAG = "filter_tag"
+        const val MIN_PRICE = 0
+        const val MAX_PRICE = 100000
+        const val PRICE_STEP = 1
 
         fun getInstance(): PlaceFilterFragment {
             return PlaceFilterFragment()
         }
     }
 
-    private var priceFrom = 0
-    private var priceTo = 100000
+    private var priceFrom = MIN_PRICE
+    private var priceTo = MAX_PRICE
 
     private val placesViewModel by lazy {
         ViewModelProviders.of(this).get(PlacesViewModel::class.java)
@@ -76,22 +79,21 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
 
             override fun afterTextChanged(price: Editable?) {
                 priceFrom = if (price.isNullOrEmpty()) {
-                    0
+                    MIN_PRICE
                 } else {
-                    price.toString().toInt()
+                    val newPrice = price.toString().toInt()
+
+                    if (newPrice > MAX_PRICE - PRICE_STEP) priceFrom else newPrice
                 }
 
                 if (!editing) {
                     editing = true
-                    filter_start_price_edit_text.setText(priceFrom.toString())
-                    filter_start_price_edit_text.setSelection(priceFrom.toString().length)
+                    filter_start_price_edit_text.setText(if (priceFrom != MIN_PRICE) priceFrom.toString() else price.toString())
+                    filter_start_price_edit_text.setSelection(if (priceFrom != MIN_PRICE) priceFrom.toString().length else price.toString().length)
                     editing = false
                 }
 
-                filter_price_range_bar.setProgress(
-                    priceFrom.toFloat(),
-                    priceTo.toFloat()
-                )
+                updateRangeBar()
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -106,22 +108,21 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
 
             override fun afterTextChanged(price: Editable?) {
                 priceTo = if (price.isNullOrEmpty()) {
-                    1
+                    MAX_PRICE
                 } else {
-                    price.toString().toInt()
+                    val newPrice = price.toString().toInt()
+
+                    if (newPrice > MAX_PRICE) priceTo else newPrice
                 }
 
                 if (!editing) {
                     editing = true
-                    filter_end_price_edit_text.setText(priceTo.toString())
-                    filter_end_price_edit_text.setSelection(priceTo.toString().length)
+                    filter_end_price_edit_text.setText(if (priceTo != MAX_PRICE ) priceTo.toString() else price.toString())
+                    filter_end_price_edit_text.setSelection(if (priceTo != MAX_PRICE) priceTo.toString().length else price.toString().length)
                     editing = false
                 }
 
-                filter_price_range_bar.setProgress(
-                    priceFrom.toFloat(),
-                    priceTo.toFloat()
-                )
+                updateRangeBar()
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -168,6 +169,15 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
     private fun getValueFromSeekBar(value: Int): Int {
         val steps = value / 1000
         return if (steps < 1) 0 else steps * 1000
+    }
+
+    private fun updateRangeBar() {
+        if (priceTo - PRICE_STEP > priceFrom) {
+            filter_price_range_bar.setProgress(
+                priceFrom.toFloat(),
+                priceTo.toFloat()
+            )
+        }
     }
 
     //TODO при изменении фильтра, мы меняем значения в placeFilterModel
