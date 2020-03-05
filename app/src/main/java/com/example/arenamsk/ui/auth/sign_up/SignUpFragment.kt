@@ -136,8 +136,10 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
 
     private fun getAvatar(): Bitmap? {
         //Если не была выбрана никакая фотография возвращаем null, иначе фотку
-        with(circle_crop_image_view) {
-            return if (visibility != View.VISIBLE) null else ImageUtils.getImageFromView(this)
+        return if (avatar_view.visibility != View.VISIBLE) {
+             null
+        } else {
+            ImageUtils.getImageFromView(circle_crop_image_view)
         }
         //Ниже код, если нужно получить обрезанный по кругу bitmap
 //        return ImageUtils.createCircleBitmap(
