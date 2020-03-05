@@ -3,7 +3,6 @@ package com.example.arenamsk.repositories
 import com.example.arenamsk.datasources.RemoteDataSource
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.RequestErrorHandler
-import com.example.arenamsk.network.utils.BaseRepository
 
 class PlaceRepository private constructor() : BaseRepository() {
 

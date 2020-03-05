@@ -1,10 +1,12 @@
-package com.example.arenamsk.network.utils
+package com.example.arenamsk.repositories
 
 import com.example.arenamsk.App
 import com.example.arenamsk.datasources.RemoteDataSource
 import com.example.arenamsk.network.models.ApiError
 import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.network.models.auth.UpdatedTokensModel
+import com.example.arenamsk.network.utils.AuthUtils
+import com.example.arenamsk.network.utils.NetworkUtils
 import com.example.arenamsk.network.utils.NetworkUtils.getErrorMessageFromErrorBody
 import retrofit2.Response
 import java.net.ConnectException
@@ -40,7 +42,10 @@ open class BaseRepository {
         errorHandler: RequestErrorHandler
     ) {
         //Check for network connection
-        if (!NetworkUtils.isNetworkAvailable(App.appContext())) {
+        if (!NetworkUtils.isNetworkAvailable(
+                App.appContext()
+            )
+        ) {
             withContext(Dispatchers.Main) {
                 errorHandler.networkUnavailableError()
             }
@@ -108,8 +113,12 @@ open class BaseRepository {
             is Result.Success -> {
                 with(AuthUtils) {
                     result.data?.let {
-                        saveAuthToken(it.accessToken)
-                        saveRefreshToken(it.refreshToken)
+                        saveAuthToken(
+                            it.accessToken
+                        )
+                        saveRefreshToken(
+                            it.refreshToken
+                        )
                     }
                 }
 

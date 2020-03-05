@@ -7,14 +7,11 @@ import com.example.arenamsk.network.models.auth.LogInUserModel
 import com.example.arenamsk.network.models.auth.SignUpUserModel
 import com.example.arenamsk.network.models.auth.UpdatedTokensModel
 import com.example.arenamsk.network.models.auth.UserImageUrl
-import com.example.arenamsk.network.utils.BaseRepository
 import com.example.arenamsk.room.tables.User
 import com.example.arenamsk.utils.ImageUtils
-import com.google.gson.JsonObject
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.File
 
 
 class AuthRepository private constructor() : BaseRepository() {
