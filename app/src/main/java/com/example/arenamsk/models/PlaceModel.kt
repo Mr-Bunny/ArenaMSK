@@ -9,10 +9,10 @@ data class PlaceModel(
     @SerializedName("name")
     val title: String = "",
 
-    @SerializedName("is_favourite") //not
+    @SerializedName("isFavorite")
     val isFavourite: Boolean = false,
 
-    @SerializedName("in_history") //not
+    @SerializedName("inBookedHistory")
     val inHistory: Boolean = false,
 
     @SerializedName("description")
@@ -24,7 +24,7 @@ data class PlaceModel(
     @SerializedName("workDayEndAt")
     val workDayEndAt: String = "",
 
-    @SerializedName("address") //not
+    @SerializedName("address")
     val address: String = "",
 
     @SerializedName("distance")
@@ -33,17 +33,17 @@ data class PlaceModel(
     @SerializedName("id")
     val id: Int = -1,
 
-    @SerializedName("rating") //not
+    @SerializedName("rating")
     val rating: Float = 0.0f,
 
-    @SerializedName("feedback_number") //not
+    @SerializedName("reviewsCount")
     val feedbackNumber: Int = 0,
 
     @SerializedName("images")
     val imagesUrl: List<String> = emptyList(),
 
-    @SerializedName("phone_numbers")
-    val phoneNumbersList: List<String> = emptyList(), //edit
+    @SerializedName("phoneNumbers")
+    val phoneNumbersList: List<String> = emptyList(),
 
     @SerializedName("area")
     val totalArea: Int = 0,
