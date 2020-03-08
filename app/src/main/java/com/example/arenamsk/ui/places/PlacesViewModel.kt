@@ -98,7 +98,10 @@ class PlacesViewModel : BaseViewModel() {
 
     /** Ищем и отображаем площадки с введенным текстом (это может быть или заголовок или адрес) */
     fun showFilteredPlaces(textToSearch: String) {
-        if (textToSearch.isEmpty()) loadPlaces()
+        if (textToSearch.isEmpty()) {
+            loadPlaces()
+            return
+        }
 
         launch(Dispatchers.IO) {
             val placeList = placesLiveData.value
@@ -106,7 +109,7 @@ class PlacesViewModel : BaseViewModel() {
             val founded = placeList?.filter { place ->
                 place.title.toLowerCase().contains(textToSearch.toLowerCase()) ||
                         place.address.toLowerCase().contains(textToSearch.toLowerCase())
-            } as MutableList<PlaceModel>
+            } as? MutableList<PlaceModel> ?: mutableListOf()
 
             withContext(Dispatchers.Main) { foundedPlacesLiveData.value = founded }
         }

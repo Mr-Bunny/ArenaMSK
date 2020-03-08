@@ -54,6 +54,7 @@
                         android:drawablePadding="22dp"
                         android:elevation="2dp"
                         android:fontFamily="@font/montserrat_bold"
+                        android:imeOptions="actionSearch"
                         android:inputType="text"
                         android:maxLines="1"
                         android:paddingStart="22dp"
