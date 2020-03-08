@@ -88,5 +88,8 @@
     <string name="booking_section_status">Status</string>
     <string name="booking_status_free">Free</string>
     <string name="booking_status_not_free">Not free</string>
+    <string name="places_not_found_text">Places not found</string>
+    <string name="text_refresh">Try again</string>
+    <string name="place_request_error_text">Couldn\'t get list of playgrounds.</string>
 
 </resources>

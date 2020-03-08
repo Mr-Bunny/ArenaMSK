@@ -5,12 +5,13 @@ import android.os.Handler
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.arenamsk.R
 import com.example.arenamsk.utils.Constants.DOUBLE_CLICK_DELAY
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     private var doubleBackToExitPressedOnce = false
 

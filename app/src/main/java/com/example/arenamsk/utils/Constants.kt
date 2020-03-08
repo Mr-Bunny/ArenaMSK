@@ -8,4 +8,12 @@ object Constants {
     /** Auth errors */
     const val BAD_CREDENTIALS = "Unauthorized: Bad credentials"
     const val EMAIL_ALREADY_EXISTS = "Email is already in use!"
+
+    /** Виды спорта */
+    const val ALL_TYPE = "Все виды"
+    const val FOOTBALL_TYPE = "Футбол"
+    const val MINI_FOOTBALL_TYPE = "Мини-футбол"
+    const val VOLLEYBALL_TYPE = "Волейбол"
+    const val BASKETBALL_TYPE = "Баскетбол"
+    const val TENNIS_TYPE = "Теннис"
 }

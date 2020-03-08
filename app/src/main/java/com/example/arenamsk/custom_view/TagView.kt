@@ -19,9 +19,10 @@ class TagView : FrameLayout {
         init()
     }
 
-    constructor(context: Context, id: Int, name: String) : super(context) {
+    constructor(context: Context, tagClickListener: TagSelectedCallback, id: Int, name: String) : super(context) {
         tagId = id
         tagName = name
+        this.tagClickListener = tagClickListener
 
         init()
     }
@@ -38,18 +39,26 @@ class TagView : FrameLayout {
         init()
     }
 
-    fun setTagClickListener(tagWasClicked: TagSelectedCallback) {
-        tagClickListener = tagWasClicked
+    fun setTagCheck(isCheck: Boolean = true) {
+        tagSelected = isCheck
+        setBorder()
     }
+
+    fun getTagName() = tagName
 
     private fun init() {
         inflate(context, R.layout.custom_place_tag, null).also { addView(it) }
         place_tag.text = tagName
         place_tag.setOnClickListener {
             tagSelected = !tagSelected
-            place_tag.setBackgroundDrawable(resources.getDrawable(if (tagSelected) R.drawable.selected_tag_background else R.drawable.unselected_tag_background))
-            tagClickListener?.tagWasSelected(tagSelected, id)
+            setBorder()
+            tagClickListener?.tagWasSelected(tagSelected, tagName)
         }
+    }
+
+    /** Ставим цвет border-а на основе того выбран тег или нет */
+    private fun setBorder() {
+        place_tag.setBackgroundDrawable(resources.getDrawable(if (tagSelected) R.drawable.selected_tag_background else R.drawable.unselected_tag_background))
     }
 
 }

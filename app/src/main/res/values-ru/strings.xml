@@ -76,6 +76,9 @@
     <string name="booking_section_status">Статус</string>
     <string name="booking_status_free">Свободно</string>
     <string name="booking_status_not_free">Занято</string>
+    <string name="places_not_found_text">Площадки не найдены</string>
+    <string name="text_refresh">Попробовать снова</string>
+    <string name="place_request_error_text">Не удалось получить список площадок.</string>
 
     <!--Place detail-->
     <string-array name="place_detail_view_pager_titles">

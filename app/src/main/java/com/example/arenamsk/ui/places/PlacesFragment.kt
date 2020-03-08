@@ -2,25 +2,38 @@ package com.example.arenamsk.ui.places
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.children
+import androidx.core.view.forEach
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.arenamsk.App
 import com.example.arenamsk.R
 import com.example.arenamsk.custom_view.TagView
+import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.base.PlaceDialogFragment
-import com.example.arenamsk.ui.place_detail.PlaceDetailFragment
 import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
 import com.example.arenamsk.ui.places.adapter.PlacesAdapter
+import com.example.arenamsk.utils.Constants.ALL_TYPE
+import com.example.arenamsk.utils.Constants.BASKETBALL_TYPE
+import com.example.arenamsk.utils.Constants.FOOTBALL_TYPE
+import com.example.arenamsk.utils.Constants.MINI_FOOTBALL_TYPE
+import com.example.arenamsk.utils.Constants.TENNIS_TYPE
+import com.example.arenamsk.utils.Constants.VOLLEYBALL_TYPE
+import com.example.arenamsk.utils.EnumUtils.GetPlacesStatus
+import com.example.arenamsk.utils.disable
+import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.fragment_places.*
+import kotlinx.android.synthetic.main.places_errors_form.*
 
 class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallback {
 
     private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback, ::itemBookingClickCallback) }
 
     private val placesViewModel by lazy {
-        ViewModelProviders.of(this).get(PlacesViewModel::class.java)
+        ViewModelProviders.of(activity!!).get(PlacesViewModel::class.java)
     }
 
     private var placeFilterFragment: PlaceFilterFragment? = null
@@ -29,19 +42,60 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Добавляем теги
+        initTags()
+
         initRecycler()
 
-        placesViewModel.getPlacesLiveData().observe(this@PlacesFragment, Observer {
-            placeAdapter.setNewList(it)
+        placesViewModel.getPlacesStatusLiveData().observe(this, Observer {
+            handlePlacesLoadingStatus(it)
         })
 
-        initTags()
+        placesViewModel.getPlacesLiveData().observe(this, Observer {
+            //Скрываем progress bar и показываем данные, если они есть, иначе показываем ошибку
+            if (it.isNullOrEmpty()) {
+                showPlacesNotFoundForm()
+            } else {
+                showRecycler()
+                placeAdapter.setNewList(it)
+            }
+        })
+
+        //Только подгружаем новые данные, не меняем теги, они меняются в колбэках нажатия
+        placesViewModel.getFilterLiveData().observe(this, Observer {
+            //Показываем progress bar и загружаем новый список площадок на основе фильтра
+            showProgressBar()
+            placesViewModel.loadPlaces(!it.sportList.isNullOrEmpty())
+        })
 
         place_filter_button.setOnClickListener { openFilterFragment() }
     }
 
-    override fun tagWasSelected(isSelected: Boolean, tagId: Int) {
-        //TODO
+    /** Обрабатываем нажатие на тег. Если было нажатие на ALL_TYPE, то мы выделение не снимаем,
+     * оно снимается автоматически по нажатию на остальные теги.
+     * Если тег был выбран - добавляем его в массив sports объекта фильтра и снимаем выделение с ALL_TYPE
+     * Если мы сняли выделение, то удаляем его из этого списка и делаем проверку на размер списка -
+     * Если он пустой, то выделяем тег "Все виды"
+     * @param isSelected true если тег был выбран, false если сняли выделение
+     * @param sportName одна из констант спорта класса Constants */
+    override fun tagWasSelected(isSelected: Boolean, sportName: String) {
+        val filter = placesViewModel.getFilterLiveData().value ?: PlaceFilterModel(sportList = ArrayList())
+
+        if (sportName == ALL_TYPE) {
+            resetTags()
+            filter.sportList = ArrayList()
+        } else {
+            if (isSelected) {
+                filter.sportList?.add(sportName)
+                setFirstTagCheck(false)
+            } else {
+                filter.sportList?.remove(sportName)
+                if (filter.sportList.isNullOrEmpty()) setFirstTagCheck()
+            }
+        }
+
+        //Меняем liveDat-у с фильтром, что приведет к обновлению данных
+        placesViewModel.setFilterLiveData(filter)
     }
 
     private fun initRecycler() {
@@ -56,16 +110,41 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
         }
     }
 
+    /** Добавляем теги на экран */
     private fun initTags() {
+        val sports: ArrayList<String>? = placesViewModel.getFilterLiveData().value?.sportList
+
         with(place_tag_container) {
             removeAllViews()
-            addView(TagView(context!!, 1, "Все виды"))
-            addView(TagView(context!!, 2, "Баскетбол"))
-            addView(TagView(context!!, 3, "Мини-футбол"))
-            addView(TagView(context!!, 4, "Футбол"))
-            addView(TagView(context!!, 5, "Теннис"))
-            addView(TagView(context!!, 6, "Волейбол"))
+            addView(TagView(requireContext(), this@PlacesFragment, 1, ALL_TYPE))
+            addView(TagView(requireContext(), this@PlacesFragment, 2, BASKETBALL_TYPE))
+            addView(TagView(requireContext(), this@PlacesFragment, 3, MINI_FOOTBALL_TYPE))
+            addView(TagView(requireContext(), this@PlacesFragment, 4, FOOTBALL_TYPE))
+            addView(TagView(requireContext(), this@PlacesFragment, 5, TENNIS_TYPE))
+            addView(TagView(requireContext(), this@PlacesFragment, 6, VOLLEYBALL_TYPE))
         }
+
+        //Если были ранее выбранные - выделяем их
+        if (sports.isNullOrEmpty()) {
+            setFirstTagCheck()
+        } else {
+            place_tag_container.children.forEach { tagView ->
+                (tagView as TagView).setTagCheck(sports.contains(tagView.getTagName()))
+            }
+        }
+    }
+
+    /** Сбрасываем выделения со всех тегов и отмечаем только первый */
+    private fun resetTags() {
+        place_tag_container.forEach { tag ->
+            (tag as TagView ).setTagCheck(false)
+        }
+
+        setFirstTagCheck()
+    }
+
+    private fun setFirstTagCheck(isChecked: Boolean = true) {
+        (place_tag_container.getChildAt(0) as? TagView)?.setTagCheck(isChecked)
     }
 
     private fun itemBookingClickCallback(place: PlaceModel) {
@@ -88,4 +167,66 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
         placeFilterFragment?.show(activity!!.supportFragmentManager, PlaceFilterFragment.FILTER_MODEL_TAG)
     }
 
+    /** Обрабатываем ошибки запроса площадок */
+    private fun handlePlacesLoadingStatus(status: GetPlacesStatus) {
+        hideProgressBar()
+
+        when (status) {
+            GetPlacesStatus.NOT_FOUND -> {
+                showPlacesNotFoundForm()
+            }
+
+            GetPlacesStatus.REQUEST_ERROR -> {
+                showRequestErrorForm()
+            }
+
+            GetPlacesStatus.NETWORK_OFFLINE -> {
+                showRequestErrorForm()
+                showNetworkOfflineError()
+            }
+
+            GetPlacesStatus.LOAD_PLACES -> {
+                showProgressBar()
+            }
+        }
+    }
+
+    /** Отображаем текст, что площадки не найдены */
+    private fun showPlacesNotFoundForm() {
+        hideProgressBar()
+        recycler_places.disable()
+        places_not_found_form.enable()
+    }
+
+    /** Отображаем текст, что не удалось загрузить площадки и кнопку для повтора запроса */
+    private fun showRequestErrorForm() {
+        hideProgressBar()
+        recycler_places.disable()
+        places_request_error_form.enable()
+        try_again_button.setOnClickListener {
+            showProgressBar()
+            placesViewModel.loadPlaces(true)
+        }
+    }
+
+    /** Скрываем progress bar и view с ошибками и показываем recycler с площадками */
+    private fun showRecycler() {
+        hideProgressBar()
+        places_not_found_form.disable()
+        places_request_error_form.disable()
+        recycler_places.enable()
+    }
+
+    /** Скрываем progress bar */
+    private fun hideProgressBar() {
+        places_loading_progress_bar.disable()
+    }
+
+    /** Показываем progress bar */
+    private fun showProgressBar() {
+        places_not_found_form.disable()
+        places_request_error_form.disable()
+        recycler_places.disable()
+        places_loading_progress_bar.enable()
+    }
 }

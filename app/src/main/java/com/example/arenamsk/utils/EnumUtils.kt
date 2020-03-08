@@ -24,4 +24,11 @@ object EnumUtils {
         LOG_IN_SUCCESS,
         NETWORK_OFFLINE
     }
+
+    enum class GetPlacesStatus {
+        LOAD_PLACES,
+        NOT_FOUND,
+        REQUEST_ERROR,
+        NETWORK_OFFLINE
+    }
 }

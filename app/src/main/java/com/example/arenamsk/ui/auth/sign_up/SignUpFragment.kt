@@ -99,7 +99,7 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), SignUpFragme
             }
 
             SignUpStatus.NETWORK_OFFLINE -> {
-                showToast(R.string.network_offline_text)
+                showNetworkOfflineError()
             }
 
             SignUpStatus.SIGN_UP_SUCCESS -> {

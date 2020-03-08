@@ -35,6 +35,9 @@ data class PlaceFilterModel(
     @SerializedName("feedback_number")
     var feedbackNumber: Int = 0,
 
+    @SerializedName("sports")
+    var sportList: ArrayList<String>? = ArrayList(),
+
     @SerializedName("imageUrl")
     var imagesUrl: List<String> = emptyList()
 

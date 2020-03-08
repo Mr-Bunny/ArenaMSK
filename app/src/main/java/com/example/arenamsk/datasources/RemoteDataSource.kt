@@ -26,6 +26,8 @@ object RemoteDataSource {
     suspend fun getAccountInfo() = service.getUserAccountInfo()
 
     /** Places */
-    suspend fun getPlaces() = service.getPLaces()
+    suspend fun getPlaces() = authService.getPLaces()
+
+    suspend fun getPlaces(sports: String?) = authService.getPLaces(sports)
 
 }
