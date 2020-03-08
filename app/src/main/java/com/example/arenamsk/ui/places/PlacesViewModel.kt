@@ -99,7 +99,7 @@ class PlacesViewModel : BaseViewModel() {
     /** Ищем и отображаем площадки с введенным текстом (это может быть или заголовок или адрес) */
     fun showFilteredPlaces(textToSearch: String) {
         if (textToSearch.isEmpty()) {
-            loadPlaces()
+            loadPlaces(true)
             return
         }
 

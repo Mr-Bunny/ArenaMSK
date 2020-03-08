@@ -107,6 +107,9 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
      * @param isSelected true если тег был выбран, false если сняли выделение
      * @param sportName одна из констант спорта класса Constants */
     override fun tagWasSelected(isSelected: Boolean, sportName: String) {
+        //Очищаем поиск при изменении фильтра
+        edit_text_search.setText("")
+
         val filter = placesViewModel.getFilterLiveData().value ?: PlaceFilterModel(sportList = ArrayList())
 
         if (sportName == ALL_TYPE) {
