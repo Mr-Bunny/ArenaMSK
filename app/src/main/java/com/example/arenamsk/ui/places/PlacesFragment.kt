@@ -1,6 +1,8 @@
 package com.example.arenamsk.ui.places
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.core.view.children
 import androidx.core.view.forEach
@@ -61,6 +63,19 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
             }
         })
 
+        //LiveData с найденными площадками
+        placesViewModel.getFoundedPlacesLiveData().observe(this, Observer {
+            //Показываем площадки только, если мы что-то вводили в поиск
+            if (edit_text_search.text.toString().isNotEmpty()) {
+                if (it.isNullOrEmpty()) {
+                    showPlacesNotFoundForm()
+                } else {
+                    showRecycler()
+                    placeAdapter.setNewList(it)
+                }
+            }
+        })
+
         //Только подгружаем новые данные, не меняем теги, они меняются в колбэках нажатия
         placesViewModel.getFilterLiveData().observe(this, Observer {
             //Показываем progress bar и загружаем новый список площадок на основе фильтра
@@ -69,6 +84,19 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
         })
 
         place_filter_button.setOnClickListener { openFilterFragment() }
+
+        //Вешаем слушатель на поле поиска площадок по названию и адресу
+        edit_text_search.addTextChangedListener(object: TextWatcher {
+            override fun afterTextChanged(textToSearch: Editable?) {
+                placesViewModel.showFilteredPlaces(textToSearch.toString().trim())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(textToSearch: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
     }
 
     /** Обрабатываем нажатие на тег. Если было нажатие на ALL_TYPE, то мы выделение не снимаем,

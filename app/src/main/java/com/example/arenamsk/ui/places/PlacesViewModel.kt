@@ -9,6 +9,9 @@ import com.example.arenamsk.repositories.PlaceRepository
 import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.EnumUtils.GetPlacesStatus
 import com.example.arenamsk.utils.SingleLiveEvent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PlacesViewModel : BaseViewModel() {
 
@@ -16,6 +19,7 @@ class PlacesViewModel : BaseViewModel() {
     private val placesStatus = SingleLiveEvent<GetPlacesStatus>()
 
     private var placesLiveData = MutableLiveData<MutableList<PlaceModel>>()
+    private var foundedPlacesLiveData = MutableLiveData<MutableList<PlaceModel>>()
     private var filterLiveData = MutableLiveData<PlaceFilterModel>()
 
     private val repository = PlaceRepository.getInstance()
@@ -44,6 +48,8 @@ class PlacesViewModel : BaseViewModel() {
     }
 
     fun getPlacesLiveData() = placesLiveData
+
+    fun getFoundedPlacesLiveData() = foundedPlacesLiveData
 
     fun getFilterLiveData() = filterLiveData
 
@@ -88,6 +94,22 @@ class PlacesViewModel : BaseViewModel() {
                 }
             }
         )
+    }
+
+    /** Ищем и отображаем площадки с введенным текстом (это может быть или заголовок или адрес) */
+    fun showFilteredPlaces(textToSearch: String) {
+        if (textToSearch.isEmpty()) loadPlaces()
+
+        launch(Dispatchers.IO) {
+            val placeList = placesLiveData.value
+
+            val founded = placeList?.filter { place ->
+                place.title.toLowerCase().contains(textToSearch.toLowerCase()) ||
+                        place.address.toLowerCase().contains(textToSearch.toLowerCase())
+            } as MutableList<PlaceModel>
+
+            withContext(Dispatchers.Main) { foundedPlacesLiveData.value = founded }
+        }
     }
 
     /** Отображаем данные */
