@@ -5,6 +5,7 @@ import com.example.arenamsk.network.models.auth.*
 import com.example.arenamsk.room.tables.User
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -32,8 +33,8 @@ interface ApiService {
     suspend fun getPLaces(@Query("sports", encoded = true) sports: String?): Response<List<PlaceModel>>
 
     @POST("api/v1/favorite/mark/{place}")
-    suspend fun addPlaceToFavourite(@Path("place") place: String): Response<JsonObject>
+    suspend fun addPlaceToFavourite(@Path("place") place: String): Response<Unit>
 
     @POST("api/v1/favorite/unmark/{place}")
-    suspend fun addRemoveFromFavourite(@Path("place") place: String): Response<JsonObject>
+    suspend fun addRemoveFromFavourite(@Path("place") place: String): Response<Unit>
 }
