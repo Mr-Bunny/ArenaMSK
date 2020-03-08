@@ -65,6 +65,31 @@ class PlacesViewModel : BaseViewModel() {
         )
     }
 
+    fun addPlaceToFavourite(toFavourite: Boolean,
+                            placeId: Int,
+                            requestAddToFavouriteFailed: (toFavourite: Boolean) -> Unit) {
+        repository.addPlaceToFavourite(toFavourite,
+            placeId,
+            object : RequestErrorHandler {
+                override suspend fun networkUnavailableError() {
+                    requestAddToFavouriteFailed(toFavourite)
+                }
+
+                override suspend fun requestFailedError(error: ApiError?) {
+                    requestAddToFavouriteFailed(toFavourite)
+                }
+
+                override suspend fun requestSuccessButResponseIsNull() {
+                    requestAddToFavouriteFailed(toFavourite)
+                }
+
+                override suspend fun timeoutException() {
+                    requestAddToFavouriteFailed(toFavourite)
+                }
+            }
+        )
+    }
+
     /** Отображаем данные */
     private fun getPlacesSuccess(places: List<PlaceModel>) {
         placesLiveData.value = places as MutableList<PlaceModel>

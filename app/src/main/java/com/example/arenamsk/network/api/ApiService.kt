@@ -30,4 +30,10 @@ interface ApiService {
 
     @GET("api/v1/place/")
     suspend fun getPLaces(@Query("sports", encoded = true) sports: String?): Response<List<PlaceModel>>
+
+    @POST("api/v1/favorite/favorite/mark/{place}")
+    suspend fun addPlaceToFavourite(@Path("place") place: String): Response<JsonObject>
+
+    @POST("api/v1/favorite/favorite/unmark/{place}")
+    suspend fun addRemoveFromFavourite(@Path("place") place: String): Response<JsonObject>
 }

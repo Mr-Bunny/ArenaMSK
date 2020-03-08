@@ -26,8 +26,12 @@ object RemoteDataSource {
     suspend fun getAccountInfo() = service.getUserAccountInfo()
 
     /** Places */
-    suspend fun getPlaces() = authService.getPLaces()
+    suspend fun getPlaces() = service.getPLaces()
 
-    suspend fun getPlaces(sports: String?) = authService.getPLaces(sports)
+    suspend fun getPlaces(sports: String?) = service.getPLaces(sports)
+
+    suspend fun addPlaceToFavourite(placeId: Int) = service.addPlaceToFavourite(placeId.toString())
+
+    suspend fun removePlaceFromFavourite(placeId: Int) = service.addRemoveFromFavourite(placeId.toString())
 
 }

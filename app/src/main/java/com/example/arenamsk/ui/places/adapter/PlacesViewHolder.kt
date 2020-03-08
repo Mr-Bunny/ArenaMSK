@@ -5,16 +5,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.places.viewpager.PlaceViewPagerAdapter
+import com.example.arenamsk.utils.TimeUtils
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.item_place_card.view.*
 
-
 class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(place: PlaceModel,
-             itemClickCallback: (meetUpId: PlaceModel) -> Unit,
-             itemBookingClickCallback: (place : PlaceModel) -> Unit) {
+    fun bind(
+        place: PlaceModel,
+        itemClickCallback: (meetUpId: PlaceModel) -> Unit,
+        itemBookingClickCallback: (place: PlaceModel) -> Unit,
+        itemAddToFavouriteClickCallback: (
+            toFavourite: Boolean,
+            placeId: Int,
+            requestAddToFavouriteFailed: (isFavourite: Boolean) -> Unit
+        ) -> Unit
+    ) {
         with(itemView) {
             place_item_title.text = place.title
             place_item_description.text = place.description
@@ -26,16 +33,21 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 place.feedbackNumber.toString()
             )
 
-            //place_item_work_time_text.text = place.workTime
+
+            place_item_work_time_text.text = TimeUtils.convertWorkTime(place.workDayStartAt, place.workDayEndAt)
 
             place_item_address_text.text = place.address
 
-            with(place_item_favourite_btn) {
-                if (place.isFavourite) {
-                    setImageDrawable(itemView.context.resources.getDrawable(R.drawable.ic_in_favoutires_btn))
-                } else {
-                    setImageDrawable(itemView.context.resources.getDrawable(R.drawable.ic_add_to_favourites_btn))
-                }
+            setUpFavouriteIcon(place.isFavourite)
+
+            place_item_favourite_btn.setOnClickListener {
+                setUpFavouriteIcon(!place.isFavourite)
+                //Делаем запрос
+                itemAddToFavouriteClickCallback.invoke(
+                    !place.isFavourite,
+                    place.id,
+                    ::requestAddToFavouriteFailed
+                )
             }
 
             place_item_distance_text.text = itemView.context.getString(
@@ -67,6 +79,23 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             place_item_view_pager.adapter = adapter
             adapter.setNewImages(place.imagesUrl as MutableList<String>)
             place_item_view_pager_indicator.setViewPager(place_item_view_pager)
+        }
+    }
+
+    /** Если запрос на добавление/удаление в избранное не прошел, если пришел, то view уже поменялась,
+     *  а данные потом обновятся при повторном открытии.
+     * @param isFavourite Принимаем противоположное значение того, что отправляли для запроса */
+    private fun requestAddToFavouriteFailed(toFavourite: Boolean) {
+        setUpFavouriteIcon(!toFavourite)
+    }
+
+    private fun setUpFavouriteIcon(isFavourite: Boolean) {
+        with(itemView.place_item_favourite_btn) {
+            if (isFavourite) {
+                setImageDrawable(itemView.context.resources.getDrawable(R.drawable.ic_in_favoutires_btn))
+            } else {
+                setImageDrawable(itemView.context.resources.getDrawable(R.drawable.ic_add_to_favourites_btn))
+            }
         }
     }
 }

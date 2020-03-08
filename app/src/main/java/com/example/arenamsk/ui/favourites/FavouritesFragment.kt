@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_favourites.*
 
 class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
 
-    private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback, ::itemBookingClickCallback) }
+    private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback, ::itemBookingClickCallback, ::addPlaceToFavourite) }
 
     private var placeDetailFragment: PlaceDialogFragment? = null
 
@@ -58,5 +58,11 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
         placeDetailFragment?.dismiss()
         placeDetailFragment = PlaceDialogFragment.getInstance(place, openBooking)
         placeDetailFragment?.show(activity!!.supportFragmentManager, PlaceDialogFragment.PLACE_DIALOG_FRAGMENT_TAG)
+    }
+
+    private fun addPlaceToFavourite(toFavourite: Boolean,
+                                    placeId: Int,
+                                    requestAddToFavouriteFailed: (toFavourite: Boolean) -> Unit) {
+        favouritesViewModel.addPlaceToFavourite(toFavourite, placeId, requestAddToFavouriteFailed)
     }
 }

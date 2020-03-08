@@ -37,4 +37,18 @@ class PlaceRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
+    fun addPlaceToFavourite(
+        toFavourite: Boolean,
+        placeId: Int,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = {
+            with(RemoteDataSource) {
+                if (toFavourite) addPlaceToFavourite(placeId) else removePlaceFromFavourite(placeId)
+            }
+        },
+        success = { },
+        errorHandler = errorHandler
+    )
+
 }

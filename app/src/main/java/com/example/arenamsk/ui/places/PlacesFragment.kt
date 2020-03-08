@@ -30,10 +30,10 @@ import kotlinx.android.synthetic.main.places_errors_form.*
 
 class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallback {
 
-    private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback, ::itemBookingClickCallback) }
+    private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback, ::itemBookingClickCallback, ::addPlaceToFavourite) }
 
     private val placesViewModel by lazy {
-        ViewModelProviders.of(activity!!).get(PlacesViewModel::class.java)
+        ViewModelProviders.of(this).get(PlacesViewModel::class.java)
     }
 
     private var placeFilterFragment: PlaceFilterFragment? = null
@@ -228,5 +228,11 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
         places_request_error_form.disable()
         recycler_places.disable()
         places_loading_progress_bar.enable()
+    }
+
+    private fun addPlaceToFavourite(toFavourite: Boolean,
+        placeId: Int,
+        requestAddToFavouriteFailed: (toFavourite: Boolean) -> Unit) {
+        placesViewModel.addPlaceToFavourite(toFavourite, placeId, requestAddToFavouriteFailed)
     }
 }
