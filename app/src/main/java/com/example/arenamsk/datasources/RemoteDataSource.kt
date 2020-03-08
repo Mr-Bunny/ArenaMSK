@@ -26,9 +26,19 @@ object RemoteDataSource {
     suspend fun getAccountInfo() = service.getUserAccountInfo()
 
     /** Places */
-    suspend fun getPlaces() = service.getPLaces()
+    //Если пользователь дефолтный, то запрос площадок без токена
+    suspend fun getPlaces() = if (AuthUtils.isUserDefault()) {
+        authService.getPLaces()
+    } else {
+        service.getPLaces()
+    }
 
-    suspend fun getPlaces(sports: String?) = service.getPLaces(sports)
+    //Если пользователь дефолтный, то запрос площадок без токена
+    suspend fun getPlaces(sports: String?) = if (AuthUtils.isUserDefault()) {
+        authService.getPLaces(sports)
+    } else {
+        service.getPLaces(sports)
+    }
 
     suspend fun addPlaceToFavourite(placeId: Int) = service.addPlaceToFavourite(placeId.toString())
 

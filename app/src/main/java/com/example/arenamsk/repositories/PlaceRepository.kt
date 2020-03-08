@@ -4,6 +4,7 @@ import com.example.arenamsk.datasources.RemoteDataSource
 import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.RequestErrorHandler
+import com.example.arenamsk.network.utils.AuthUtils
 
 class PlaceRepository private constructor() : BaseRepository() {
 

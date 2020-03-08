@@ -4,6 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.ui.places.viewpager.PlaceViewPagerAdapter
 import com.example.arenamsk.utils.TimeUtils
 import com.example.arenamsk.utils.disable
@@ -40,6 +41,11 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             setUpFavouriteIcon(place.isFavourite)
 
+            if (AuthUtils.isUserDefault()) {
+                place_item_favourite_btn.disable()
+            } else {
+                place_item_favourite_btn.enable()
+            }
             place_item_favourite_btn.setOnClickListener {
                 setUpFavouriteIcon(!place.isFavourite)
                 //Делаем запрос
