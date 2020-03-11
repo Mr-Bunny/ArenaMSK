@@ -19,7 +19,9 @@ class PlacesViewModel : BaseViewModel() {
     private val placesStatus = SingleLiveEvent<GetPlacesStatus>()
 
     private var placesLiveData = MutableLiveData<MutableList<PlaceModel>>()
+    private var favouritesPlacesLiveData = MutableLiveData<MutableList<PlaceModel>>()
     private var foundedPlacesLiveData = MutableLiveData<MutableList<PlaceModel>>()
+    private var foundedFavouritesPlacesLiveData = MutableLiveData<MutableList<PlaceModel>>()
     private var filterLiveData = MutableLiveData<PlaceFilterModel>()
 
     private val repository = PlaceRepository.getInstance()
@@ -48,6 +50,10 @@ class PlacesViewModel : BaseViewModel() {
     }
 
     fun getPlacesLiveData() = placesLiveData
+
+    fun getFavouritesPlacesLiveData() = favouritesPlacesLiveData
+
+    fun getFoundedFavouritesPlacesLiveData() = foundedFavouritesPlacesLiveData
 
     fun getFoundedPlacesLiveData() = foundedPlacesLiveData
 
@@ -115,8 +121,33 @@ class PlacesViewModel : BaseViewModel() {
         }
     }
 
+    /** Ищем и отображаем площадки в избранном с введенным текстом (это может быть или заголовок или адрес) */
+    fun showFilteredPlacesInFavourites(textToSearch: String) {
+        if (textToSearch.isEmpty()) {
+            loadPlaces(false)
+            return
+        }
+
+        launch(Dispatchers.IO) {
+            val favouritesPlaceList = favouritesPlacesLiveData.value
+
+            val founded = favouritesPlaceList?.filter { place ->
+                place.title.toLowerCase().contains(textToSearch.toLowerCase()) ||
+                        place.address.toLowerCase().contains(textToSearch.toLowerCase())
+            } as? MutableList<PlaceModel> ?: mutableListOf()
+
+            withContext(Dispatchers.Main) { foundedFavouritesPlacesLiveData.value = founded }
+        }
+    }
+
     /** Отображаем данные */
     private fun getPlacesSuccess(places: List<PlaceModel>) {
+        //Сохраняем все площадки
         placesLiveData.value = places as MutableList<PlaceModel>
+
+        //Сохраняем площадки добавленные в избранное
+        favouritesPlacesLiveData.value = places.filter { placeModel ->
+            placeModel.isFavourite
+        } as MutableList<PlaceModel>
     }
 }
