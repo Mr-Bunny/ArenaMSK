@@ -10,8 +10,8 @@ class PlacesAdapter(private val itemClickCallback: (place : PlaceModel) -> Unit,
                     private val itemBookingClickCallback: (place : PlaceModel) -> Unit,
                     private val itemAddToFavouriteClickCallback: (
                         toFavourite: Boolean,
-                        placeId: Int,
-                        requestAddToFavouriteFailed: (toFavourite: Boolean) -> Unit
+                        place: PlaceModel,
+                        requestAddToFavouriteFailed: (toFavourite: Boolean, place: PlaceModel) -> Unit
                     ) -> Unit) : RecyclerView.Adapter<PlacesViewHolder>() {
 
     private val places: MutableList<PlaceModel> = mutableListOf()

@@ -10,7 +10,7 @@ data class PlaceModel(
     val title: String = "",
 
     @SerializedName("isFavorite")
-    val isFavourite: Boolean = false,
+    var isFavourite: Boolean = false,
 
     @SerializedName("inBookedHistory")
     val inHistory: Boolean = false,

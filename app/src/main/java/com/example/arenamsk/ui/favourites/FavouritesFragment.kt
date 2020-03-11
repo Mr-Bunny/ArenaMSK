@@ -94,9 +94,9 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
     }
 
     private fun addPlaceToFavourite(toFavourite: Boolean,
-                                    placeId: Int,
-                                    requestAddToFavouriteFailed: (toFavourite: Boolean) -> Unit) {
-        placesViewModel.addPlaceToFavourite(toFavourite, placeId, requestAddToFavouriteFailed)
+                                    place: PlaceModel,
+                                    requestAddToFavouriteFailed: (toFavourite: Boolean, place: PlaceModel) -> Unit) {
+        placesViewModel.addPlaceToFavourite(toFavourite, place, requestAddToFavouriteFailed)
     }
 
     /** Отображаем текст, что площадки не найдены */

@@ -19,8 +19,8 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemBookingClickCallback: (place: PlaceModel) -> Unit,
         itemAddToFavouriteClickCallback: (
             toFavourite: Boolean,
-            placeId: Int,
-            requestAddToFavouriteFailed: (isFavourite: Boolean) -> Unit
+            place: PlaceModel,
+            requestAddToFavouriteFailed: (isFavourite: Boolean, place: PlaceModel) -> Unit
         ) -> Unit
     ) {
         with(itemView) {
@@ -47,11 +47,14 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 place_item_favourite_btn.enable()
             }
             place_item_favourite_btn.setOnClickListener {
-                setUpFavouriteIcon(!place.isFavourite)
-                //Делаем запрос
+                val toFavourite = !place.isFavourite
+
+                place.isFavourite = toFavourite
+                setUpFavouriteIcon(toFavourite)
+                //Делаем запрос на добавление или удаление в избранное
                 itemAddToFavouriteClickCallback.invoke(
-                    !place.isFavourite,
-                    place.id,
+                    toFavourite,
+                    place,
                     ::requestAddToFavouriteFailed
                 )
             }
@@ -91,7 +94,8 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     /** Если запрос на добавление/удаление в избранное не прошел, если пришел, то view уже поменялась,
      *  а данные потом обновятся при повторном открытии.
      * @param isFavourite Принимаем противоположное значение того, что отправляли для запроса */
-    private fun requestAddToFavouriteFailed(toFavourite: Boolean) {
+    private fun requestAddToFavouriteFailed(toFavourite: Boolean, place: PlaceModel) {
+        place.isFavourite = !toFavourite
         setUpFavouriteIcon(!toFavourite)
     }
 

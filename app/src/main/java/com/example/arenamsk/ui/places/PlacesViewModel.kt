@@ -78,25 +78,25 @@ class PlacesViewModel : BaseViewModel() {
     }
 
     fun addPlaceToFavourite(toFavourite: Boolean,
-                            placeId: Int,
-                            requestAddToFavouriteFailed: (toFavourite: Boolean) -> Unit) {
+                            place: PlaceModel,
+                            requestAddToFavouriteFailed: (toFavourite: Boolean, place: PlaceModel) -> Unit) {
         repository.addPlaceToFavourite(toFavourite,
-            placeId,
+            place.id,
             object : RequestErrorHandler {
                 override suspend fun networkUnavailableError() {
-                    requestAddToFavouriteFailed(toFavourite)
+                    requestAddToFavouriteFailed(toFavourite, place)
                 }
 
                 override suspend fun requestFailedError(error: ApiError?) {
-                    requestAddToFavouriteFailed(toFavourite)
+                    requestAddToFavouriteFailed(toFavourite, place)
                 }
 
                 override suspend fun requestSuccessButResponseIsNull() {
-                    requestAddToFavouriteFailed(toFavourite)
+                    requestAddToFavouriteFailed(toFavourite, place)
                 }
 
                 override suspend fun timeoutException() {
-                    requestAddToFavouriteFailed(toFavourite)
+                    requestAddToFavouriteFailed(toFavourite, place)
                 }
             }
         )

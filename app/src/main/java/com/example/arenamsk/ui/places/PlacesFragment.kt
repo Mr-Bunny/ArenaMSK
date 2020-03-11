@@ -9,7 +9,6 @@ import androidx.core.view.forEach
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.arenamsk.App
 import com.example.arenamsk.R
 import com.example.arenamsk.custom_view.TagView
 import com.example.arenamsk.models.PlaceFilterModel
@@ -259,8 +258,8 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
     }
 
     private fun addPlaceToFavourite(toFavourite: Boolean,
-        placeId: Int,
-        requestAddToFavouriteFailed: (toFavourite: Boolean) -> Unit) {
-        placesViewModel.addPlaceToFavourite(toFavourite, placeId, requestAddToFavouriteFailed)
+                                    place: PlaceModel,
+        requestAddToFavouriteFailed: (toFavourite: Boolean, place: PlaceModel) -> Unit) {
+        placesViewModel.addPlaceToFavourite(toFavourite, place, requestAddToFavouriteFailed)
     }
 }
