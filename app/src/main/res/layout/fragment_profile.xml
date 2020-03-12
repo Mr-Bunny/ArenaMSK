@@ -33,7 +33,7 @@
             android:layout_marginBottom="21dp"
             android:contentDescription="@string/image_description"
             android:scaleType="centerCrop"
-            android:src="@drawable/auth_background"
+            android:src="@drawable/image_placeholder"
             app:layout_constraintLeft_toLeftOf="@id/profile_title"
             app:layout_constraintTop_toBottomOf="@id/profile_title"
             app:riv_oval="true"/>
@@ -82,12 +82,6 @@
                 app:drawableStartCompat="@drawable/ic_booked" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/profile_item_notifications"
-                style="@style/ProfileTextMenuItem"
-                android:text="@string/text_profile_item_notifications"
-                app:drawableStartCompat="@drawable/ic_notifications" />
-
-            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/profile_item_settings"
                 style="@style/ProfileTextMenuItem"
                 android:text="@string/text_profile_item_settings"
@@ -99,6 +93,7 @@
                 android:text="@string/text_profile_item_contact"
                 app:drawableStartCompat="@drawable/ic_contact_us" />
 
+            <!--TODO убрать потом-->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/profile_item_exit"
                 style="@style/ProfileTextMenuItem"

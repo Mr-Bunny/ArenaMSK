@@ -59,7 +59,7 @@
 
     <!--Profile-->
     <string name="text_profile_item_edit">Редактировать профиль</string>
-    <string name="text_profile_item_booked">Забронированно</string>
+    <string name="text_profile_item_booked">Забронировано</string>
     <string name="text_profile_item_notifications">Уведомления</string>
     <string name="text_profile_item_settings">Настройки</string>
     <string name="text_profile_item_contact">Напишите нам</string>
