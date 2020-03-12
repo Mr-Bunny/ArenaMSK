@@ -1,6 +1,7 @@
 package com.example.arenamsk.ui.place_filter
 
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -31,15 +32,13 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         }
     }
 
+    private var handler: Handler? = null
+
     private var priceFrom = MIN_PRICE
     private var priceTo = MAX_PRICE
 
     private val placesViewModel by lazy {
-        ViewModelProviders.of(this).get(PlacesViewModel::class.java)
-    }
-
-    private val placeFilterModel by lazy {
-        placesViewModel.getFilterLiveData().value ?: PlaceFilterModel()
+        ViewModelProviders.of(requireActivity()).get(PlacesViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,17 +62,64 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        placesViewModel.getPlacesLiveData().observe(this, Observer {
-            //TODO set кол-во найденных мест
+        placesViewModel.getPlacesLiveData().observe(viewLifecycleOwner, Observer {
+            filter_text_founded_places_count.text =
+                resources.getString(R.string.text_filter_founded_places, it.size.toString())
         })
 
         updateUI()
 
-        close_filter_btn.setOnClickListener { dismiss() }
+        setupListeners()
     }
 
-    //TODO на основе placeFilterModel выставляем UI
+    /** На основе placeFilterModel выставляем UI */
     private fun updateUI() {
+        val filter = placesViewModel.getFilterLiveData().value
+
+        filter_has_baths.isChecked = filter?.hasBaths ?: false
+        filter_has_inventory.isChecked = filter?.hasInventory ?: false
+        filter_has_lockers.isChecked = filter?.hasLockers ?: false
+        filter_has_parking.isChecked = filter?.hasParking ?: false
+        filter_open_field.isChecked = filter?.openField ?: false
+
+        priceFrom = filter?.priceFrom ?: MIN_PRICE
+        priceTo = filter?.priceTo ?: MAX_PRICE
+
+        filter_start_price_edit_text.setText(priceFrom.toString())
+        filter_end_price_edit_text.setText(priceTo.toString())
+
+        filter_price_range_bar.setProgress(priceFrom.toFloat(), priceTo.toFloat())
+
+        //TODO set up sports and subways
+    }
+
+    private fun setupListeners() {
+        filter_has_baths.setOnCheckedChangeListener { _, _ -> updatePlaces() }
+
+        filter_has_inventory.setOnCheckedChangeListener { _, _ -> updatePlaces() }
+
+        filter_has_lockers.setOnCheckedChangeListener { _, _ -> updatePlaces() }
+
+        filter_has_parking.setOnCheckedChangeListener { _, _ -> updatePlaces() }
+
+        filter_open_field.setOnCheckedChangeListener { _, isChecked -> updatePlaces() }
+
+        filter_close_field.setOnCheckedChangeListener { _, isChecked -> updatePlaces() }
+
+        close_filter_btn.setOnClickListener { dismiss() }
+
+        filter_btn_show.setOnClickListener {
+            //Закрываем фильтр для возврата на предыдущий экран
+            dismiss()
+        }
+
+        filter_btn_reset.setOnClickListener {
+            //Обнуляем фильтр и view
+            placesViewModel.resetFilter()
+
+            resetView()
+        }
+
         filter_start_price_edit_text.addTextChangedListener(object : TextWatcher {
             var editing = false
 
@@ -117,7 +163,7 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
 
                 if (!editing) {
                     editing = true
-                    filter_end_price_edit_text.setText(if (priceTo != MAX_PRICE ) priceTo.toString() else price.toString())
+                    filter_end_price_edit_text.setText(if (priceTo != MAX_PRICE) priceTo.toString() else price.toString())
                     filter_end_price_edit_text.setSelection(if (priceTo != MAX_PRICE) priceTo.toString().length else price.toString().length)
                     editing = false
                 }
@@ -131,8 +177,6 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
         })
-
-        filter_price_range_bar.setProgress(0f, 100000f)
 
         filter_price_range_bar.setOnRangeChangedListener(object : OnRangeChangedListener {
             override fun onRangeChanged(
@@ -155,6 +199,8 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
                         ).toString() else rightValue.toInt().toString()
                     )
                 }
+
+                updatePlaces()
             }
 
             override fun onStartTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {
@@ -180,7 +226,42 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         }
     }
 
-    //TODO при изменении фильтра, мы меняем значения в placeFilterModel
-    // Затем, этот объект сохраняем в liveData, у нас стартует загрузка на основе фильтра
-    // Обновляем кол-во найденых мест в этом фрагменте
+    private fun updatePlaces() {
+        //Обновляем площадки через какое-то время
+        if (handler == null) {
+            handler = Handler().apply {
+                postDelayed(
+                    {
+                        placesViewModel.updatePlaceWithFilter(
+                            hasBaths = filter_has_baths.isChecked,
+                            hasParking = filter_has_parking.isChecked,
+                            hasLockers = filter_has_lockers.isChecked,
+                            hasInventory = filter_has_inventory.isChecked,
+                            openField = filter_open_field.isChecked,
+                            priceFrom = priceFrom,
+                            priceTo = priceTo,
+                            sports = ArrayList(),
+                            subways = ArrayList()
+                        )
+                        handler = null
+                    },
+                    800L
+                )
+            }
+        }
+    }
+
+    private fun resetView() {
+        filter_has_baths.isChecked = false
+        filter_has_parking.isChecked = false
+        filter_has_lockers.isChecked = false
+        filter_has_inventory.isChecked = false
+        filter_open_field.isChecked = false
+        filter_close_field.isChecked = true
+        priceFrom = MIN_PRICE
+        priceTo = MAX_PRICE
+        filter_start_price_edit_text.setText(priceFrom.toString())
+        filter_end_price_edit_text.setText(priceTo.toString())
+        //TODO reset sports and subways
+    }
 }

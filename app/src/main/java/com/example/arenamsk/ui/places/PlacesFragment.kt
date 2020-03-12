@@ -34,7 +34,7 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
     private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback, ::itemBookingClickCallback, ::addPlaceToFavourite) }
 
     private val placesViewModel by lazy {
-        ViewModelProviders.of(this).get(PlacesViewModel::class.java)
+        ViewModelProviders.of(requireActivity()).get(PlacesViewModel::class.java)
     }
 
     private var placeFilterFragment: PlaceFilterFragment? = null
@@ -75,12 +75,12 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
             }
         })
 
-        //Только подгружаем новые данные, не меняем теги, они меняются в колбэках нажатия
-        placesViewModel.getFilterLiveData().observe(this, Observer {
-            //Показываем progress bar и загружаем новый список площадок на основе фильтра
-            showProgressBar()
-            placesViewModel.loadPlaces(!it.sportList.isNullOrEmpty())
-        })
+//        //Только подгружаем новые данные, не меняем теги, они меняются в колбэках нажатия
+//        placesViewModel.getFilterLiveData().observe(this, Observer {
+//            //Показываем progress bar и загружаем новый список площадок на основе фильтра
+//            showProgressBar()
+//            placesViewModel.loadPlaces(!it.sportList.isNullOrEmpty())
+//        })
 
         place_filter_button.setOnClickListener { openFilterFragment() }
 
@@ -122,7 +122,7 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
         }
 
         //Меняем liveDat-у с фильтром, что приведет к обновлению данных
-        placesViewModel.setFilterLiveData(filter)
+        placesViewModel.updatePlaceWithFilter(filter)
     }
 
     private fun initRecycler() {

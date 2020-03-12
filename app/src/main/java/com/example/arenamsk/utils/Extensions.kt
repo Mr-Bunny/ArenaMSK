@@ -26,3 +26,12 @@ fun View.disable() {
 fun View.hide() {
     visibility = View.INVISIBLE
 }
+
+fun ArrayList<String>.toStringTypedArray(): String? {
+    if (this.isNullOrEmpty()) return null
+
+    return this.toString()
+        .replace(" ", "")
+        .replace("[", "")
+        .replace("]", "")
+}

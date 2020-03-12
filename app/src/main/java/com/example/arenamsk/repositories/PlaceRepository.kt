@@ -5,6 +5,7 @@ import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.network.utils.AuthUtils
+import com.example.arenamsk.utils.toStringTypedArray
 
 class PlaceRepository private constructor() : BaseRepository() {
 
@@ -17,22 +18,32 @@ class PlaceRepository private constructor() : BaseRepository() {
         }
     }
 
+    /** Загрузка площадок с экрана списка площадок */
     fun getPlaces(
-        filter: PlaceFilterModel? = null,
+        sportList: ArrayList<String>? = null,
         success: (response: List<PlaceModel>) -> Unit,
         errorHandler: RequestErrorHandler
     ) = makeRequest(
         call = {
-            if (filter?.sportList.isNullOrEmpty()) {
+            if (sportList.isNullOrEmpty()) {
                 RemoteDataSource.getPlaces()
             } else {
                 //Приводим массив с видами спорта к виду "Футбол,Баскетбол"
-                val typedArray = filter?.sportList?.toString()
-                    ?.replace(" ", "")
-                    ?.replace("[", "")
-                    ?.replace("]", "")
-                RemoteDataSource.getPlaces(typedArray)
+                RemoteDataSource.getPlaces(sportList.toStringTypedArray())
             }
+        },
+        success = success,
+        errorHandler = errorHandler
+    )
+
+    /** Загрузка площадок с экрана фильтра */
+    fun getPlaces(
+        filter: PlaceFilterModel,
+        success: (response: List<PlaceModel>) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = {
+            RemoteDataSource.getPlaces(filter)
         },
         success = success,
         errorHandler = errorHandler

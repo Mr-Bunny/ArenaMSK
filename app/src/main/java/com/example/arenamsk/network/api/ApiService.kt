@@ -32,6 +32,17 @@ interface ApiService {
     @GET("api/v1/place/")
     suspend fun getPLaces(@Query("sports", encoded = true) sports: String?): Response<List<PlaceModel>>
 
+    @GET("api/v1/place/")
+    suspend fun getPLaces(@Query("hasBaths") hasBaths: Boolean,
+                          @Query("hasInventory") hasInventory: Boolean,
+                          @Query("hasLockers") hasLockers: Boolean,
+                          @Query("hasParking") hasParking: Boolean,
+                          @Query("openField") openField: Boolean,
+                          @Query("priceFrom") priceFrom: Int,
+                          @Query("priceTo") priceTo: Int,
+                          @Query("sports", encoded = true) sports: String?,
+                          @Query("subways", encoded = true) subways: String?): Response<List<PlaceModel>>
+
     @POST("api/v1/favorite/mark/{place}")
     suspend fun addPlaceToFavourite(@Path("place") place: String): Response<Unit>
 

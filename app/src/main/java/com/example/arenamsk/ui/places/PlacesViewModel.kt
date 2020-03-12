@@ -18,10 +18,16 @@ class PlacesViewModel : BaseViewModel() {
     //Статус запроса площадок
     private val placesStatus = SingleLiveEvent<GetPlacesStatus>()
 
+    //Список всех площадок
     private var placesLiveData = MutableLiveData<MutableList<PlaceModel>>()
+    //Список площадок, которые в избранном, берутся локально из обшего списка найденных площадок
+    //При открытии экрана избранных, все площадки подгружаются заново, т.е. фильтр сбрасывается
     private var favouritesPlacesLiveData = MutableLiveData<MutableList<PlaceModel>>()
+    //Список найденных площадок среди загруженных (либо все, либо найденные по фильтру)
     private var foundedPlacesLiveData = MutableLiveData<MutableList<PlaceModel>>()
+    //Список найденных избранных площадок среди загруженных (либо все, либо найденные по фильтру)
     private var foundedFavouritesPlacesLiveData = MutableLiveData<MutableList<PlaceModel>>()
+    //Модель фильтра
     private var filterLiveData = MutableLiveData<PlaceFilterModel>()
 
     private val repository = PlaceRepository.getInstance()
@@ -59,10 +65,6 @@ class PlacesViewModel : BaseViewModel() {
 
     fun getFilterLiveData() = filterLiveData
 
-    fun setFilterLiveData(filter: PlaceFilterModel) {
-        filterLiveData.value = filter
-    }
-
     fun getPlacesStatusLiveData() = placesStatus
 
     /** Делаем запрос на получение списка всех площадок и СК
@@ -71,15 +73,17 @@ class PlacesViewModel : BaseViewModel() {
         placesStatus.value = GetPlacesStatus.LOAD_PLACES
 
         repository.getPlaces(
-            filter = if (withFilter) filterLiveData.value else null,
+            sportList = if (withFilter) filterLiveData.value?.sportList else null,
             success = ::getPlacesSuccess,
             errorHandler = errorHandler
         )
     }
 
-    fun addPlaceToFavourite(toFavourite: Boolean,
-                            place: PlaceModel,
-                            requestAddToFavouriteFailed: (toFavourite: Boolean, place: PlaceModel) -> Unit) {
+    fun addPlaceToFavourite(
+        toFavourite: Boolean,
+        place: PlaceModel,
+        requestAddToFavouriteFailed: (toFavourite: Boolean, place: PlaceModel) -> Unit
+    ) {
         repository.addPlaceToFavourite(toFavourite,
             place.id,
             object : RequestErrorHandler {
@@ -140,9 +144,74 @@ class PlacesViewModel : BaseViewModel() {
         }
     }
 
+    /** Ищем новые площадки на основе фильтра */
+    fun updatePlaceWithFilter(
+        hasBaths: Boolean = false,
+        hasInventory: Boolean = false,
+        hasLockers: Boolean = false,
+        hasParking: Boolean = false,
+        openField: Boolean = false,
+        priceFrom: Int = 0,
+        priceTo: Int = 100000,
+        sports: ArrayList<String>,
+        subways: ArrayList<String>
+    ) {
+        val newFilter = PlaceFilterModel(
+            hasBaths,
+            hasInventory,
+            hasLockers,
+            hasParking,
+            openField,
+            priceFrom,
+            priceTo,
+            sports,
+            subways
+        )
+
+        filterLiveData.value = newFilter
+
+        placesStatus.value = GetPlacesStatus.LOAD_PLACES
+
+        repository.getPlaces(
+            filter = newFilter,
+            success = ::getFilteredPlacesSuccess,
+            errorHandler = errorHandler
+        )
+    }
+
+    fun updatePlaceWithFilter(newFilter: PlaceFilterModel) {
+        filterLiveData.value = newFilter
+
+        placesStatus.value = GetPlacesStatus.LOAD_PLACES
+
+        repository.getPlaces(
+            filter = newFilter,
+            success = ::getFilteredPlacesSuccess,
+            errorHandler = errorHandler
+        )
+    }
+
+    fun resetFilter() {
+        filterLiveData.value = PlaceFilterModel()
+
+        repository.getPlaces(
+            filter = filterLiveData.value!!,
+            success = ::getFilteredPlacesSuccess,
+            errorHandler = errorHandler
+        )
+    }
+
     /** Отображаем данные */
     private fun getPlacesSuccess(places: List<PlaceModel>) {
-        //Сохраняем все площадки
+        handlePlaces(places)
+    }
+
+    private fun getFilteredPlacesSuccess(places: List<PlaceModel>) {
+        handlePlaces(places)
+    }
+
+    private fun handlePlaces(places: List<PlaceModel>) {
+        //Сохраняем найденные площадки
         placesLiveData.value = places as MutableList<PlaceModel>
 
         //Сохраняем площадки добавленные в избранное
@@ -150,4 +219,5 @@ class PlacesViewModel : BaseViewModel() {
             placeModel.isFavourite
         } as MutableList<PlaceModel>
     }
+
 }
