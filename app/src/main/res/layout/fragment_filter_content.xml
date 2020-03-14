@@ -37,7 +37,8 @@
                     android:id="@+id/spinner_sport_type_filter"
                     style="@style/FilterText"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:background="@drawable/filter_spinner_background"
                     app:arrowDrawable="@drawable/ic_spinner_arrow" />
 
@@ -59,7 +60,8 @@
                     android:id="@+id/spinner_metro_filter"
                     style="@style/FilterText"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:background="@drawable/filter_spinner_background"
                     app:arrowDrawable="@drawable/ic_spinner_arrow" />
 

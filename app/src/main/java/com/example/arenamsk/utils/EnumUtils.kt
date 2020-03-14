@@ -31,4 +31,18 @@ object EnumUtils {
         REQUEST_ERROR,
         NETWORK_OFFLINE
     }
+
+    enum class Sports(val type: String) {
+        SPORT_ALL("Все виды"),
+        SPORT_FOOTBALL("Футбол"),
+        SPORT_MINI_FOOTBALL("Мини-футбол"),
+        SPORT_VOLLEYBALL("Волейбол"),
+        SPORT_BASKETBALL("Баскетбол"),
+        SPORT_TENNIS("Теннис")
+    }
+
+    //Конвертируем константы в список видов спорта
+    fun getSportList() = mutableListOf<String>().apply {
+        Sports.values().forEach { add(it.type) }
+    }
 }

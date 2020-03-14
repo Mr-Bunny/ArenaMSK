@@ -17,15 +17,10 @@ import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.base.PlaceDialogFragment
 import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
 import com.example.arenamsk.ui.places.adapter.PlacesAdapter
-import com.example.arenamsk.utils.Constants.ALL_TYPE
-import com.example.arenamsk.utils.Constants.BASKETBALL_TYPE
-import com.example.arenamsk.utils.Constants.FOOTBALL_TYPE
-import com.example.arenamsk.utils.Constants.MINI_FOOTBALL_TYPE
-import com.example.arenamsk.utils.Constants.TENNIS_TYPE
-import com.example.arenamsk.utils.Constants.VOLLEYBALL_TYPE
 import com.example.arenamsk.utils.EnumUtils.GetPlacesStatus
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
+import com.example.arenamsk.utils.EnumUtils.Sports.*
 import kotlinx.android.synthetic.main.fragment_places.*
 import kotlinx.android.synthetic.main.places_errors_form.*
 
@@ -108,7 +103,7 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
     override fun tagWasSelected(isSelected: Boolean, sportName: String) {
         val filter = placesViewModel.getFilterLiveData().value ?: PlaceFilterModel(sportList = ArrayList())
 
-        if (sportName == ALL_TYPE) {
+        if (sportName == SPORT_ALL.type) {
             resetTags()
             filter.sportList = ArrayList()
         } else {
@@ -143,12 +138,12 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
 
         with(place_tag_container) {
             removeAllViews()
-            addView(TagView(requireContext(), this@PlacesFragment, 1, ALL_TYPE))
-            addView(TagView(requireContext(), this@PlacesFragment, 2, BASKETBALL_TYPE))
-            addView(TagView(requireContext(), this@PlacesFragment, 3, MINI_FOOTBALL_TYPE))
-            addView(TagView(requireContext(), this@PlacesFragment, 4, FOOTBALL_TYPE))
-            addView(TagView(requireContext(), this@PlacesFragment, 5, TENNIS_TYPE))
-            addView(TagView(requireContext(), this@PlacesFragment, 6, VOLLEYBALL_TYPE))
+            addView(TagView(requireContext(), this@PlacesFragment, 1, SPORT_ALL.type))
+            addView(TagView(requireContext(), this@PlacesFragment, 2, SPORT_BASKETBALL.type))
+            addView(TagView(requireContext(), this@PlacesFragment, 3, SPORT_MINI_FOOTBALL.type))
+            addView(TagView(requireContext(), this@PlacesFragment, 4, SPORT_FOOTBALL.type))
+            addView(TagView(requireContext(), this@PlacesFragment, 5, SPORT_TENNIS.type))
+            addView(TagView(requireContext(), this@PlacesFragment, 6, SPORT_VOLLEYBALL.type))
         }
 
         //Если были ранее выбранные - выделяем их

@@ -16,11 +16,17 @@ import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.ui.places.PlacesViewModel
 import com.example.arenamsk.utils.Constants
+import com.example.arenamsk.utils.EnumUtils
+import com.example.arenamsk.utils.EnumUtils.getSportList
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import kotlinx.android.synthetic.main.fragment_filter.*
 import kotlinx.android.synthetic.main.fragment_filter_content.*
 import kotlinx.android.synthetic.main.fragment_filter_content.view.*
+import org.angmarch.views.NiceSpinner
+import org.angmarch.views.OnSpinnerItemSelectedListener
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwner {
 
@@ -45,6 +51,10 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
     }
 
     private lateinit var cachedFilter: PlaceFilterModel
+
+    //Храним как массив, но из окна фильтра можно выставить только одно значение из списка
+    //Пустой массив = SPORT_ALL
+    private val sports = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +93,9 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
                 resources.getString(R.string.text_filter_founded_places, it.size.toString())
         })
 
+        //Ставим все возможные значения
+        spinner_sport_type_filter.attachDataSource(getSportList())
+
         updateUI()
 
         setupListeners()
@@ -91,6 +104,14 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
     /** На основе placeFilterModel выставляем UI */
     private fun updateUI() {
         val filter = placesViewModel.getFilterLiveData().value
+
+        //Если мы на экране площадок выбрали только один вид спорта - то делаем его выбранным по умолчанию
+        if (filter?.sportList?.size == 1) {
+            val choosedSport = filter.sportList?.get(0) ?: ""
+            sports.clear()
+            sports.add(choosedSport)
+            spinner_sport_type_filter.selectedIndex = getSportList().indexOf(choosedSport)
+        }
 
         filter_has_baths.isChecked = filter?.hasBaths ?: false
         filter_has_inventory.isChecked = filter?.hasInventory ?: false
@@ -111,6 +132,18 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
     }
 
     private fun setupListeners() {
+        spinner_sport_type_filter.onSpinnerItemSelectedListener =
+            OnSpinnerItemSelectedListener { parent, _, position, _ ->
+                sports.clear()
+                with(parent?.getItemAtPosition(position).toString()) {
+                    if (this != EnumUtils.Sports.SPORT_ALL.type) {
+                        sports.add(this)
+                    }
+                }
+
+                updatePlaces()
+            }
+
         filter_has_baths.setOnCheckedChangeListener { _, _ -> updatePlaces() }
 
         filter_has_inventory.setOnCheckedChangeListener { _, _ -> updatePlaces() }
@@ -132,6 +165,17 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         close_filter_btn.setOnClickListener {  closeFilter() }
 
         filter_btn_show.setOnClickListener {
+            placesViewModel.updatePlaceWithFilter(
+                hasBaths = filter_has_baths.isChecked,
+                hasParking = filter_has_parking.isChecked,
+                hasLockers = filter_has_lockers.isChecked,
+                hasInventory = filter_has_inventory.isChecked,
+                openField = filter_open_field.isChecked,
+                priceFrom = priceFrom,
+                priceTo = priceTo,
+                sports = sports,
+                subways = ArrayList()
+            )
             //Закрываем фильтр для возврата на предыдущий экран
             dismiss()
         }
@@ -265,7 +309,7 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
                                 openField = filter_open_field.isChecked,
                                 priceFrom = priceFrom,
                                 priceTo = priceTo,
-                                sports = ArrayList(),
+                                sports = sports,
                                 subways = ArrayList()
                             )
                             handler = null
