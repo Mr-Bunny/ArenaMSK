@@ -81,6 +81,7 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         filter_has_lockers.isChecked = filter?.hasLockers ?: false
         filter_has_parking.isChecked = filter?.hasParking ?: false
         filter_open_field.isChecked = filter?.openField ?: false
+        filter_close_field.isChecked = !filter_open_field.isChecked
 
         priceFrom = filter?.priceFrom ?: MIN_PRICE
         priceTo = filter?.priceTo ?: MAX_PRICE
@@ -102,9 +103,15 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
 
         filter_has_parking.setOnCheckedChangeListener { _, _ -> updatePlaces() }
 
-        filter_open_field.setOnCheckedChangeListener { _, isChecked -> updatePlaces() }
+        filter_open_field.setOnCheckedChangeListener { _, isChecked ->
+            filter_close_field.isChecked = !isChecked
+            updatePlaces()
+        }
 
-        filter_close_field.setOnCheckedChangeListener { _, isChecked -> updatePlaces() }
+        filter_close_field.setOnCheckedChangeListener { _, isChecked ->
+            filter_open_field.isChecked = !isChecked
+            updatePlaces()
+        }
 
         close_filter_btn.setOnClickListener { dismiss() }
 
