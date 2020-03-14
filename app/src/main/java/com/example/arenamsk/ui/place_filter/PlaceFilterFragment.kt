@@ -1,5 +1,6 @@
 package com.example.arenamsk.ui.place_filter
 
+import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -14,10 +15,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.ui.places.PlacesViewModel
+import com.example.arenamsk.utils.Constants
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import kotlinx.android.synthetic.main.fragment_filter.*
 import kotlinx.android.synthetic.main.fragment_filter_content.*
+import kotlinx.android.synthetic.main.fragment_filter_content.view.*
 
 class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwner {
 
@@ -41,10 +44,20 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         ViewModelProviders.of(requireActivity()).get(PlacesViewModel::class.java)
     }
 
+    private lateinit var cachedFilter: PlaceFilterModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setStyle(STYLE_NORMAL, R.style.FullScreenDialogStyle)
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return object : Dialog(activity!!, theme) {
+            override fun onBackPressed() {
+                closeFilter()
+            }
+        }
     }
 
     override fun onCreateView(
@@ -61,6 +74,9 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //Сохраняем текущий фильтр, на случай, если мы закроем окно и не будем применять найстройки
+        cachedFilter = placesViewModel.getFilterLiveData().value ?: PlaceFilterModel()
 
         placesViewModel.getPlacesLiveData().observe(viewLifecycleOwner, Observer {
             filter_text_founded_places_count.text =
@@ -113,7 +129,7 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
             updatePlaces()
         }
 
-        close_filter_btn.setOnClickListener { dismiss() }
+        close_filter_btn.setOnClickListener {  closeFilter() }
 
         filter_btn_show.setOnClickListener {
             //Закрываем фильтр для возврата на предыдущий экран
@@ -233,24 +249,27 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         }
     }
 
+    //TODO использовать корутины
     private fun updatePlaces() {
         //Обновляем площадки через какое-то время
         if (handler == null) {
             handler = Handler().apply {
                 postDelayed(
                     {
-                        placesViewModel.updatePlaceWithFilter(
-                            hasBaths = filter_has_baths.isChecked,
-                            hasParking = filter_has_parking.isChecked,
-                            hasLockers = filter_has_lockers.isChecked,
-                            hasInventory = filter_has_inventory.isChecked,
-                            openField = filter_open_field.isChecked,
-                            priceFrom = priceFrom,
-                            priceTo = priceTo,
-                            sports = ArrayList(),
-                            subways = ArrayList()
-                        )
-                        handler = null
+                        if (isResumed) {
+                            placesViewModel.updatePlaceWithFilter(
+                                hasBaths = filter_has_baths.isChecked,
+                                hasParking = filter_has_parking.isChecked,
+                                hasLockers = filter_has_lockers.isChecked,
+                                hasInventory = filter_has_inventory.isChecked,
+                                openField = filter_open_field.isChecked,
+                                priceFrom = priceFrom,
+                                priceTo = priceTo,
+                                sports = ArrayList(),
+                                subways = ArrayList()
+                            )
+                            handler = null
+                        }
                     },
                     800L
                 )
@@ -270,5 +289,12 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         filter_start_price_edit_text.setText(priceFrom.toString())
         filter_end_price_edit_text.setText(priceTo.toString())
         //TODO reset sports and subways
+    }
+
+    private fun closeFilter() {
+        //Показываем площадки на основе старого фильтра
+        placesViewModel.updatePlaceWithFilter(cachedFilter)
+        //Закрываем фильтр для возврата на предыдущий экран
+        dismiss()
     }
 }
