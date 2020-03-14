@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.ui.places.PlacesViewModel
+import com.example.arenamsk.utils.ActionEvent
 import com.example.arenamsk.utils.Constants
 import com.example.arenamsk.utils.EnumUtils
 import com.example.arenamsk.utils.EnumUtils.getSportList
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_filter_content.*
 import kotlinx.android.synthetic.main.fragment_filter_content.view.*
 import org.angmarch.views.NiceSpinner
 import org.angmarch.views.OnSpinnerItemSelectedListener
+import org.greenrobot.eventbus.EventBus
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -165,17 +167,9 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         close_filter_btn.setOnClickListener {  closeFilter() }
 
         filter_btn_show.setOnClickListener {
-            placesViewModel.updatePlaceWithFilter(
-                hasBaths = filter_has_baths.isChecked,
-                hasParking = filter_has_parking.isChecked,
-                hasLockers = filter_has_lockers.isChecked,
-                hasInventory = filter_has_inventory.isChecked,
-                openField = filter_open_field.isChecked,
-                priceFrom = priceFrom,
-                priceTo = priceTo,
-                sports = sports,
-                subways = ArrayList()
-            )
+            //Обновляем данные
+            EventBus.getDefault().post(ActionEvent.UpdateSportList())
+            placesViewModel.updatePlaceWithFilter()
             //Закрываем фильтр для возврата на предыдущий экран
             dismiss()
         }

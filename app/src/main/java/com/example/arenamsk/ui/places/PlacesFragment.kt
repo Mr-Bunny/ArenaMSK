@@ -15,14 +15,18 @@ import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.base.PlaceDialogFragment
+import com.example.arenamsk.ui.base.PlaceDialogFragment.Companion.BOOKING_FRAGMENT_TAG
 import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
 import com.example.arenamsk.ui.places.adapter.PlacesAdapter
+import com.example.arenamsk.utils.ActionEvent
 import com.example.arenamsk.utils.EnumUtils.GetPlacesStatus
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import com.example.arenamsk.utils.EnumUtils.Sports.*
 import kotlinx.android.synthetic.main.fragment_places.*
 import kotlinx.android.synthetic.main.places_errors_form.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallback {
 
@@ -93,6 +97,18 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        EventBus.getDefault().unregister(this)
+
+        super.onStop()
+    }
+
     /** Обрабатываем нажатие на тег. Если было нажатие на ALL_TYPE, то мы выделение не снимаем,
      * оно снимается автоматически по нажатию на остальные теги.
      * Если тег был выбран - добавляем его в массив sports объекта фильтра и снимаем выделение с ALL_TYPE
@@ -118,6 +134,11 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
 
         //Меняем liveDat-у с фильтром, что приведет к обновлению данных
         placesViewModel.updatePlaceWithFilter(filter)
+    }
+
+    @Subscribe
+    fun updateSportTags(event: ActionEvent.UpdateSportList) {
+        initTags()
     }
 
     private fun initRecycler() {

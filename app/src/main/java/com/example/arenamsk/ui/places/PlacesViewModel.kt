@@ -179,6 +179,11 @@ class PlacesViewModel : BaseViewModel() {
         )
     }
 
+    //Когда нужно просто подгрузить площадки с текущим фильтром
+    fun updatePlaceWithFilter() {
+        updatePlaceWithFilter(filterLiveData.value ?: PlaceFilterModel())
+    }
+
     fun updatePlaceWithFilter(newFilter: PlaceFilterModel) {
         filterLiveData.value = newFilter
 
