@@ -22,13 +22,8 @@ class PlacesViewModel : BaseViewModel() {
 
     //Список всех площадок
     private var placesLiveData = MutableLiveData<MutableList<PlaceModel>>()
-    //Список площадок, которые в избранном, берутся локально из обшего списка найденных площадок
-    //При открытии экрана избранных, все площадки подгружаются заново, т.е. фильтр сбрасывается
-    private var favouritesPlacesLiveData = MutableLiveData<MutableList<PlaceModel>>()
     //Список найденных площадок среди загруженных (либо все, либо найденные по фильтру)
     private var foundedPlacesLiveData = MutableLiveData<MutableList<PlaceModel>>()
-    //Список найденных избранных площадок среди загруженных (либо все, либо найденные по фильтру)
-    private var foundedFavouritesPlacesLiveData = MutableLiveData<MutableList<PlaceModel>>()
     //Модель фильтра
     private var filterLiveData = MutableLiveData<PlaceFilterModel>()
     //Список станций метро
@@ -57,34 +52,17 @@ class PlacesViewModel : BaseViewModel() {
 
     init {
         loadSubways()
-        loadPlaces()
     }
 
     fun getPlacesLiveData() = placesLiveData
 
     fun getSubwaysLiveData() = subwaysLiveData
 
-    fun getFavouritesPlacesLiveData() = favouritesPlacesLiveData
-
-    fun getFoundedFavouritesPlacesLiveData() = foundedFavouritesPlacesLiveData
-
     fun getFoundedPlacesLiveData() = foundedPlacesLiveData
 
     fun getFilterLiveData() = filterLiveData
 
     fun getPlacesStatusLiveData() = placesStatus
-
-    /** Делаем запрос на получение списка всех площадок и СК
-     * Или если есть фильтр, то делаем запрос с фильтром */
-    fun loadPlaces(withFilter: Boolean = false) {
-        placesStatus.value = GetPlacesStatus.LOAD_PLACES
-
-        repository.getPlaces(
-            sportList = if (withFilter) filterLiveData.value?.sportList else null,
-            success = ::getPlacesSuccess,
-            errorHandler = errorHandler
-        )
-    }
 
     fun addPlaceToFavourite(
         toFavourite: Boolean,
@@ -116,7 +94,7 @@ class PlacesViewModel : BaseViewModel() {
     /** Ищем и отображаем площадки с введенным текстом (это может быть или заголовок или адрес) */
     fun showFilteredPlaces(textToSearch: String) {
         if (textToSearch.isEmpty()) {
-            loadPlaces(true)
+            handlePlaces(placesLiveData.value ?: emptyList())
             return
         }
 
@@ -129,25 +107,6 @@ class PlacesViewModel : BaseViewModel() {
             } as? MutableList<PlaceModel> ?: mutableListOf()
 
             withContext(Dispatchers.Main) { foundedPlacesLiveData.value = founded }
-        }
-    }
-
-    /** Ищем и отображаем площадки в избранном с введенным текстом (это может быть или заголовок или адрес) */
-    fun showFilteredPlacesInFavourites(textToSearch: String) {
-        if (textToSearch.isEmpty()) {
-            loadPlaces(false)
-            return
-        }
-
-        launch(Dispatchers.IO) {
-            val favouritesPlaceList = favouritesPlacesLiveData.value
-
-            val founded = favouritesPlaceList?.filter { place ->
-                place.title.toLowerCase().contains(textToSearch.toLowerCase()) ||
-                        place.address.toLowerCase().contains(textToSearch.toLowerCase())
-            } as? MutableList<PlaceModel> ?: mutableListOf()
-
-            withContext(Dispatchers.Main) { foundedFavouritesPlacesLiveData.value = founded }
         }
     }
 
@@ -225,11 +184,6 @@ class PlacesViewModel : BaseViewModel() {
     private fun handlePlaces(places: List<PlaceModel>) {
         //Сохраняем найденные площадки
         placesLiveData.value = places as MutableList<PlaceModel>
-
-        //Сохраняем площадки добавленные в избранное
-        favouritesPlacesLiveData.value = places.filter { placeModel ->
-            placeModel.isFavourite
-        } as MutableList<PlaceModel>
     }
 
     private fun loadSubways() {

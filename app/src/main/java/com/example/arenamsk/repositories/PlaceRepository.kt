@@ -21,6 +21,18 @@ class PlaceRepository private constructor() : BaseRepository() {
         }
     }
 
+    /** Загрузка избранных площадок */
+    fun getFavourites(
+        success: (response: List<PlaceModel>) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = {
+            RemoteDataSource.getFavourites()
+        },
+        success = success,
+        errorHandler = errorHandler
+    )
+
     /** Загрузка площадок с экрана списка площадок */
     fun getPlaces(
         sportList: ArrayList<String>? = null,

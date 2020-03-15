@@ -42,6 +42,8 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        placesViewModel.updatePlaceWithFilter()
+
         //Добавляем теги
         initTags()
 
@@ -73,13 +75,6 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
                 }
             }
         })
-
-//        //Только подгружаем новые данные, не меняем теги, они меняются в колбэках нажатия
-//        placesViewModel.getFilterLiveData().observe(this, Observer {
-//            //Показываем progress bar и загружаем новый список площадок на основе фильтра
-//            showProgressBar()
-//            placesViewModel.loadPlaces(!it.sportList.isNullOrEmpty())
-//        })
 
         place_filter_button.setOnClickListener { openFilterFragment() }
 
@@ -248,7 +243,7 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
         places_request_error_form.enable()
         try_again_button.setOnClickListener {
             showProgressBar()
-            placesViewModel.loadPlaces(true)
+            placesViewModel.updatePlaceWithFilter()
         }
     }
 

@@ -33,6 +33,9 @@ interface ApiService {
     @GET("api/v1/place/")
     suspend fun getPLaces(): Response<List<PlaceModel>>
 
+    @GET("api/v1/place/favorite")
+    suspend fun getFavourites(): Response<List<PlaceModel>>
+
     @GET("api/v1/place/")
     suspend fun getPLaces(@Query("sports", encoded = true) sports: String?): Response<List<PlaceModel>>
 

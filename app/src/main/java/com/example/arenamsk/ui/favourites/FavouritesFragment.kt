@@ -11,13 +11,11 @@ import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.base.PlaceDialogFragment
-import com.example.arenamsk.ui.places.PlacesViewModel
 import com.example.arenamsk.ui.places.adapter.PlacesAdapter
+import com.example.arenamsk.utils.EnumUtils
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.fragment_favourites.*
-import kotlinx.android.synthetic.main.fragment_places.*
-import kotlinx.android.synthetic.main.places_errors_form.*
 
 class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
 
@@ -25,8 +23,8 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
 
     private var placeDetailFragment: PlaceDialogFragment? = null
 
-    private val placesViewModel by lazy {
-        ViewModelProviders.of(this).get(PlacesViewModel::class.java)
+    private val favouritesViewModel by lazy {
+        ViewModelProviders.of(this).get(FavouritesViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,21 +33,25 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
         initRecycler()
 
         //LiveData с найденными площадками
-        placesViewModel.getFoundedFavouritesPlacesLiveData().observe(this, Observer {
+        favouritesViewModel.getFoundedFavouritesPlacesLiveData().observe(this, Observer {
             //Показываем площадки только, если мы что-то вводили в поиск
             if (edit_text_search_favourites.text.toString().isNotEmpty()) {
                 setupList(it)
             }
         })
 
-        placesViewModel.getFavouritesPlacesLiveData().observe(viewLifecycleOwner, Observer {
+        favouritesViewModel.getFavouritesPlacesLiveData().observe(viewLifecycleOwner, Observer {
             setupList(it)
+        })
+
+        favouritesViewModel.getFavouritesStatusPlacesLiveData().observe(viewLifecycleOwner, Observer {
+            handlePlacesLoadingStatus(it)
         })
 
         //Вешаем слушатель на поле поиска площадок по названию и адресу
         edit_text_search_favourites.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(textToSearch: Editable?) {
-                placesViewModel.showFilteredPlacesInFavourites(textToSearch.toString().trim())
+                favouritesViewModel.showFilteredPlacesInFavourites(textToSearch.toString().trim())
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -96,7 +98,7 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
     private fun addPlaceToFavourite(toFavourite: Boolean,
                                     place: PlaceModel,
                                     requestAddToFavouriteFailed: (toFavourite: Boolean, place: PlaceModel) -> Unit) {
-        placesViewModel.addPlaceToFavourite(toFavourite, place, requestAddToFavouriteFailed)
+        favouritesViewModel.addPlaceToFavourite(toFavourite, place, requestAddToFavouriteFailed)
     }
 
     /** Отображаем текст, что площадки не найдены */
@@ -109,5 +111,24 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
     private fun hidePlacesNotFoundForm() {
         recycler_favourites.enable()
         favourite_places_not_found_form.disable()
+    }
+
+    /** Обрабатываем ошибки запроса площадок */
+    private fun handlePlacesLoadingStatus(status: EnumUtils.GetPlacesStatus) {
+        when (status) {
+            EnumUtils.GetPlacesStatus.NOT_FOUND -> {
+                showPlacesNotFoundForm()
+            }
+
+            EnumUtils.GetPlacesStatus.REQUEST_ERROR -> {
+            }
+
+            EnumUtils.GetPlacesStatus.NETWORK_OFFLINE -> {
+                showNetworkOfflineError()
+            }
+
+            EnumUtils.GetPlacesStatus.LOAD_PLACES -> {
+            }
+        }
     }
 }

@@ -36,6 +36,9 @@ object RemoteDataSource {
         service.getPLaces()
     }
 
+    //Получаем список избранных площадок
+    suspend fun getFavourites() = service.getFavourites()
+
     //Если пользователь дефолтный, то запрос площадок без токена
     suspend fun getPlaces(sports: String?) = if (AuthUtils.isUserDefault()) {
         authService.getPLaces(sports)
@@ -55,7 +58,14 @@ object RemoteDataSource {
             priceFrom = priceFrom,
             priceTo = priceTo,
             sports = sportList?.toStringTypedArray(),
-            subways = if (subways?.id == PlaceFilterFragment.DEFAULT_SUBWAY_ID) null else subways?.id.toString()
+            subways = if (subways == null ||
+                subways?.id == null ||
+                subways?.id == PlaceFilterFragment.DEFAULT_SUBWAY_ID
+            ) {
+                null
+            } else {
+                subways?.id.toString()
+            }
         )
     }
 
