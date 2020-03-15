@@ -351,8 +351,10 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         priceTo = MAX_PRICE
         filter_start_price_edit_text.setText(priceFrom.toString())
         filter_end_price_edit_text.setText(priceTo.toString())
+        sports.clear()
+        spinner_sport_type_filter.selectedIndex = 0
         subways = Subway()
-        //TODO reset sports and subways
+        spinner_metro_filter.selectedIndex = 0
     }
 
     private fun closeFilter() {
