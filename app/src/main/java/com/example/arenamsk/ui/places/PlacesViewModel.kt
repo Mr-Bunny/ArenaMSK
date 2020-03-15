@@ -5,7 +5,9 @@ import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.ApiError
 import com.example.arenamsk.network.models.RequestErrorHandler
+import com.example.arenamsk.network.utils.AuthUtils.emptyErrorHandler
 import com.example.arenamsk.repositories.PlaceRepository
+import com.example.arenamsk.room.tables.Subway
 import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.EnumUtils.GetPlacesStatus
 import com.example.arenamsk.utils.SingleLiveEvent
@@ -29,6 +31,8 @@ class PlacesViewModel : BaseViewModel() {
     private var foundedFavouritesPlacesLiveData = MutableLiveData<MutableList<PlaceModel>>()
     //Модель фильтра
     private var filterLiveData = MutableLiveData<PlaceFilterModel>()
+    //Список станций метро
+    private var subwaysLiveData = MutableLiveData<List<Subway>>()
 
     private val repository = PlaceRepository.getInstance()
 
@@ -52,10 +56,13 @@ class PlacesViewModel : BaseViewModel() {
     }
 
     init {
+        loadSubways()
         loadPlaces()
     }
 
     fun getPlacesLiveData() = placesLiveData
+
+    fun getSubwaysLiveData() = subwaysLiveData
 
     fun getFavouritesPlacesLiveData() = favouritesPlacesLiveData
 
@@ -154,7 +161,7 @@ class PlacesViewModel : BaseViewModel() {
         priceFrom: Int = 0,
         priceTo: Int = 100000,
         sports: ArrayList<String>,
-        subways: ArrayList<String>
+        subways: Subway
     ) {
         val newFilter = PlaceFilterModel(
             hasBaths,
@@ -225,4 +232,12 @@ class PlacesViewModel : BaseViewModel() {
         } as MutableList<PlaceModel>
     }
 
+    private fun loadSubways() {
+        launch(Dispatchers.IO) {
+            repository.getSubways(
+                success = { subwaysLiveData.value = it },
+                errorHandler = emptyErrorHandler
+            )
+        }
+    }
 }

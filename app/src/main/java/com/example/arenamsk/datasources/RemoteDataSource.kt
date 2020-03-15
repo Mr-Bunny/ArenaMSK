@@ -1,16 +1,15 @@
 package com.example.arenamsk.datasources
 
 import com.example.arenamsk.models.PlaceFilterModel
-import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.api.ApiService
 import com.example.arenamsk.network.models.auth.LogInUserModel
 import com.example.arenamsk.network.models.auth.RefreshTokenModel
 import com.example.arenamsk.network.models.auth.SignUpUserModel
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.network.utils.RetrofitFactory
+import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
 import com.example.arenamsk.utils.toStringTypedArray
 import okhttp3.MultipartBody
-import okhttp3.Response
 
 object RemoteDataSource {
     private val service: ApiService
@@ -56,7 +55,7 @@ object RemoteDataSource {
             priceFrom = priceFrom,
             priceTo = priceTo,
             sports = sportList?.toStringTypedArray(),
-            subways = subways?.toStringTypedArray()
+            subways = if (subways?.id == PlaceFilterFragment.DEFAULT_SUBWAY_ID) null else subways?.id.toString()
         )
     }
 
@@ -64,5 +63,7 @@ object RemoteDataSource {
 
     suspend fun removePlaceFromFavourite(placeId: Int) =
         service.addRemoveFromFavourite(placeId.toString())
+
+    suspend fun getSubways() = authService.getAllSubways()
 
 }

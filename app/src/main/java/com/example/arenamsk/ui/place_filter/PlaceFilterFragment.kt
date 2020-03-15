@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceFilterModel
+import com.example.arenamsk.room.tables.Subway
 import com.example.arenamsk.ui.places.PlacesViewModel
 import com.example.arenamsk.utils.ActionEvent
 import com.example.arenamsk.utils.Constants
@@ -37,6 +38,8 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         const val MIN_PRICE = 0
         const val MAX_PRICE = 100000
         const val PRICE_STEP = 1
+        const val DEFAULT_SUBWAY = "Все станции"
+        const val DEFAULT_SUBWAY_ID = 0
 
         fun getInstance(): PlaceFilterFragment {
             return PlaceFilterFragment()
@@ -52,11 +55,23 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         ViewModelProviders.of(requireActivity()).get(PlacesViewModel::class.java)
     }
 
+    //Из объектов метро достаем только имя
+    private val allSubways: List<String> by lazy {
+        val list = mutableListOf(DEFAULT_SUBWAY)
+        placesViewModel.getSubwaysLiveData().value?.forEach {
+            list.add(it.name ?: "")
+        }
+        list
+    }
+
     private lateinit var cachedFilter: PlaceFilterModel
 
     //Храним как массив, но из окна фильтра можно выставить только одно значение из списка
     //Пустой массив = SPORT_ALL
     private val sports = ArrayList<String>()
+
+    //Индекс выбранного метро
+    private var subways = Subway(name = DEFAULT_SUBWAY)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +113,8 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         //Ставим все возможные значения
         spinner_sport_type_filter.attachDataSource(getSportList())
 
+        spinner_metro_filter.attachDataSource(allSubways)
+
         updateUI()
 
         setupListeners()
@@ -115,6 +132,9 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
             spinner_sport_type_filter.selectedIndex = getSportList().indexOf(choosedSport)
         }
 
+        subways = Subway(filter?.subways?.id ?: DEFAULT_SUBWAY_ID)
+        spinner_metro_filter.selectedIndex = subways.id
+
         filter_has_baths.isChecked = filter?.hasBaths ?: false
         filter_has_inventory.isChecked = filter?.hasInventory ?: false
         filter_has_lockers.isChecked = filter?.hasLockers ?: false
@@ -129,8 +149,6 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         filter_end_price_edit_text.setText(priceTo.toString())
 
         filter_price_range_bar.setProgress(priceFrom.toFloat(), priceTo.toFloat())
-
-        //TODO set up sports and subways
     }
 
     private fun setupListeners() {
@@ -142,6 +160,13 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
                         sports.add(this)
                     }
                 }
+
+                updatePlaces()
+            }
+
+        spinner_metro_filter.onSpinnerItemSelectedListener =
+            OnSpinnerItemSelectedListener { _, _, position, _ ->
+                subways = Subway(id = position)
 
                 updatePlaces()
             }
@@ -304,7 +329,7 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
                                 priceFrom = priceFrom,
                                 priceTo = priceTo,
                                 sports = sports,
-                                subways = ArrayList()
+                                subways = subways
                             )
                             handler = null
                         }
@@ -326,6 +351,7 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
         priceTo = MAX_PRICE
         filter_start_price_edit_text.setText(priceFrom.toString())
         filter_end_price_edit_text.setText(priceTo.toString())
+        subways = Subway()
         //TODO reset sports and subways
     }
 

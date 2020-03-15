@@ -1,11 +1,14 @@
 package com.example.arenamsk.repositories
 
+import com.example.arenamsk.datasources.LocalDataSource
 import com.example.arenamsk.datasources.RemoteDataSource
 import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.network.utils.AuthUtils
+import com.example.arenamsk.room.tables.Subway
 import com.example.arenamsk.utils.toStringTypedArray
+import kotlinx.coroutines.CoroutineScope
 
 class PlaceRepository private constructor() : BaseRepository() {
 
@@ -62,5 +65,20 @@ class PlaceRepository private constructor() : BaseRepository() {
         success = { },
         errorHandler = errorHandler
     )
+
+    suspend fun getSubways(success: (response: List<Subway>) -> Unit,
+                   errorHandler: RequestErrorHandler) {
+        LocalDataSource.getLocalSubwayList().also {
+            if (it.isNullOrEmpty()) {
+                makeRequest(
+                    call = { RemoteDataSource.getSubways() },
+                    success = success,
+                    errorHandler = errorHandler
+                )
+            } else {
+                success.invoke(it)
+            }
+        }
+    }
 
 }

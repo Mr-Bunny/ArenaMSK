@@ -2,6 +2,7 @@ package com.example.arenamsk.network.api
 
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.auth.*
+import com.example.arenamsk.room.tables.Subway
 import com.example.arenamsk.room.tables.User
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
@@ -25,6 +26,9 @@ interface ApiService {
 
     @GET("api/v1/account/")
     suspend fun getUserAccountInfo(): Response<User>
+
+    @GET("api/v1/subway/")
+    suspend fun getAllSubways(): Response<List<Subway>>
 
     @GET("api/v1/place/")
     suspend fun getPLaces(): Response<List<PlaceModel>>

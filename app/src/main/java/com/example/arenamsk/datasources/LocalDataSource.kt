@@ -18,4 +18,6 @@ object LocalDataSource {
     }
 
     suspend fun updateUserData(user: User) = roomStorage.userDao().update(user)
+
+    suspend fun getLocalSubwayList() = roomStorage.subwaysDao().getAll()
 }

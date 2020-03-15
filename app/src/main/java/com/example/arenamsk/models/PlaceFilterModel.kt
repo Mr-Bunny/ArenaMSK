@@ -1,6 +1,7 @@
 package com.example.arenamsk.models
 
 import android.os.Parcelable
+import com.example.arenamsk.room.tables.Subway
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -31,6 +32,6 @@ data class PlaceFilterModel(
     var sportList: ArrayList<String>? = ArrayList(),
 
     @SerializedName("subways")
-    var subways: ArrayList<String>? = ArrayList()
+    var subways: Subway? = null
 
 ) : Parcelable
