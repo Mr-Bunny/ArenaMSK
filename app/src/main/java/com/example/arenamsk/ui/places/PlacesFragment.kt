@@ -112,23 +112,13 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
      * @param isSelected true если тег был выбран, false если сняли выделение
      * @param sportName одна из констант спорта класса Constants */
     override fun tagWasSelected(isSelected: Boolean, sportName: String) {
-        val filter = placesViewModel.getFilterLiveData().value ?: PlaceFilterModel(sportList = ArrayList())
-
-        if (sportName == SPORT_ALL.type) {
-            resetTags()
-            filter.sportList = ArrayList()
-        } else {
-            if (isSelected) {
-                filter.sportList?.add(sportName)
-                setFirstTagCheck(false)
-            } else {
-                filter.sportList?.remove(sportName)
-                if (filter.sportList.isNullOrEmpty()) setFirstTagCheck()
-            }
-        }
+        val newList = ArrayList<String>().apply { if (isSelected && sportName != SPORT_ALL.type) add(sportName) }
+        val filter = placesViewModel.getFilterLiveData().value ?: PlaceFilterModel(sportList = newList)
 
         //Меняем liveDat-у с фильтром, что приведет к обновлению данных
-        placesViewModel.updatePlaceWithFilter(filter)
+        placesViewModel.updatePlaceWithFilter(filter.apply { sportList = newList })
+
+        initTags()
     }
 
     @Subscribe
