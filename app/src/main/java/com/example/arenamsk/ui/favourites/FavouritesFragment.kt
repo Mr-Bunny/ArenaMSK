@@ -16,10 +16,18 @@ import com.example.arenamsk.utils.EnumUtils
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.fragment_favourites.*
+import kotlinx.android.synthetic.main.fragment_places.*
+import kotlinx.android.synthetic.main.places_errors_form.*
 
 class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
 
-    private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback, ::itemBookingClickCallback, ::addPlaceToFavourite) }
+    private val placeAdapter by lazy {
+        PlacesAdapter(
+            ::itemClickCallback,
+            ::itemBookingClickCallback,
+            ::addPlaceToFavourite
+        )
+    }
 
     private var placeDetailFragment: PlaceDialogFragment? = null
 
@@ -44,12 +52,13 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
             setupList(it)
         })
 
-        favouritesViewModel.getFavouritesStatusPlacesLiveData().observe(viewLifecycleOwner, Observer {
-            handlePlacesLoadingStatus(it)
-        })
+        favouritesViewModel.getFavouritesStatusPlacesLiveData()
+            .observe(viewLifecycleOwner, Observer {
+                handlePlacesLoadingStatus(it)
+            })
 
         //Вешаем слушатель на поле поиска площадок по названию и адресу
-        edit_text_search_favourites.addTextChangedListener(object: TextWatcher {
+        edit_text_search_favourites.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(textToSearch: Editable?) {
                 favouritesViewModel.showFilteredPlacesInFavourites(textToSearch.toString().trim())
             }
@@ -92,25 +101,18 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
     private fun openPlaceDetail(place: PlaceModel, openBooking: Boolean = false) {
         placeDetailFragment?.dismiss()
         placeDetailFragment = PlaceDialogFragment.getInstance(place, openBooking)
-        placeDetailFragment?.show(activity!!.supportFragmentManager, PlaceDialogFragment.PLACE_DIALOG_FRAGMENT_TAG)
+        placeDetailFragment?.show(
+            activity!!.supportFragmentManager,
+            PlaceDialogFragment.PLACE_DIALOG_FRAGMENT_TAG
+        )
     }
 
-    private fun addPlaceToFavourite(toFavourite: Boolean,
-                                    place: PlaceModel,
-                                    requestAddToFavouriteFailed: (toFavourite: Boolean, place: PlaceModel) -> Unit) {
+    private fun addPlaceToFavourite(
+        toFavourite: Boolean,
+        place: PlaceModel,
+        requestAddToFavouriteFailed: (toFavourite: Boolean, place: PlaceModel) -> Unit
+    ) {
         favouritesViewModel.addPlaceToFavourite(toFavourite, place, requestAddToFavouriteFailed)
-    }
-
-    /** Отображаем текст, что площадки не найдены */
-    private fun showPlacesNotFoundForm() {
-        recycler_favourites.disable()
-        favourite_places_not_found_form.enable()
-    }
-
-    /** Скрываем текст, что площадки не найдены и показываем список площадок*/
-    private fun hidePlacesNotFoundForm() {
-        recycler_favourites.enable()
-        favourite_places_not_found_form.disable()
     }
 
     /** Обрабатываем ошибки запроса площадок */
@@ -121,14 +123,66 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
             }
 
             EnumUtils.GetPlacesStatus.REQUEST_ERROR -> {
+                showRequestErrorForm()
             }
 
             EnumUtils.GetPlacesStatus.NETWORK_OFFLINE -> {
+                showRequestErrorForm()
                 showNetworkOfflineError()
             }
 
             EnumUtils.GetPlacesStatus.LOAD_PLACES -> {
+                showProgressBar()
             }
         }
+    }
+
+    //TODO вынести методы ниже в один и через when это все обрабатывать
+    /** Отображаем текст, что площадки не найдены */
+    private fun showPlacesNotFoundForm() {
+        hideProgressBar()
+        recycler_favourites.disable()
+        places_request_error_form.disable()
+        places_not_found_form.enable()
+    }
+
+    /** Отображаем текст, что не удалось загрузить площадки и кнопку для повтора запроса */
+    private fun showRequestErrorForm() {
+        hideProgressBar()
+        recycler_favourites.disable()
+        places_request_error_form.enable()
+        try_again_button.setOnClickListener {
+            showProgressBar()
+            favouritesViewModel.getFavourites()
+        }
+    }
+
+    /** Скрываем progress bar и view с ошибками и показываем recycler с площадками */
+    private fun showRecycler() {
+        hideProgressBar()
+        places_not_found_form.disable()
+        places_request_error_form.disable()
+        recycler_favourites.enable()
+    }
+
+    /** Скрываем progress bar */
+    private fun hideProgressBar() {
+        favourites_loading_progress_bar.disable()
+    }
+
+    /** Показываем progress bar */
+    private fun showProgressBar() {
+        places_request_error_form.disable()
+        places_not_found_form.disable()
+        recycler_favourites.disable()
+        favourites_loading_progress_bar.enable()
+    }
+
+    /** Скрываем текст, что площадки не найдены и показываем список площадок */
+    private fun hidePlacesNotFoundForm() {
+        recycler_favourites.enable()
+        hideProgressBar()
+        places_not_found_form.disable()
+        places_request_error_form.disable()
     }
 }

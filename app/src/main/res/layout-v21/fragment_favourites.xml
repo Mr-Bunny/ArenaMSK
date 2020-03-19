@@ -63,14 +63,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/favourite_places_not_found_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/places_not_found_text"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:gravity="center"
+    <include layout="@layout/places_errors_form" />
+
+    <ProgressBar
+        android:id="@+id/favourites_loading_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView

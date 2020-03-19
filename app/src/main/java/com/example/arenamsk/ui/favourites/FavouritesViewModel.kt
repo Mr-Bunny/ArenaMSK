@@ -102,7 +102,7 @@ class FavouritesViewModel : BaseViewModel() {
 
     /** Делаем запрос на получение списка всех площадок и СК
      * Или если есть фильтр, то делаем запрос с фильтром */
-    private fun getFavourites() {
+    fun getFavourites() {
         placesStatus.value = GetPlacesStatus.LOAD_PLACES
 
         repository.getFavourites(

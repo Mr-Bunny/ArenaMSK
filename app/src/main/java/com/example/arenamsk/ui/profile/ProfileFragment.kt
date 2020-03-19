@@ -31,8 +31,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                     if (it.imageUrl?.isNotEmpty() == true && profile_avatar != null) {
                         Picasso.get()
                             .load(it.imageUrl)
-                            .error(R.drawable.auth_background)
-                            .placeholder(R.drawable.auth_background)
+                            .error(R.drawable.image_placeholder)
+                            .placeholder(R.drawable.image_placeholder)
                             .into(profile_avatar)
                     }
 
