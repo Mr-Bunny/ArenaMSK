@@ -5,11 +5,31 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_map">
 
+    <action
+        android:id="@+id/action_open_place_on_map"
+        app:destination="@id/navigation_map">
+
+        <argument
+            android:name="coordinates"
+            android:defaultValue="@null"
+            app:argType="com.example.arenamsk.models.CoordinatesModel"
+            app:nullable="true" />
+
+    </action>
+
     <fragment
         android:id="@+id/navigation_map"
         android:name="com.example.arenamsk.ui.map.MapFragment"
         android:label="@string/title_menu_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map">
+
+        <argument
+            android:name="coordinates"
+            android:defaultValue="@null"
+            app:argType="com.example.arenamsk.models.CoordinatesModel"
+            app:nullable="true" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_places"

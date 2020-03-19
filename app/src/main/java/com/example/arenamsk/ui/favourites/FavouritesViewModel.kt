@@ -5,6 +5,7 @@ import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.ApiError
 import com.example.arenamsk.network.models.RequestErrorHandler
+import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.repositories.PlaceRepository
 import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.EnumUtils.GetPlacesStatus
@@ -103,12 +104,16 @@ class FavouritesViewModel : BaseViewModel() {
     /** Делаем запрос на получение списка всех площадок и СК
      * Или если есть фильтр, то делаем запрос с фильтром */
     fun getFavourites() {
-        placesStatus.value = GetPlacesStatus.LOAD_PLACES
+        if (AuthUtils.isUserDefault()) {
+            placesStatus.value = GetPlacesStatus.NOT_FOUND
+        } else {
+            placesStatus.value = GetPlacesStatus.LOAD_PLACES
 
-        repository.getFavourites(
-            success = ::getPlacesSuccess,
-            errorHandler = errorHandler
-        )
+            repository.getFavourites(
+                success = ::getPlacesSuccess,
+                errorHandler = errorHandler
+            )
+        }
     }
 
     /** Отображаем данные */

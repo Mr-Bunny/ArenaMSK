@@ -3,6 +3,7 @@ package com.example.arenamsk.ui.map
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import com.example.arenamsk.R
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.places.PlacesViewModel
@@ -13,6 +14,8 @@ import com.google.android.gms.maps.SupportMapFragment
 class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
 
     private var mMap: GoogleMap? = null
+
+    private val args: MapFragmentArgs by navArgs()
 
     private val mapViewModel by lazy {
         ViewModelProviders.of(this).get(MapViewModel::class.java)

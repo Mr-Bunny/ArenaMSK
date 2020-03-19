@@ -3,6 +3,7 @@ package com.example.arenamsk.ui.places.adapter
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
+import com.example.arenamsk.models.CoordinatesModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.ui.places.viewpager.PlaceViewPagerAdapter
@@ -16,6 +17,7 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(
         place: PlaceModel,
         itemClickCallback: (meetUpId: PlaceModel) -> Unit,
+        mapWasClicked: (coordinatesModel: CoordinatesModel) -> Unit,
         itemPhoneClickCallback: (phone: String) -> Unit,
         itemBookingClickCallback: (place: PlaceModel) -> Unit,
         itemAddToFavouriteClickCallback: (
@@ -46,6 +48,7 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             } else {
                 place_item_favourite_btn.enable()
             }
+
             place_item_favourite_btn.setOnClickListener {
                 val toFavourite = !place.isFavourite
 
@@ -57,6 +60,10 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     place,
                     ::requestAddToFavouriteFailed
                 )
+            }
+
+            place_item_show_map_btn.setOnClickListener {
+                mapWasClicked.invoke(CoordinatesModel(place.latitude, place.longitude))
             }
 
             place_item_btn_phone.setOnClickListener {

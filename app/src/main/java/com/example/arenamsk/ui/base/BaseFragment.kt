@@ -9,7 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.fragment.findNavController
+import com.example.arenamsk.MobileNavigationDirections
 import com.example.arenamsk.R
+import com.example.arenamsk.models.CoordinatesModel
+import com.example.arenamsk.ui.MainActivity
 
 abstract class BaseFragment(private val layoutId: Int): Fragment(), LifecycleOwner {
 
@@ -48,5 +52,11 @@ abstract class BaseFragment(private val layoutId: Int): Fragment(), LifecycleOwn
             data = Uri.parse("tel:$phone")
         }
         startActivity(intent)
+    }
+
+    protected fun openMap(coordinatesModel: CoordinatesModel) {
+        MobileNavigationDirections.actionOpenPlaceOnMap(coordinatesModel).also {
+            findNavController().navigate(it)
+        }
     }
 }

@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
+import com.example.arenamsk.models.CoordinatesModel
 import com.example.arenamsk.models.PlaceModel
 
 class PlacesAdapter(
     private val itemClickCallback: (place: PlaceModel) -> Unit,
+    private val mapWasClicked: (coordinatesModel: CoordinatesModel) -> Unit,
     private val itemBookingClickCallback: (place: PlaceModel) -> Unit,
     private val itemPhoneClickCallback: (phone: String) -> Unit,
     private val itemAddToFavouriteClickCallback: (
@@ -29,6 +31,7 @@ class PlacesAdapter(
         holderScreen.bind(
             places[position],
             itemClickCallback,
+            mapWasClicked,
             itemPhoneClickCallback,
             itemBookingClickCallback,
             itemAddToFavouriteClickCallback

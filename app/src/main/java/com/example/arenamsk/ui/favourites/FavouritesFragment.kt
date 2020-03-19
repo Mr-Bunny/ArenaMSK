@@ -23,6 +23,7 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
     private val placeAdapter by lazy {
         PlacesAdapter(
             ::itemClickCallback,
+            ::openMap,
             ::itemBookingClickCallback,
             ::openPhone,
             ::addPlaceToFavourite

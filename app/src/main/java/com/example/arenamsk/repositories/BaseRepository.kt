@@ -73,7 +73,7 @@ open class BaseRepository {
                 withContext(Dispatchers.Main) {
                     if (result.apiError?.exception is SocketTimeoutException || result.apiError?.exception is ConnectException) {
                         errorHandler.timeoutException()
-                    } else if (result.apiError?.statusCode == 403) { //Refresh tokens
+                    } else if (result.apiError?.statusCode == 403 && !AuthUtils.isUserDefault() && AuthUtils.isUserAuthorized()) {
                         updateTokensAndRequest(call, success, errorHandler)
                     } else {
                         errorHandler.requestFailedError(result.apiError)
@@ -106,14 +106,15 @@ open class BaseRepository {
     }
 
     /** Делаем попытку обновить токены и передаем сюда оригинальный запрос с колбэками.
-     Если обновление токенов было успешно - повторяем непрошедший запрос
-     Если нет - кидаем ошибки в изначальный errorHandler */
+    Если обновление токенов было успешно - повторяем непрошедший запрос
+    Если нет - кидаем ошибки в изначальный errorHandler */
     private suspend fun <T : Any> updateTokensAndRequest(
         call: suspend () -> Response<T>,
         success: (response: T) -> Unit,
         errorHandler: RequestErrorHandler
     ) {
-        when (val result: Result<UpdatedTokensModel> = safeApiResult(call = { RemoteDataSource.updateToken() })) {
+        when (val result: Result<UpdatedTokensModel> =
+            safeApiResult(call = { RemoteDataSource.updateToken() })) {
             is Result.Success -> {
                 with(AuthUtils) {
                     result.data?.let {
@@ -144,5 +145,10 @@ open class BaseRepository {
         }
     }
 
-    private fun checkTokenExpired() = (System.currentTimeMillis() / 1000) > AuthUtils.getExpiredIn()
+    private fun checkTokenExpired() =
+        if (!AuthUtils.isUserDefault() && AuthUtils.isUserAuthorized()) {
+            (System.currentTimeMillis() / 1000) > AuthUtils.getExpiredIn()
+        } else {
+            false
+        }
 }

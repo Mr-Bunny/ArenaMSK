@@ -36,6 +36,12 @@ data class PlaceModel(
     @SerializedName("rating")
     val rating: Float = 0.0f,
 
+    @SerializedName("longitude")
+    val longitude: Float = 0.0f,
+
+    @SerializedName("latitude")
+    val latitude: Float = 0.0f,
+
     @SerializedName("reviewsCount")
     val feedbackNumber: Int = 0,
 

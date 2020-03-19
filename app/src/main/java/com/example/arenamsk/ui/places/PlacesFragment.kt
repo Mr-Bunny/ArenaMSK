@@ -29,7 +29,12 @@ import org.greenrobot.eventbus.Subscribe
 
 class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallback {
 
-    private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback, ::itemBookingClickCallback, ::openPhone, ::addPlaceToFavourite) }
+    private val placeAdapter by lazy {
+        PlacesAdapter(
+            ::itemClickCallback, ::openMap,
+            ::itemBookingClickCallback, ::openPhone, ::addPlaceToFavourite
+        )
+    }
 
     private val placesViewModel by lazy {
         ViewModelProviders.of(requireActivity()).get(PlacesViewModel::class.java)
@@ -78,7 +83,7 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
         place_filter_button.setOnClickListener { openFilterFragment() }
 
         //Вешаем слушатель на поле поиска площадок по названию и адресу
-        edit_text_search.addTextChangedListener(object: TextWatcher {
+        edit_text_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(textToSearch: Editable?) {
                 placesViewModel.showFilteredPlaces(textToSearch.toString().trim())
             }
@@ -111,8 +116,10 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
      * @param isSelected true если тег был выбран, false если сняли выделение
      * @param sportName одна из констант спорта класса Constants */
     override fun tagWasSelected(isSelected: Boolean, sportName: String) {
-        val newList = ArrayList<String>().apply { if (isSelected && sportName != SPORT_ALL.type) add(sportName) }
-        val filter = placesViewModel.getFilterLiveData().value ?: PlaceFilterModel(sportList = newList)
+        val newList =
+            ArrayList<String>().apply { if (isSelected && sportName != SPORT_ALL.type) add(sportName) }
+        val filter =
+            placesViewModel.getFilterLiveData().value ?: PlaceFilterModel(sportList = newList)
 
         //Меняем liveDat-у с фильтром, что приведет к обновлению данных
         placesViewModel.updatePlaceWithFilter(filter.apply { sportList = newList })
@@ -164,7 +171,7 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
     /** Сбрасываем выделения со всех тегов и отмечаем только первый */
     private fun resetTags() {
         place_tag_container.forEach { tag ->
-            (tag as TagView ).setTagCheck(false)
+            (tag as TagView).setTagCheck(false)
         }
 
         setFirstTagCheck()
@@ -185,13 +192,19 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
     private fun openPlaceDetail(place: PlaceModel, openBooking: Boolean = false) {
         placeDetailFragment?.dismiss()
         placeDetailFragment = PlaceDialogFragment.getInstance(place, openBooking)
-        placeDetailFragment?.show(activity!!.supportFragmentManager, PlaceDialogFragment.PLACE_DIALOG_FRAGMENT_TAG)
+        placeDetailFragment?.show(
+            activity!!.supportFragmentManager,
+            PlaceDialogFragment.PLACE_DIALOG_FRAGMENT_TAG
+        )
     }
 
     private fun openFilterFragment() {
         placeFilterFragment?.dismiss()
         placeFilterFragment = PlaceFilterFragment.getInstance()
-        placeFilterFragment?.show(activity!!.supportFragmentManager, PlaceFilterFragment.FILTER_MODEL_TAG)
+        placeFilterFragment?.show(
+            activity!!.supportFragmentManager,
+            PlaceFilterFragment.FILTER_MODEL_TAG
+        )
     }
 
     /** Обрабатываем ошибки запроса площадок */
@@ -257,9 +270,11 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
         places_loading_progress_bar.enable()
     }
 
-    private fun addPlaceToFavourite(toFavourite: Boolean,
-                                    place: PlaceModel,
-        requestAddToFavouriteFailed: (toFavourite: Boolean, place: PlaceModel) -> Unit) {
+    private fun addPlaceToFavourite(
+        toFavourite: Boolean,
+        place: PlaceModel,
+        requestAddToFavouriteFailed: (toFavourite: Boolean, place: PlaceModel) -> Unit
+    ) {
         placesViewModel.addPlaceToFavourite(toFavourite, place, requestAddToFavouriteFailed)
     }
 }
