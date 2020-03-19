@@ -1,5 +1,7 @@
 package com.example.arenamsk.ui.base
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,4 +43,10 @@ abstract class BaseFragment(private val layoutId: Int): Fragment(), LifecycleOwn
         showToast(R.string.network_offline_text)
     }
 
+    protected fun openPhone(phone: String) {
+        val intent = Intent(Intent.ACTION_DIAL).apply {
+            data = Uri.parse("tel:$phone")
+        }
+        startActivity(intent)
+    }
 }

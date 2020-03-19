@@ -16,7 +16,6 @@ import com.example.arenamsk.utils.EnumUtils
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.fragment_favourites.*
-import kotlinx.android.synthetic.main.fragment_places.*
 import kotlinx.android.synthetic.main.places_errors_form.*
 
 class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
@@ -25,6 +24,7 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
         PlacesAdapter(
             ::itemClickCallback,
             ::itemBookingClickCallback,
+            ::openPhone,
             ::addPlaceToFavourite
         )
     }

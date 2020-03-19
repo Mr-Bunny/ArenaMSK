@@ -16,6 +16,7 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(
         place: PlaceModel,
         itemClickCallback: (meetUpId: PlaceModel) -> Unit,
+        itemPhoneClickCallback: (phone: String) -> Unit,
         itemBookingClickCallback: (place: PlaceModel) -> Unit,
         itemAddToFavouriteClickCallback: (
             toFavourite: Boolean,
@@ -33,7 +34,6 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 R.string.text_place_feedback_number,
                 place.feedbackNumber.toString()
             )
-
 
             place_item_work_time_text.text = TimeUtils.convertWorkTime(place.workDayStartAt, place.workDayEndAt)
 
@@ -57,6 +57,12 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     place,
                     ::requestAddToFavouriteFailed
                 )
+            }
+
+            place_item_btn_phone.setOnClickListener {
+                if (!place.phoneNumbersList.isNullOrEmpty()) {
+                    itemPhoneClickCallback.invoke(place.phoneNumbersList[0])
+                }
             }
 
             place_item_distance_text.text = itemView.context.getString(

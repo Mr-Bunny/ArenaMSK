@@ -15,7 +15,6 @@ import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.base.PlaceDialogFragment
-import com.example.arenamsk.ui.base.PlaceDialogFragment.Companion.BOOKING_FRAGMENT_TAG
 import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
 import com.example.arenamsk.ui.places.adapter.PlacesAdapter
 import com.example.arenamsk.utils.ActionEvent
@@ -30,7 +29,7 @@ import org.greenrobot.eventbus.Subscribe
 
 class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallback {
 
-    private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback, ::itemBookingClickCallback, ::addPlaceToFavourite) }
+    private val placeAdapter by lazy { PlacesAdapter(::itemClickCallback, ::itemBookingClickCallback, ::openPhone, ::addPlaceToFavourite) }
 
     private val placesViewModel by lazy {
         ViewModelProviders.of(requireActivity()).get(PlacesViewModel::class.java)
