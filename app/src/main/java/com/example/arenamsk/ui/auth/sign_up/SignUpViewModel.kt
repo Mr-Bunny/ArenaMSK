@@ -162,6 +162,7 @@ class SignUpViewModel : BaseAuthViewModel() {
         with(AuthUtils) {
             saveAuthToken(tokens.accessToken)
             saveRefreshToken(tokens.refreshToken)
+            saveExpiredIn(tokens.expiredIn)
             setUserIsAuthorized(true)
             setUserIsDefault(false)
         }

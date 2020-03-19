@@ -118,6 +118,7 @@ class LogInViewModel : BaseAuthViewModel() {
         with(AuthUtils) {
             saveAuthToken(response.accessToken)
             saveRefreshToken(response.refreshToken)
+            saveExpiredIn(response.expiredIn)
         }
 
         //Подгружаем информацию о пользователе

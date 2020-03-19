@@ -51,8 +51,14 @@ object AuthUtils {
         manager.saveValue(SharedPreferenceManager.KEY.REFRESH_TOKEN, refreshToken)
     }
 
+    fun saveExpiredIn(expiredIn: Int) {
+        manager.saveValue(SharedPreferenceManager.KEY.EXPIRED_IN, expiredIn)
+    }
+
     fun getAuthToken() = manager.getStringValue(SharedPreferenceManager.KEY.AUTH_TOKEN, "") ?: ""
 
     fun getRefreshToken() = manager.getStringValue(SharedPreferenceManager.KEY.REFRESH_TOKEN, "") ?: ""
+
+    fun getExpiredIn() = manager.getIntValue(SharedPreferenceManager.KEY.EXPIRED_IN, 0) ?: 0
 
 }

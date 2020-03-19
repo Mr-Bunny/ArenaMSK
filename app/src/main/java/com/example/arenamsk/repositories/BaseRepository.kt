@@ -53,6 +53,10 @@ open class BaseRepository {
             return
         }
 
+        if (checkTokenExpired()) {
+            updateTokensAndRequest(call, success, errorHandler)
+        }
+
         //Making request
         when (val result: Result<T> = safeApiResult(call)) {
             is Result.Success -> {
@@ -119,6 +123,9 @@ open class BaseRepository {
                         saveRefreshToken(
                             it.refreshToken
                         )
+                        saveExpiredIn(
+                            it.expiredIn
+                        )
                     }
                 }
 
@@ -136,4 +143,6 @@ open class BaseRepository {
             }
         }
     }
+
+    private fun checkTokenExpired() = (System.currentTimeMillis() / 1000) > AuthUtils.getExpiredIn()
 }

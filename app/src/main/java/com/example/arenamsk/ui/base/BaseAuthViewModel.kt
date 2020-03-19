@@ -17,7 +17,7 @@ abstract class BaseAuthViewModel: BaseViewModel() {
                 LocalDataSource.saveUserData(it)
             }
 
-            //Сохраняем токены и ставим флаг, что авторизированы
+            //Ставим флаг, что авторизированы
             with(AuthUtils) {
                 saveAuthToken("")
                 saveRefreshToken("")

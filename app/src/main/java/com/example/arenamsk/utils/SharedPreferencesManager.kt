@@ -85,5 +85,6 @@ class SharedPreferenceManager private constructor() {
         const val USER_EMAIL = "email"
         const val AUTH_TOKEN = "auth_token"
         const val REFRESH_TOKEN = "refresh_token"
+        const val EXPIRED_IN = "expired_in"
     }
 }
