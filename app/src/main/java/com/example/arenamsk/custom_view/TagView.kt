@@ -58,7 +58,15 @@ class TagView : FrameLayout {
 
     /** Ставим цвет border-а на основе того выбран тег или нет */
     private fun setBorder() {
-        place_tag.setBackgroundDrawable(resources.getDrawable(if (tagSelected) R.drawable.selected_tag_background else R.drawable.unselected_tag_background))
+        with(place_tag) {
+            if (tagSelected) {
+                setBackgroundDrawable(resources.getDrawable(R.drawable.selected_tag_background))
+                setTextColor(resources.getColor(R.color.colorWhite))
+            } else {
+                setBackgroundDrawable(resources.getDrawable(R.drawable.unselected_tag_background))
+                setTextColor(resources.getColor(R.color.text_color_grey_light))
+            }
+        }
     }
 
 }
