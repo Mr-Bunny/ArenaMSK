@@ -8,6 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
@@ -45,6 +46,7 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
 
         if (AuthUtils.isUserDefault()) {
             showUnauthorizedDialog()
+            return
         }
 
         initRecycler()
@@ -154,7 +156,10 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
             .setPositiveButton("Зарегистрироваться") { _, _ ->
                 exitFromProfile()
             }
-            .setCancelable(true)
+            .setNegativeButton("Закрыть") { _, _ ->
+                findNavController().navigate(R.id.navigation_places)
+            }
+            .setCancelable(false)
             .show()
     }
 

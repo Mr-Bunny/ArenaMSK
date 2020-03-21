@@ -154,12 +154,19 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="buttonBarPositiveButtonStyle">@style/Alert.Button.Positive</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Alert.Button.Negative</item>
     </style>
 
     <style name="Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="Alert.Button.Negative" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/text_color_grey</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
 
