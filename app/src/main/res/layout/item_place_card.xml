@@ -184,6 +184,7 @@
             app:backgroundTint="@color/colorPrimary"
             app:elevation="0dp"
             app:fabSize="mini"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/place_item_btn_calendar"
             app:layout_constraintLeft_toRightOf="@id/place_item_btn_calendar"
             app:layout_constraintTop_toTopOf="@id/place_item_btn_calendar"
