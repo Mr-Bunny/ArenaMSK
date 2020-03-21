@@ -1,14 +1,18 @@
 package com.example.arenamsk.ui.favourites
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.network.utils.AuthUtils
+import com.example.arenamsk.ui.AuthActivity
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.base.PlaceDialogFragment
 import com.example.arenamsk.ui.places.adapter.PlacesAdapter
@@ -38,6 +42,10 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (AuthUtils.isUserDefault()) {
+            showUnauthorizedDialog()
+        }
 
         initRecycler()
 
@@ -136,6 +144,18 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
                 showProgressBar()
             }
         }
+    }
+
+    /** Если пользователь не авторизирован - показываем диалоговое окно с кнопкой для перехода к регистрации */
+    private fun showUnauthorizedDialog() {
+        AlertDialog.Builder(requireContext(), R.style.FavouriteAlertDialog)
+            .setTitle("Вы не авторизированы")
+            .setMessage("Для добавления площадок в избранное пройдите регистрацию")
+            .setPositiveButton("Зарегистрироваться") { _, _ ->
+                exitFromProfile()
+            }
+            .setCancelable(true)
+            .show()
     }
 
     //TODO вынести методы ниже в один и через when это все обрабатывать

@@ -13,6 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.arenamsk.MobileNavigationDirections
 import com.example.arenamsk.R
 import com.example.arenamsk.models.CoordinatesModel
+import com.example.arenamsk.network.utils.AuthUtils
+import com.example.arenamsk.ui.AuthActivity
 import com.example.arenamsk.ui.MainActivity
 
 abstract class BaseFragment(private val layoutId: Int): Fragment(), LifecycleOwner {
@@ -58,5 +60,17 @@ abstract class BaseFragment(private val layoutId: Int): Fragment(), LifecycleOwn
         MobileNavigationDirections.actionOpenPlaceOnMap(coordinatesModel).also {
             findNavController().navigate(it)
         }
+    }
+
+    protected fun exitFromProfile() {
+        with(AuthUtils) {
+            setUserIsAuthorized(false)
+            setUserIsDefault(false)
+            saveAuthToken("")
+            saveRefreshToken("")
+        }
+
+        startActivity(Intent(activity, AuthActivity::class.java))
+        activity?.finish()
     }
 }
