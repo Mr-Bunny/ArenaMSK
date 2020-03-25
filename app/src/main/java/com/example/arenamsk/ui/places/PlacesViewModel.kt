@@ -12,6 +12,7 @@ import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.EnumUtils.GetPlacesStatus
 import com.example.arenamsk.utils.MyLocation
 import com.example.arenamsk.utils.SingleLiveEvent
+import com.google.android.gms.maps.model.Marker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -171,6 +172,11 @@ class PlacesViewModel : BaseViewModel() {
             success = ::getFilteredPlacesSuccess,
             errorHandler = errorHandler
         )
+    }
+
+    /** Возвращает площадку или null по id маркера, который равен id площадки */
+    fun getPlaceByMarker(placeMarker: Marker): PlaceModel? {
+        return placesLiveData.value?.firstOrNull { placeMarker.tag == it.id }
     }
 
     /** Отображаем данные */

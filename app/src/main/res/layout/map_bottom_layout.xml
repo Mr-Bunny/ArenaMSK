@@ -33,7 +33,7 @@
             android:fontFamily="@font/montserrat_bold"
             android:textColor="@color/text_color_grey"
             android:textSize="24sp"
-            app:layout_constraintHorizontal_weight="3"
+            app:layout_constraintHorizontal_weight="4"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/map_place_distance"
             app:layout_constraintTop_toBottomOf="@id/top_image"
@@ -48,7 +48,7 @@
             android:textColor="@color/text_color_grey_light"
             android:textSize="14sp"
             android:text="0.0км"
-            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintHorizontal_weight="2"
             app:layout_constraintLeft_toRightOf="@id/map_place_title"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top_image" />
