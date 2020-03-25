@@ -26,13 +26,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
-import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm
-import com.google.maps.android.collections.MarkerManager
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.android.synthetic.main.map_bottom_layout.*
 
@@ -40,6 +36,7 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
 
     companion object {
         private const val ZOOM_VALUE = 2f
+        private const val GEO_REQUEST = 1002
         private const val LOCATION_REFRESH_TIME: Long = 10
         private const val LOCATION_REFRESH_DISTANCE: Float = 10f
     }
@@ -90,6 +87,8 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        checkPermission()
+
         placeViewModel.updatePlaceWithFilter()
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -135,24 +134,14 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         }
 
         map_geo_button.setOnClickListener {
-            if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
-            } else {
+            if (checkPermission()) {
+                updateUserLocation()
+
                 mMap?.let { it.isMyLocationEnabled = true }
 
-                val locationResult = object : MyLocation.LocationResult() {
-
-                    override fun gotLocation(location: Location?) {
-                        val lat = location!!.latitude
-                        val lon = location.longitude
-
-                        mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lon), 15f))
-                    }
+                MyLocation.userLocation?.let {
+                    mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(it, 15f))
                 }
-
-                val myLocation = MyLocation()
-                myLocation.getLocation(requireContext(), locationResult)
             }
         }
 
@@ -176,6 +165,18 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
             override fun onTextChanged(textToSearch: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
         })
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+       if (requestCode == GEO_REQUEST && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            updateUserLocation()
+       }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     private fun showPlacesOnMap(list: List<PlaceModel>) {
@@ -233,8 +234,9 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         map_place_title.text = place.placeTitle
         map_item_work_time_text.text = TimeUtils.convertWorkTime(place.workDayStartAt, place.workDayEndAt)
         map_item_address_text.text = place.address
-        //TODO
-        //map_place_distance.text
+        map_place_distance.text = resources.getString(R.string.text_place_distance, MyLocation.calculateDistance(
+            LatLng(place.latitude, place.longitude)
+        ).toString())
     }
 
     private fun openFilterFragment() {
@@ -244,5 +246,16 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
             activity!!.supportFragmentManager,
             PlaceFilterFragment.FILTER_MODEL_TAG
         )
+    }
+
+    /** return true if permission granted */
+    private fun checkPermission(): Boolean {
+        return if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), GEO_REQUEST)
+            false
+        } else {
+            true
+        }
     }
 }

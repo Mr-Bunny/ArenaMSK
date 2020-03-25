@@ -28,7 +28,7 @@ data class PlaceModel(
     val address: String = "",
 
     @SerializedName("distance")
-    val distance: Float = 0.0f,
+    var distance: Float = 0.0f,
 
     @SerializedName("id")
     val id: Int = -1,

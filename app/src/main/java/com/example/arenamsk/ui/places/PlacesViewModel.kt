@@ -10,6 +10,7 @@ import com.example.arenamsk.repositories.PlaceRepository
 import com.example.arenamsk.room.tables.Subway
 import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.EnumUtils.GetPlacesStatus
+import com.example.arenamsk.utils.MyLocation
 import com.example.arenamsk.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -182,8 +183,8 @@ class PlacesViewModel : BaseViewModel() {
     }
 
     private fun handlePlaces(places: List<PlaceModel>) {
-        //Сохраняем найденные площадки
-        placesLiveData.value = places as MutableList<PlaceModel>
+        //Сохраняем найденные площадки с просчитаной до пользователя дистанцией
+        placesLiveData.value = MyLocation.getPlacesWithDistance(places) as MutableList<PlaceModel>
     }
 
     private fun loadSubways() {

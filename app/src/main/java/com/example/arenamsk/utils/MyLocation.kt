@@ -9,6 +9,9 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
+import com.example.arenamsk.models.PlaceModel
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.SphericalUtil
 import java.util.*
 
 class MyLocation {
@@ -18,9 +21,38 @@ class MyLocation {
     internal var gps_enabled = false
     internal var network_enabled = false
 
+    companion object {
+        var userLocation: LatLng? = null
+
+        fun calculateDistance(placeLocation: LatLng): Float {
+            return if (userLocation == null) {
+                0f
+            } else if (placeLocation.latitude != 0.0 && placeLocation.longitude != 0.0) {
+                SphericalUtil.computeDistanceBetween(LatLng(placeLocation.latitude, placeLocation.longitude), userLocation).toFloat()
+            } else {
+                0f
+            }
+        }
+
+        fun getPlacesWithDistance(places: List<PlaceModel>): List<PlaceModel> {
+            if (userLocation == null) return places
+
+            val coordinates = LatLng(userLocation!!.latitude, userLocation!!.longitude)
+
+            places.forEach {
+                if (it.latitude != 0.0 && it.longitude != 0.0) {
+                    val distance = SphericalUtil.computeDistanceBetween(LatLng(it.latitude, it.longitude), coordinates)
+                    it.distance = distance.toFloat()
+                } else {
+                    it.distance = 0f
+                }
+            }
+
+            return places
+        }
+    }
+
     internal var locationListenerGps: LocationListener = object : LocationListener {
-
-
         override fun onLocationChanged(location: Location) {
             timer1.cancel()
             locationResult.gotLocation(location)
