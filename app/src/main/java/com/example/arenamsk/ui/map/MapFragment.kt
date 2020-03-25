@@ -109,7 +109,14 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap
-        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(55.753215, 37.622504), 12f))
+
+        //Если есть аргументы, то значит был переход с другого экрана и нам надо показать нужную площадку
+        val coordinatesModel = args.coordinates
+        if (coordinatesModel != null) {
+            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(coordinatesModel.latitude, coordinatesModel.longitude), 16f))
+        } else {
+            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(55.753215, 37.622504), 12f))
+        }
 
         mMap?.setOnMapClickListener {
             with(map_edit_text_search) {
@@ -181,6 +188,7 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+    /** Добавляем площадки на карту */
     private fun showPlacesOnMap(list: List<PlaceModel>) {
         mMap?.clear()
         mMap?.setOnMarkerClickListener {
@@ -191,8 +199,14 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         list.forEach { place ->
             val coordinates = LatLng(place.latitude, place.longitude)
             MarkerOptions().position(coordinates).apply {
-                val marker = mMap?.addMarker(this)
-                marker?.tag = place.id
+                mMap?.addMarker(this)?.let {
+                    it.tag = place.id
+                    val coordinatesModel = args.coordinates
+                    if (coordinatesModel != null &&
+                        (coordinatesModel.latitude == place.latitude &&
+                                coordinatesModel.longitude == place.longitude)
+                    ) onClusterItemClick(it)
+                }
             }
         }
     }
