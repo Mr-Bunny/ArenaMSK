@@ -1,6 +1,7 @@
 package com.example.arenamsk.ui.map
 
 import android.Manifest
+import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -8,12 +9,15 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
+import com.example.arenamsk.App
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
@@ -31,6 +35,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.android.synthetic.main.map_bottom_layout.*
+import kotlinx.android.synthetic.main.map_marker_info_window.view.*
 
 class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
 
@@ -111,6 +116,7 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap
+        mMap?.setInfoWindowAdapter(MyInfoAdapter())
 
         //Если есть аргументы, то значит был переход с другого экрана и нам надо показать нужную площадку
         val coordinatesModel = args.coordinates
@@ -219,6 +225,8 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
                         (coordinatesModel.latitude == place.latitude &&
                                 coordinatesModel.longitude == place.longitude)
                     ) onClusterItemClick(it)
+
+                    it.showInfoWindow()
                 }
             }
         }
@@ -279,6 +287,33 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
             false
         } else {
             true
+        }
+    }
+
+    inner class MyInfoAdapter: GoogleMap.InfoWindowAdapter {
+        override fun getInfoContents(p0: Marker?): View {
+            return initView(p0)
+        }
+
+        override fun getInfoWindow(p0: Marker?): View {
+            return initView(p0)
+        }
+
+        private fun initView(marker: Marker?): View {
+            val wrapper = ContextThemeWrapper(App.appContext(), R.style.TransparentBackground)
+            val inflater = wrapper.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            return inflater.inflate(R.layout.map_marker_info_window, null).apply {
+                marker?.let {
+                    val place = placeViewModel.getPlaceByMarker(marker) ?: return@apply
+
+                    info_window_title.text = place.placeTitle
+                    info_window_distance.text = resources.getString(R.string.text_place_distance, MyLocation.calculateDistance(
+                        LatLng(place.latitude, place.longitude)
+                    ).toString())
+                    info_window_rating_text.text = place.rating.toString()
+                    info_window_rating.rating = place.rating
+                }
+            }
         }
     }
 }

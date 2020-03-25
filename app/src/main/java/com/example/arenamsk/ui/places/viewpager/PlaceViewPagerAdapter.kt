@@ -5,12 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
+import com.example.arenamsk.network.models.ImageModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.place_view_pager_item.view.*
 
 class PlaceViewPagerAdapter : RecyclerView.Adapter<PagerVH>() {
 
-    private var images: MutableList<String> = mutableListOf()
+    private var images: MutableList<ImageModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerVH =
         PagerVH(
@@ -25,12 +26,12 @@ class PlaceViewPagerAdapter : RecyclerView.Adapter<PagerVH>() {
 
     override fun onBindViewHolder(holder: PagerVH, position: Int) = holder.itemView.run {
         Picasso.get()
-            .load(images[position])
+            .load(images[position].fullImage)
             .placeholder(R.drawable.image_placeholder)
             .into(place_image)
     }
 
-    fun setNewImages(newImages: MutableList<String>) {
+    fun setNewImages(newImages: MutableList<ImageModel>) {
         if (images.isNotEmpty()) images.clear()
         images.addAll(newImages)
         notifyDataSetChanged()

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
 import com.example.arenamsk.models.CoordinatesModel
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.network.models.ImageModel
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.ui.places.viewpager.PlaceViewPagerAdapter
 import com.example.arenamsk.utils.TimeUtils
@@ -82,12 +83,12 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             place_item_btn_calendar.setOnClickListener { itemBookingClickCallback.invoke(place) }
 
             when {
-                place.imagesUrl.isEmpty() -> {
+                place.images.isEmpty() -> {
                     place_item_view_pager.disable()
                     place_item_view_pager_indicator.disable()
                     return
                 }
-                place.imagesUrl.size == 1 -> {
+                place.images.size == 1 -> {
                     place_item_view_pager.enable()
                     place_item_view_pager_indicator.disable()
                 }
@@ -99,7 +100,7 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             val adapter = PlaceViewPagerAdapter()
             place_item_view_pager.adapter = adapter
-            adapter.setNewImages(place.imagesUrl as MutableList<String>)
+            adapter.setNewImages(place.images as MutableList<ImageModel>)
             place_item_view_pager_indicator.setViewPager(place_item_view_pager)
         }
     }

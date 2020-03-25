@@ -18,6 +18,7 @@ import com.example.arenamsk.utils.ActionEvent.OpenCalendar
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import com.google.android.material.appbar.AppBarLayout
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_place_dialog.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -89,6 +90,14 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
         with(arguments?.getParcelable(PLACE_DIALOG_FRAGMENT_ARG_TAG)
             ?: PlaceModel().also { dismiss() }) {
             setupToolbar(this)
+
+            try {
+                Picasso.get()
+                    .load(this.images[0].fullImage)
+                    .placeholder(R.drawable.image_placeholder)
+                    .into(place_dialog_image)
+            } catch (e: Exception) {
+            }
 
             createPlaceDetailFragment(this)
             createPlaceBookingFragment(this)

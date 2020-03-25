@@ -1,6 +1,7 @@
 package com.example.arenamsk.models
 
 import android.os.Parcelable
+import com.example.arenamsk.network.models.ImageModel
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -46,7 +47,7 @@ data class PlaceModel(
     val feedbackNumber: Int = 0,
 
     @SerializedName("images")
-    val imagesUrl: List<String> = emptyList(),
+    val images: List<ImageModel> = emptyList(),
 
     @SerializedName("phoneNumbers")
     val phoneNumbersList: List<String> = emptyList(),

@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
-import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.network.models.ImageModel
 
 class PlaceDetailPhotoAdapter : RecyclerView.Adapter<PlaceDetailPhotoViewHolder>() {
 
-    private val photosList: MutableList<String> = mutableListOf()
+    private val photosList: MutableList<ImageModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceDetailPhotoViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.place_detail_photo_item, parent, false)
@@ -21,7 +21,7 @@ class PlaceDetailPhotoAdapter : RecyclerView.Adapter<PlaceDetailPhotoViewHolder>
 
     override fun getItemCount(): Int = photosList.size
 
-    fun setNewList(newList: List<String>) {
+    fun setNewList(newList: List<ImageModel>) {
         if (photosList.isNotEmpty()) photosList.clear()
         photosList.addAll(newList)
         notifyDataSetChanged()
