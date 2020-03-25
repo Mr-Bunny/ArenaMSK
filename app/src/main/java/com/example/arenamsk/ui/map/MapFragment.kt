@@ -6,6 +6,8 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
@@ -74,10 +76,6 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
 
     private var placeFilterFragment: PlaceFilterFragment? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -138,34 +136,30 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         }
 
         placeViewModel.getPlacesLiveData().observe(viewLifecycleOwner, Observer {
-            mMap?.clear()
             showPlacesOnMap(it)
         })
 
-        //По идее это для отображения точки при переходе с экрана площадок
-//        args.coordinates?.let {
-//            mMap?.addMarker(MarkerOptions().position(LatLng(it.latitude, it.longitude)))
-//
-//            val width = DisplayMetrics().also {
-//                requireActivity().windowManager.defaultDisplay.getMetrics(it)
-//            }.widthPixels
-//
-//            val latLngBuilder = LatLngBounds.Builder().apply {
-//                include(LatLng(it.latitude, it.longitude))
-//            }
-//            val latLngBounds: LatLngBounds = latLngBuilder.build()
-//            val track = CameraUpdateFactory.newLatLngBounds(
-//                latLngBounds,
-//                width,
-//                width,
-//                25
-//            )
-//
-//            mMap?.moveCamera(track)
-//        }
+        placeViewModel.getFoundedPlacesLiveData().observe(viewLifecycleOwner, Observer {
+            showPlacesOnMap(it)
+        })
+
+        //Вешаем слушатель на поле поиска площадок по названию и адресу
+        map_edit_text_search.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(textToSearch: Editable?) {
+                placeViewModel.showFilteredPlaces(textToSearch.toString().trim())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(textToSearch: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
     }
 
     private fun showPlacesOnMap(list: List<PlaceModel>) {
+        mMap?.clear()
+
         val placesCoordinates = mutableListOf<LatLng>()
         list.forEach { placesCoordinates.add(LatLng(it.latitude, it.longitude)) }
 
