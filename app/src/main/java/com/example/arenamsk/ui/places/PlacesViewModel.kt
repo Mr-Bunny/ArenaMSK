@@ -179,6 +179,11 @@ class PlacesViewModel : BaseViewModel() {
         return placesLiveData.value?.firstOrNull { placeMarker.tag == it.id }
     }
 
+    /** Возвращает площадку или null по имени */
+    fun getPlaceByTilte(title: String): PlaceModel? {
+        return placesLiveData.value?.firstOrNull { title == it.placeTitle }
+    }
+
     /** Отображаем данные */
     private fun getPlacesSuccess(places: List<PlaceModel>) {
         handlePlaces(places)

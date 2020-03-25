@@ -17,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
+import com.example.arenamsk.ui.base.PlaceDialogFragment
 import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
 import com.example.arenamsk.ui.places.PlacesViewModel
 import com.example.arenamsk.utils.*
@@ -77,6 +78,7 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         ViewModelProviders.of(requireActivity()).get(PlacesViewModel::class.java)
     }
 
+    private var placeDetailFragment: PlaceDialogFragment? = null
     private var placeFilterFragment: PlaceFilterFragment? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -194,6 +196,17 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         mMap?.setOnMarkerClickListener {
             onClusterItemClick(it)
             true
+        }
+
+        marker_info.setOnClickListener {
+            placeViewModel.getPlaceByTilte(map_place_title.text.toString())?.let {
+                placeDetailFragment?.dismiss()
+                placeDetailFragment = PlaceDialogFragment.getInstance(it, false)
+                placeDetailFragment?.show(
+                    activity!!.supportFragmentManager,
+                    PlaceDialogFragment.PLACE_DIALOG_FRAGMENT_TAG
+                )
+            }
         }
 
         list.forEach { place ->
