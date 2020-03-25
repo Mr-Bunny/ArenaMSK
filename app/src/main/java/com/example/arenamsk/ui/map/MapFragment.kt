@@ -1,6 +1,7 @@
 package com.example.arenamsk.ui.map
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -14,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
+import com.example.arenamsk.App
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceItem
 import com.example.arenamsk.models.PlaceModel
@@ -181,11 +183,14 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
 
     private fun showPlacesOnMap(list: List<PlaceModel>) {
         mMap?.clear()
+        clusterManager?.clearItems()
 
         list.forEach {
             val item = PlaceItem(it)
             clusterManager?.addItem(item)
         }
+
+        clusterManager?.cluster()
 
         val placesCoordinates = mutableListOf<LatLng>()
         list.forEach { placesCoordinates.add(LatLng(it.latitude, it.longitude)) }
@@ -194,18 +199,24 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         placesCoordinates.forEach {
             markers.add(MarkerOptions().position(it).apply { mMap?.addMarker(this) })
         }
-
-        clusterManager?.cluster()
     }
 
     /** @param isEmptyText if true we set fab is visible and hide edit text */
     private fun setSearchState(isEmptyText: Boolean) {
         if (isEmptyText) {
             map_search_button.enable()
-            map_edit_text_search.disable()
+            with(map_edit_text_search) {
+                disable()
+                clearFocus()
+                hideKeyboard()
+            }
         } else {
             map_search_button.disable()
-            map_edit_text_search.enable()
+            with(map_edit_text_search) {
+                enable()
+                requestFocus()
+                showKeyboard()
+            }
         }
     }
 
@@ -214,8 +225,6 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         clusterManager?.setOnClusterItemClickListener { item -> onClusterItemClick(item.place) }
 
         mMap?.let {
-            it.setOnCameraIdleListener(clusterManager)
-            it.setOnMarkerClickListener(clusterManager)
             it.setOnMapClickListener {
                 map_edit_text_search.clearFocus()
                 bottomDialogBehavior.state = BottomSheetBehavior.STATE_HIDDEN
