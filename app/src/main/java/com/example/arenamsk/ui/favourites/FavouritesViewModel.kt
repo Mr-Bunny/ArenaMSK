@@ -1,7 +1,6 @@
 package com.example.arenamsk.ui.favourites
 
 import androidx.lifecycle.MutableLiveData
-import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.ApiError
 import com.example.arenamsk.network.models.RequestErrorHandler
@@ -93,7 +92,7 @@ class FavouritesViewModel : BaseViewModel() {
             val favouritesPlaceList = favouritesPlacesLiveData.value
 
             val founded = favouritesPlaceList?.filter { place ->
-                place.title.toLowerCase().contains(textToSearch.toLowerCase()) ||
+                place.placeTitle.toLowerCase().contains(textToSearch.toLowerCase()) ||
                         place.address.toLowerCase().contains(textToSearch.toLowerCase())
             } as? MutableList<PlaceModel> ?: mutableListOf()
 

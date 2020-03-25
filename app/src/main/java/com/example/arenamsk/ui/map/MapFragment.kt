@@ -9,25 +9,32 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.FrameLayout
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.example.arenamsk.R
+import com.example.arenamsk.models.PlaceItem
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
 import com.example.arenamsk.ui.places.PlacesViewModel
-import com.example.arenamsk.utils.MyLocation
-import com.example.arenamsk.utils.disable
-import com.example.arenamsk.utils.enable
+import com.example.arenamsk.utils.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.maps.android.clustering.Cluster
+import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm
+import com.google.maps.android.collections.MarkerManager
 import kotlinx.android.synthetic.main.fragment_map.*
+import kotlinx.android.synthetic.main.map_bottom_layout.*
 
 class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
 
@@ -38,6 +45,10 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
     }
 
     private var currentLocation: Location? = null
+
+    private var clusterManager: ClusterManager<PlaceItem>? = null
+
+    private lateinit var bottomDialogBehavior: BottomSheetBehavior<FrameLayout>
 
     private val mLocationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
@@ -97,11 +108,21 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
                 setSearchState(true)
             }
         }
+
+        bottomDialogBehavior = BottomSheetBehavior.from(marker_info)
+        bottomDialogBehavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap
         mMap?.moveCamera( CameraUpdateFactory.newLatLngZoom(LatLng(55.753215, 37.622504), 12f))
+
+        setClusterParameters()
+
+        mMap?.setOnMapClickListener {
+            map_edit_text_search.clearFocus()
+            bottomDialogBehavior.setState(BottomSheetBehavior.STATE_HIDDEN)
+        }
 
         map_plus_button.setOnClickListener {
             currentZoom += ZOOM_VALUE
@@ -160,6 +181,11 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
     private fun showPlacesOnMap(list: List<PlaceModel>) {
         mMap?.clear()
 
+        list.forEach {
+            val item = PlaceItem(it)
+            clusterManager?.addItem(item)
+        }
+
         val placesCoordinates = mutableListOf<LatLng>()
         list.forEach { placesCoordinates.add(LatLng(it.latitude, it.longitude)) }
 
@@ -167,6 +193,8 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         placesCoordinates.forEach {
             markers.add(MarkerOptions().position(it).apply { mMap?.addMarker(this) })
         }
+
+        clusterManager?.cluster()
     }
 
     /** @param isEmptyText if true we set fab is visible and hide edit text */
@@ -178,6 +206,35 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
             map_search_button.disable()
             map_edit_text_search.enable()
         }
+    }
+
+    private fun setClusterParameters() {
+        clusterManager = ClusterManager(requireContext(), mMap)
+        clusterManager?.setOnClusterItemClickListener { item -> onClusterItemClick(item.place) }
+
+        mMap?.let {
+            it.setOnCameraIdleListener(clusterManager)
+            it.setOnMarkerClickListener(clusterManager)
+            it.setOnMapClickListener {
+                map_edit_text_search.clearFocus()
+                bottomDialogBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            }
+        }
+    }
+
+    private fun onClusterItemClick(place: PlaceModel): Boolean {
+        bottomDialogBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        setPlaceInfo(place)
+
+        return true
+    }
+
+    private fun setPlaceInfo(place: PlaceModel) {
+        map_place_title.text = place.placeTitle
+        map_item_work_time_text.text = TimeUtils.convertWorkTime(place.workDayStartAt, place.workDayEndAt)
+        map_item_address_text.text = place.address
+        //TODO
+        //map_place_distance.text
     }
 
     private fun openFilterFragment() {

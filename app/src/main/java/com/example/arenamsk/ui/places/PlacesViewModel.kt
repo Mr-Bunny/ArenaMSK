@@ -102,7 +102,7 @@ class PlacesViewModel : BaseViewModel() {
             val placeList = placesLiveData.value
 
             val founded = placeList?.filter { place ->
-                place.title.toLowerCase().contains(textToSearch.toLowerCase()) ||
+                place.placeTitle.toLowerCase().contains(textToSearch.toLowerCase()) ||
                         place.address.toLowerCase().contains(textToSearch.toLowerCase())
             } as? MutableList<PlaceModel> ?: mutableListOf()
 

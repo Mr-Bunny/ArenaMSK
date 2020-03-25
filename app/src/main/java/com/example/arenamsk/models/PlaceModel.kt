@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class PlaceModel(
     @SerializedName("name")
-    val title: String = "",
+    val placeTitle: String = "",
 
     @SerializedName("isFavorite")
     var isFavourite: Boolean = false,

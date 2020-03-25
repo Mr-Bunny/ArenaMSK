@@ -177,7 +177,7 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
                 }
 
                 if (scrollRange + verticalOffset == 0) {
-                    place_detail_toolbar.title = place.title
+                    place_detail_toolbar.title = place.placeTitle
                     isShow = true
                 } else if (isShow) {
                     place_detail_toolbar.title = " "
@@ -186,7 +186,7 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
             }
         })
 
-        place_detail_title.text = place.title
+        place_detail_title.text = place.placeTitle
     }
 
     private fun backBtnPressed() {

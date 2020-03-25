@@ -27,7 +27,7 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         ) -> Unit
     ) {
         with(itemView) {
-            place_item_title.text = place.title
+            place_item_title.text = place.placeTitle
             place_item_description.text = place.description
 
             place_item_rating_bar.rating = place.rating
