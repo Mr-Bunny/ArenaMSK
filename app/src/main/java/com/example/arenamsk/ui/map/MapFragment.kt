@@ -6,7 +6,6 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
@@ -17,6 +16,7 @@ import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
 import com.example.arenamsk.ui.places.PlacesViewModel
+import com.example.arenamsk.utils.MyLocation
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -24,7 +24,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_map.*
 
@@ -122,10 +121,24 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
                 ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
             } else {
                 mMap?.let { it.isMyLocationEnabled = true }
+
+                val locationResult = object : MyLocation.LocationResult() {
+
+                    override fun gotLocation(location: Location?) {
+                        val lat = location!!.latitude
+                        val lon = location.longitude
+
+                        mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lon), 15f))
+                    }
+                }
+
+                val myLocation = MyLocation()
+                myLocation.getLocation(requireContext(), locationResult)
             }
         }
 
         placeViewModel.getPlacesLiveData().observe(viewLifecycleOwner, Observer {
+            mMap?.clear()
             showPlacesOnMap(it)
         })
 
