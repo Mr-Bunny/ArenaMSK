@@ -113,7 +113,7 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         //Если есть аргументы, то значит был переход с другого экрана и нам надо показать нужную площадку
         val coordinatesModel = args.coordinates
         if (coordinatesModel != null) {
-            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(coordinatesModel.latitude, coordinatesModel.longitude), 16f))
+            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(coordinatesModel.latitude, coordinatesModel.longitude), 17f))
         } else {
             mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(55.753215, 37.622504), 12f))
         }
