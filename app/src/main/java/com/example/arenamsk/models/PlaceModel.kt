@@ -10,6 +10,9 @@ data class PlaceModel(
     @SerializedName("name")
     val placeTitle: String = "",
 
+    @SerializedName("playgrounds")
+    val playgroundModels: List<PlaygroundModel> = emptyList(),
+
     @SerializedName("isFavorite")
     var isFavourite: Boolean = false,
 

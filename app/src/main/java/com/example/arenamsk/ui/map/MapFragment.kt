@@ -116,7 +116,6 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap
-        mMap?.setInfoWindowAdapter(MyInfoAdapter())
 
         //Если есть аргументы, то значит был переход с другого экрана и нам надо показать нужную площадку
         val coordinatesModel = args.coordinates
@@ -219,14 +218,22 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
             val coordinates = LatLng(place.latitude, place.longitude)
             MarkerOptions().position(coordinates).apply {
                 mMap?.addMarker(this)?.let {
+                    //set tag
                     it.tag = place.id
+                    //set icon
+                    if (place.playgroundModels.size > 1) {
+                        it.setIcon("sk".getSportIcon())
+                    } else if (place.playgroundModels.isNotEmpty()) {
+                        it.setIcon(place.playgroundModels[0].sport?.name.getSportIcon())
+                    }
+                    //set coordinates
                     val coordinatesModel = args.coordinates
                     if (coordinatesModel != null &&
                         (coordinatesModel.latitude == place.latitude &&
                                 coordinatesModel.longitude == place.longitude)
                     ) onClusterItemClick(it)
 
-                    it.showInfoWindow()
+                    //it.showInfoWindow()
                 }
             }
         }
@@ -287,33 +294,6 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
             false
         } else {
             true
-        }
-    }
-
-    inner class MyInfoAdapter: GoogleMap.InfoWindowAdapter {
-        override fun getInfoContents(p0: Marker?): View {
-            return initView(p0)
-        }
-
-        override fun getInfoWindow(p0: Marker?): View {
-            return initView(p0)
-        }
-
-        private fun initView(marker: Marker?): View {
-            val wrapper = ContextThemeWrapper(App.appContext(), R.style.TransparentBackground)
-            val inflater = wrapper.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            return inflater.inflate(R.layout.map_marker_info_window, null).apply {
-                marker?.let {
-                    val place = placeViewModel.getPlaceByMarker(marker) ?: return@apply
-
-                    info_window_title.text = place.placeTitle
-                    info_window_distance.text = resources.getString(R.string.text_place_distance, MyLocation.calculateDistance(
-                        LatLng(place.latitude, place.longitude)
-                    ).toString())
-                    info_window_rating_text.text = place.rating.toString()
-                    info_window_rating.rating = place.rating
-                }
-            }
         }
     }
 }
