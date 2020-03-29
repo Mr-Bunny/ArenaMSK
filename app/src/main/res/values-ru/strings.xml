@@ -46,6 +46,8 @@
     <string name="text_filter_title_place_type">Тип площадки</string>
     <string name="text_filter_place_type_open">Открытая</string>
     <string name="text_filter_place_type_closed">Крытая</string>
+    <string name="text_place_type_open">Открытое поле</string>
+    <string name="text_place_type_closed">Крытое поле</string>
     <string name="text_filter_title_additional">Дополнительно</string>
     <string name="text_filter_parking">Парковка</string>
     <string name="text_filter_inventory">Инвентарь</string>

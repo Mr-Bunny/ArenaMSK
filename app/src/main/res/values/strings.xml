@@ -82,6 +82,10 @@
     <string name="text_no_review_yet">No reviews yet</string>
     <string name="text_no_review_yet_send_first">No reviews yet\n<u>Send first feedback</u></string>
     <string name="text_send_feedback_button">SEND FEEDBACK</string>
+    <string name="place_total_area" translatable="false">%1$sм2</string>
+
+    <string name="text_place_type_open">Open field</string>
+    <string name="text_place_type_closed">Covered field</string>
 
     <string name="booking_section_time">Time</string>
     <string name="booking_section_price">Price,\nRUB</string>
