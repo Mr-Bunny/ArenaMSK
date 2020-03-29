@@ -132,6 +132,15 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
         initTags()
     }
 
+    @Subscribe
+    fun updatePlaceFavourite(event: ActionEvent.UpdatePlaceInPosition) {
+        with(event) {
+            val place = placeAdapter.places[position]
+            place.isFavourite = inFav
+            placeAdapter.notifyItemChanged(position)
+        }
+    }
+
     private fun initRecycler() {
         with(recycler_places) {
             setHasFixedSize(true)
@@ -185,13 +194,13 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
         openPlaceDetail(place, true)
     }
 
-    private fun itemClickCallback(place: PlaceModel) {
-        openPlaceDetail(place)
+    private fun itemClickCallback(place: PlaceModel, position: Int) {
+        openPlaceDetail(place, false, position)
     }
 
-    private fun openPlaceDetail(place: PlaceModel, openBooking: Boolean = false) {
+    private fun openPlaceDetail(place: PlaceModel, openBooking: Boolean = false, position: Int = -1) {
         placeDetailFragment?.dismiss()
-        placeDetailFragment = PlaceDialogFragment.getInstance(place, openBooking)
+        placeDetailFragment = PlaceDialogFragment.getInstance(place, openBooking, position)
         placeDetailFragment?.show(
             activity!!.supportFragmentManager,
             PlaceDialogFragment.PLACE_DIALOG_FRAGMENT_TAG

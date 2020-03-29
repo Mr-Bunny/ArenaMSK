@@ -8,7 +8,7 @@ import com.example.arenamsk.models.CoordinatesModel
 import com.example.arenamsk.models.PlaceModel
 
 class PlacesAdapter(
-    private val itemClickCallback: (place: PlaceModel) -> Unit,
+    private val itemClickCallback: (place: PlaceModel, position: Int) -> Unit,
     private val mapWasClicked: (coordinatesModel: CoordinatesModel) -> Unit,
     private val itemBookingClickCallback: (place: PlaceModel) -> Unit,
     private val itemPhoneClickCallback: (phone: String) -> Unit,
@@ -19,7 +19,7 @@ class PlacesAdapter(
     ) -> Unit
 ) : RecyclerView.Adapter<PlacesViewHolder>() {
 
-    private val places: MutableList<PlaceModel> = mutableListOf()
+    val places: MutableList<PlaceModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlacesViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -29,6 +29,7 @@ class PlacesAdapter(
 
     override fun onBindViewHolder(holderScreen: PlacesViewHolder, position: Int) {
         holderScreen.bind(
+            position,
             places[position],
             itemClickCallback,
             mapWasClicked,

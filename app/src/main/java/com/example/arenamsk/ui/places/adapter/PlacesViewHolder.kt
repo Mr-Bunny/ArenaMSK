@@ -16,8 +16,9 @@ import kotlinx.android.synthetic.main.item_place_card.view.*
 class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(
+        position:Int, 
         place: PlaceModel,
-        itemClickCallback: (meetUpId: PlaceModel) -> Unit,
+        itemClickCallback: (meetUpId: PlaceModel, position: Int) -> Unit,
         mapWasClicked: (coordinatesModel: CoordinatesModel) -> Unit,
         itemPhoneClickCallback: (phone: String) -> Unit,
         itemBookingClickCallback: (place: PlaceModel) -> Unit,
@@ -78,7 +79,7 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 place.distance.toString()
             )
 
-            setOnClickListener { itemClickCallback.invoke(place) }
+            setOnClickListener { itemClickCallback.invoke(place, position) }
 
             place_item_btn_calendar.setOnClickListener { itemBookingClickCallback.invoke(place) }
 

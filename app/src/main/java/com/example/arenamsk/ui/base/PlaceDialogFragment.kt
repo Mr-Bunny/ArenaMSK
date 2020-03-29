@@ -15,6 +15,7 @@ import com.example.arenamsk.ui.booking.PlaceBookingFragment.Companion.PLACE_BOOK
 import com.example.arenamsk.ui.place_detail.PlaceDetailFragment
 import com.example.arenamsk.ui.place_detail.PlaceDetailFragment.Companion.PLACE_DETAIL_ARG_TAG
 import com.example.arenamsk.ui.places.PlacesViewModel
+import com.example.arenamsk.utils.ActionEvent
 import com.example.arenamsk.utils.ActionEvent.OpenBookingEvent
 import com.example.arenamsk.utils.ActionEvent.OpenCalendar
 import com.example.arenamsk.utils.disable
@@ -32,18 +33,21 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
         const val DETAIL_FRAGMENT_TAG = "detail_fragment_tag"
         const val BOOKING_FRAGMENT_TAG = "booking_fragment_tag"
         const val PLACE_DIALOG_FRAGMENT_TAG = "base_dialog_fragment_tag"
+        const val PLACE_DIALOG_FRAGMENT_POSITION_TAG = "position_tag"
         const val PLACE_DIALOG_FRAGMENT_ARG_TAG = "place_dialog_fragment_arg_tag"
         const val PLACE_DIALOG_OPEN_BOOKING_ARG_TAG = "place_dialog_open_booking_arg_tag"
 
         fun getInstance(
             place: PlaceModel? = null,
-            openBooking: Boolean = false
+            openBooking: Boolean = false,
+            position: Int = -1
         ): PlaceDialogFragment {
             place?.let {
                 return PlaceDialogFragment().apply {
                     arguments = Bundle().apply {
                         putParcelable(PLACE_DIALOG_FRAGMENT_ARG_TAG, it)
                         putBoolean(PLACE_DIALOG_OPEN_BOOKING_ARG_TAG, openBooking)
+                        putInt(PLACE_DIALOG_FRAGMENT_POSITION_TAG, position)
                     }
                 }
             }
@@ -56,7 +60,9 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
         ViewModelProviders.of(requireActivity()).get(PlacesViewModel::class.java)
     }
 
-    private val place: PlaceModel by lazy { arguments?.getParcelable(PLACE_DIALOG_FRAGMENT_ARG_TAG) ?: PlaceModel() }
+    private val place: PlaceModel by lazy {
+        arguments?.getParcelable(PLACE_DIALOG_FRAGMENT_ARG_TAG) ?: PlaceModel()
+    }
 
     private var placeDetailFragment: PlaceDetailFragment? = null
     private var placeBookingFragment: PlaceBookingFragment? = null
@@ -116,6 +122,15 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
                     toFavourite,
                     place,
                     ::requestAddToFavouriteFailed
+                )
+
+                EventBus.getDefault().post(
+                    ActionEvent.UpdatePlaceInPosition(
+                        position = arguments?.getInt(
+                            PLACE_DIALOG_FRAGMENT_POSITION_TAG, -1
+                        ) ?: -1,
+                        inFav = toFavourite
+                    )
                 )
             }
 
@@ -265,5 +280,14 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
     private fun requestAddToFavouriteFailed(toFavourite: Boolean, place: PlaceModel) {
         place.isFavourite = !toFavourite
         setUpFavouriteIcon(!toFavourite)
+
+        EventBus.getDefault().post(
+            ActionEvent.UpdatePlaceInPosition(
+                position = arguments?.getInt(
+                    PLACE_DIALOG_FRAGMENT_POSITION_TAG, -1
+                ) ?: -1,
+                inFav = !toFavourite
+            )
+        )
     }
 }

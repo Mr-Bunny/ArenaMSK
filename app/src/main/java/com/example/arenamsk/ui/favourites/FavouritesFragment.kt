@@ -1,6 +1,5 @@
 package com.example.arenamsk.ui.favourites
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,15 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.utils.AuthUtils
-import com.example.arenamsk.ui.AuthActivity
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.base.PlaceDialogFragment
 import com.example.arenamsk.ui.places.adapter.PlacesAdapter
+import com.example.arenamsk.utils.ActionEvent
 import com.example.arenamsk.utils.EnumUtils
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.fragment_favourites.*
 import kotlinx.android.synthetic.main.places_errors_form.*
+import org.greenrobot.eventbus.Subscribe
 
 class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
 
@@ -82,6 +82,15 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
         })
     }
 
+    @Subscribe
+    fun updatePlaceFavourite(event: ActionEvent.UpdatePlaceInPosition) {
+        with(event) {
+            val place = placeAdapter.places[position]
+            place.isFavourite = inFav
+            placeAdapter.notifyItemChanged(position)
+        }
+    }
+
     private fun setupList(list: MutableList<PlaceModel>?) {
         if (list.isNullOrEmpty()) {
             showPlacesNotFoundForm()
@@ -105,13 +114,13 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
         openPlaceDetail(place, true)
     }
 
-    private fun itemClickCallback(place: PlaceModel) {
-        openPlaceDetail(place)
+    private fun itemClickCallback(place: PlaceModel, position: Int) {
+        openPlaceDetail(place, false, position)
     }
 
-    private fun openPlaceDetail(place: PlaceModel, openBooking: Boolean = false) {
+    private fun openPlaceDetail(place: PlaceModel, openBooking: Boolean = false, position: Int = -1) {
         placeDetailFragment?.dismiss()
-        placeDetailFragment = PlaceDialogFragment.getInstance(place, openBooking)
+        placeDetailFragment = PlaceDialogFragment.getInstance(place, openBooking, position)
         placeDetailFragment?.show(
             activity!!.supportFragmentManager,
             PlaceDialogFragment.PLACE_DIALOG_FRAGMENT_TAG
