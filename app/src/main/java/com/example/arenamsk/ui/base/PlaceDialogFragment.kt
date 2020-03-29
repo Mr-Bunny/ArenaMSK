@@ -17,6 +17,8 @@ import com.example.arenamsk.utils.ActionEvent.OpenBookingEvent
 import com.example.arenamsk.utils.ActionEvent.OpenCalendar
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
+import com.example.arenamsk.utils.getSportIcon
+import com.example.arenamsk.utils.getSportIconDrawableId
 import com.google.android.material.appbar.AppBarLayout
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_place_dialog.*
@@ -48,6 +50,8 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
             return PlaceDialogFragment()
         }
     }
+
+    private val place: PlaceModel by lazy { arguments?.getParcelable(PLACE_DIALOG_FRAGMENT_ARG_TAG) ?: PlaceModel() }
 
     private var placeDetailFragment: PlaceDetailFragment? = null
     private var placeBookingFragment: PlaceBookingFragment? = null
@@ -86,9 +90,14 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
             EventBus.getDefault().post(OpenCalendar())
         }
 
+        if (place.playgroundModels.size > 1) {
+            place_detail_sport_type_image.setImageResource("sk".getSportIconDrawableId())
+        } else if (place.playgroundModels.isNotEmpty()) {
+            place_detail_sport_type_image.setImageResource(place.playgroundModels[0].sport?.name.getSportIconDrawableId())
+        }
+
         //Get Place from args if null dismiss fragment
-        with(arguments?.getParcelable(PLACE_DIALOG_FRAGMENT_ARG_TAG)
-            ?: PlaceModel().also { dismiss() }) {
+        with(place) {
             setupToolbar(this)
 
             try {

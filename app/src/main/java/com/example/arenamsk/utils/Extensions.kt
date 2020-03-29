@@ -71,6 +71,28 @@ fun String?.getSportIcon(): BitmapDescriptor {
     return result ?: BitmapDescriptorFactory.defaultMarker()
 }
 
+fun String?.getSportIconDrawableId(): Int = when (this) {
+        EnumUtils.Sports.SPORT_FOOTBALL.type, EnumUtils.Sports.SPORT_MINI_FOOTBALL.type -> {
+            R.drawable.ic_football_logo
+        }
+
+        EnumUtils.Sports.SPORT_BASKETBALL.type -> {
+            R.drawable.ic_basketball_logo
+        }
+
+        EnumUtils.Sports.SPORT_VOLLEYBALL.type -> {
+            R.drawable.ic_volleyball_logo
+        }
+
+        EnumUtils.Sports.SPORT_TENNIS.type -> {
+            R.drawable.ic_tennis_logo
+        }
+
+        else -> {
+            R.drawable.ic_marker_sk
+        }
+}
+
 private fun bitmapDescriptorFromVector(vectorResId: Int): BitmapDescriptor? {
     return ContextCompat.getDrawable(App.appContext(), vectorResId)?.run {
         setBounds(0, 0, intrinsicWidth, intrinsicHeight)
