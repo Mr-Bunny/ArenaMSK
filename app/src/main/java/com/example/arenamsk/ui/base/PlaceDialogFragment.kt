@@ -7,17 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.booking.PlaceBookingFragment
 import com.example.arenamsk.ui.booking.PlaceBookingFragment.Companion.PLACE_BOOKING_ARG_TAG
 import com.example.arenamsk.ui.place_detail.PlaceDetailFragment
 import com.example.arenamsk.ui.place_detail.PlaceDetailFragment.Companion.PLACE_DETAIL_ARG_TAG
+import com.example.arenamsk.ui.places.PlacesViewModel
 import com.example.arenamsk.utils.ActionEvent.OpenBookingEvent
 import com.example.arenamsk.utils.ActionEvent.OpenCalendar
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
-import com.example.arenamsk.utils.getSportIcon
 import com.example.arenamsk.utils.getSportIconDrawableId
 import com.google.android.material.appbar.AppBarLayout
 import com.squareup.picasso.Picasso
@@ -49,6 +50,10 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
 
             return PlaceDialogFragment()
         }
+    }
+
+    private val placesViewModel by lazy {
+        ViewModelProviders.of(requireActivity()).get(PlacesViewModel::class.java)
     }
 
     private val place: PlaceModel by lazy { arguments?.getParcelable(PLACE_DIALOG_FRAGMENT_ARG_TAG) ?: PlaceModel() }
@@ -99,6 +104,20 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
         //Get Place from args if null dismiss fragment
         with(place) {
             setupToolbar(this)
+
+            setUpFavouriteIcon(isFavourite)
+            place_detail_favourite_image_btn.setOnClickListener {
+                val toFavourite = !place.isFavourite
+
+                place.isFavourite = toFavourite
+                setUpFavouriteIcon(toFavourite)
+                //Делаем запрос на добавление или удаление в избранное
+                placesViewModel.addPlaceToFavourite(
+                    toFavourite,
+                    place,
+                    ::requestAddToFavouriteFailed
+                )
+            }
 
             try {
                 Picasso.get()
@@ -228,5 +247,23 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
                 }
             }
         }
+    }
+
+    private fun setUpFavouriteIcon(isFavourite: Boolean) {
+        with(place_detail_favourite_image_btn) {
+            if (isFavourite) {
+                setImageDrawable(context.resources.getDrawable(R.drawable.ic_in_favoutires_btn))
+            } else {
+                setImageDrawable(context.resources.getDrawable(R.drawable.ic_add_to_favourites_btn))
+            }
+        }
+    }
+
+    /** Если запрос на добавление/удаление в избранное не прошел, если пришел, то view уже поменялась,
+     *  а данные потом обновятся при повторном открытии.
+     * @param isFavourite Принимаем противоположное значение того, что отправляли для запроса */
+    private fun requestAddToFavouriteFailed(toFavourite: Boolean, place: PlaceModel) {
+        place.isFavourite = !toFavourite
+        setUpFavouriteIcon(!toFavourite)
     }
 }
