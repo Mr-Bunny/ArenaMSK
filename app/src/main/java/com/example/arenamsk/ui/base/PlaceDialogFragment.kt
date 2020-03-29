@@ -10,6 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.ui.booking.PlaceBookingFragment
 import com.example.arenamsk.ui.booking.PlaceBookingFragment.Companion.PLACE_BOOKING_ARG_TAG
 import com.example.arenamsk.ui.place_detail.PlaceDetailFragment
@@ -206,9 +207,23 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
     private fun changeIcons(isPlaceDetail: Boolean) {
         if (isPlaceDetail) {
             place_detail_calendar_image_btn.disable()
-            place_detail_favourite_image_btn.enable()
+            setFavBtnVisibility(true)
         } else {
             place_detail_calendar_image_btn.enable()
+            setFavBtnVisibility(false)
+        }
+    }
+
+    //Нужно проверять - авторизирован ли человек или нет
+    private fun setFavBtnVisibility(needToShow: Boolean) {
+        if (AuthUtils.isUserDefault()) {
+            place_detail_favourite_image_btn.disable()
+            return
+        }
+
+        if (needToShow) {
+            place_detail_favourite_image_btn.enable()
+        } else {
             place_detail_favourite_image_btn.disable()
         }
     }
