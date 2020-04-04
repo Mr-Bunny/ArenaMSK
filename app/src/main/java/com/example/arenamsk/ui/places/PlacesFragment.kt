@@ -135,9 +135,11 @@ class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallba
     @Subscribe
     fun updatePlaceFavourite(event: ActionEvent.UpdatePlaceInPosition) {
         with(event) {
-            val place = placeAdapter.places[position]
-            place.isFavourite = inFav
-            placeAdapter.notifyItemChanged(position)
+            if (position >= 0 && position < placeAdapter.places.size) {
+                val place = placeAdapter.places[position]
+                place.isFavourite = inFav
+                placeAdapter.notifyItemChanged(position)
+            }
         }
     }
 

@@ -21,6 +21,7 @@ import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.fragment_favourites.*
 import kotlinx.android.synthetic.main.places_errors_form.*
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
@@ -82,12 +83,26 @@ class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        EventBus.getDefault().unregister(this)
+
+        super.onStop()
+    }
+
     @Subscribe
     fun updatePlaceFavourite(event: ActionEvent.UpdatePlaceInPosition) {
         with(event) {
-            val place = placeAdapter.places[position]
-            place.isFavourite = inFav
-            placeAdapter.notifyItemChanged(position)
+            if (position >= 0 && position < placeAdapter.places.size) {
+                val place = placeAdapter.places[position]
+                place.isFavourite = inFav
+                placeAdapter.notifyItemChanged(position)
+            }
         }
     }
 
