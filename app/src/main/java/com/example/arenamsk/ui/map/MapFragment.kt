@@ -25,10 +25,7 @@ import com.example.arenamsk.ui.base.PlaceDialogFragment
 import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
 import com.example.arenamsk.ui.places.PlacesViewModel
 import com.example.arenamsk.utils.*
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -116,6 +113,9 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap
+
+        mMap?.uiSettings?.isMyLocationButtonEnabled = false
+        mMap?.uiSettings?.isCompassEnabled = false
 
         //Если есть аргументы, то значит был переход с другого экрана и нам надо показать нужную площадку
         val coordinatesModel = args.coordinates
