@@ -45,6 +45,15 @@ fun ArrayList<String>.toStringTypedArray(): String? {
         .replace("]", "")
 }
 
+fun Context.getStatusBarHeight(): Int {
+    var result = 0
+    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+    if (resourceId > 0) {
+        result = resources.getDimensionPixelSize(resourceId)
+    }
+    return result
+}
+
 fun String?.getSportIcon(): BitmapDescriptor {
     val result = when (this) {
         EnumUtils.Sports.SPORT_FOOTBALL.type, EnumUtils.Sports.SPORT_MINI_FOOTBALL.type -> {
