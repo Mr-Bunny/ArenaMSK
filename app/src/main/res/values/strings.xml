@@ -96,4 +96,7 @@
     <string name="text_refresh">Try again</string>
     <string name="place_request_error_text">Couldn\'t get list of playgrounds.</string>
 
+    <!--Booked fragment-->
+    <string name="title_booked_fragment">@string/text_profile_item_booked</string>
+
 </resources>

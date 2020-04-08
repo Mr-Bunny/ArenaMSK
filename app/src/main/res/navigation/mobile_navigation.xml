@@ -49,4 +49,10 @@
         android:label="@string/title_menu_profile"
         tools:layout="@layout/fragment_profile" />
 
+    <fragment
+        android:id="@+id/navigation_booked"
+        android:name="com.example.arenamsk.ui.booked.BookedFragment"
+        android:label="@string/title_booked_fragment"
+        tools:layout="@layout/fragment_booked" />
+
 </navigation>

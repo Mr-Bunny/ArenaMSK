@@ -3,6 +3,7 @@ package com.example.arenamsk.ui.profile
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.arenamsk.R
 import com.example.arenamsk.datasources.LocalDataSource
 import com.example.arenamsk.network.utils.AuthUtils
@@ -38,8 +39,20 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             }
         }
 
-        if (AuthUtils.isUserDefault()) profile_item_edit.disable()
+        if (AuthUtils.isUserDefault()) {
+            profile_item_booked.disable()
+            profile_item_edit.disable()
+        }
 
         profile_item_exit.setOnClickListener { exitFromProfile() }
+
+        profile_item_booked.setOnClickListener {
+            openBookedFragment()
+        }
+    }
+
+    /** Открываем фрагмент с историей бронирования */
+    private fun openBookedFragment() {
+        findNavController().navigate(R.id.navigation_booked)
     }
 }

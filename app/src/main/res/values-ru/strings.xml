@@ -89,4 +89,7 @@
         <item>Отзывы</item>
     </string-array>
 
+    <!--Booked fragment-->
+    <string name="title_booked_fragment">@string/text_profile_item_booked</string>
+
 </resources>
