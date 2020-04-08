@@ -98,5 +98,9 @@
 
     <!--Booked fragment-->
     <string name="title_booked_fragment">@string/text_profile_item_booked</string>
+    <string-array name="booked_view_pager_titles">
+        <item>Current</item>
+        <item>In history</item>
+    </string-array>
 
 </resources>

@@ -7,8 +7,10 @@ import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import com.example.arenamsk.R
 import com.example.arenamsk.ui.base.BaseFragment
+import com.example.arenamsk.ui.booked.adapter.BookedViewPagerAdapter
 import com.example.arenamsk.utils.getStatusBarHeight
 import kotlinx.android.synthetic.main.fragment_booked.booked_tab_layout
+import kotlinx.android.synthetic.main.fragment_booked.booked_view_pager
 
 class BookedFragment: BaseFragment(R.layout.fragment_booked) {
 
@@ -26,6 +28,11 @@ class BookedFragment: BaseFragment(R.layout.fragment_booked) {
         super.onViewCreated(view, savedInstanceState)
 
         setupTopPadding()
+
+        with(booked_view_pager) {
+            adapter = BookedViewPagerAdapter(childFragmentManager)
+            booked_tab_layout.setupWithViewPager(this)
+        }
     }
 
     private fun setupTopPadding() {

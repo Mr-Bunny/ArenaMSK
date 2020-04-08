@@ -9,13 +9,14 @@
         android:id="@+id/booked_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="8dp"
         android:background="@drawable/bottom_shadow"
         android:clipToPadding="false"
         android:minHeight="56dp"
         app:tabIndicatorFullWidth="false"
         app:tabIndicatorGravity="bottom"
         app:tabIndicatorHeight="1dp"
-        app:tabMode="fixed"
+        app:tabMode="scrollable"
         app:tabPaddingStart="16dp"
         app:tabTextAppearance="@style/PlaceDetailTabLayout" />
 
