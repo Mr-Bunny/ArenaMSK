@@ -64,7 +64,7 @@
                     app:layout_constraintRight_toRightOf="@id/place_detail_header_foreground"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.69"
-                    tools:srcCompat="@drawable/ic_marker_sk" />
+                    tools:srcCompat="@drawable/ic_tennis_logo" />
 
                 <TextView
                     android:id="@+id/place_detail_title"
