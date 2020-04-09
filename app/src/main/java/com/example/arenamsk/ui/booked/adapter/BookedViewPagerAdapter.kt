@@ -7,6 +7,8 @@ import com.example.arenamsk.App
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.booked.booked_pager_item.BookedPagerItemFragment
+import com.example.arenamsk.ui.booked.booked_pager_item.BookedPagerItemFragment.Companion.CURRENT_SCREEN_TYPE
+import com.example.arenamsk.ui.booked.booked_pager_item.BookedPagerItemFragment.Companion.HISTORY_SCREEN_TYPE
 import com.example.arenamsk.ui.place_detail_feedback.PlaceDetailFeedbackFragment
 import com.example.arenamsk.ui.place_detail_info.PlaceDetailInfoFragment
 import com.example.arenamsk.ui.place_detail_photo.PlaceDetailPhotoFragment
@@ -17,11 +19,11 @@ class BookedViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEH
 
     override fun getItem(position: Int): Fragment = when (position) {
         0 -> {
-            BookedPagerItemFragment.getInstance()
+            BookedPagerItemFragment.getInstance(CURRENT_SCREEN_TYPE)
         }
 
         else -> {
-            BookedPagerItemFragment.getInstance()
+            BookedPagerItemFragment.getInstance(HISTORY_SCREEN_TYPE)
         }
     }
 

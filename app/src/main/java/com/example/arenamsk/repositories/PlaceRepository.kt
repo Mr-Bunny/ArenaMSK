@@ -64,6 +64,32 @@ class PlaceRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
+    /** Загрузка текущих забронированных площадок */
+    //TODO
+    fun getCurrentBookedPlaces(
+        success: (response: List<PlaceModel>) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = {
+            RemoteDataSource.getPlaces()
+        },
+        success = success,
+        errorHandler = errorHandler
+    )
+
+    /** Загрузка площадок в истории бронирования */
+    //TODO
+    fun getBookedHistoryPlaces(
+        success: (response: List<PlaceModel>) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = {
+            RemoteDataSource.getPlaces()
+        },
+        success = success,
+        errorHandler = errorHandler
+    )
+
     fun addPlaceToFavourite(
         toFavourite: Boolean,
         placeId: Int,
