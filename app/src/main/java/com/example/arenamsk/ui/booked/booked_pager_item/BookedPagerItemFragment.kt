@@ -11,12 +11,15 @@ import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.base.PlaceDialogFragment
 import com.example.arenamsk.ui.places.PlacesViewModel
 import com.example.arenamsk.ui.places.adapter.PlacesAdapter
+import com.example.arenamsk.utils.ActionEvent
 import com.example.arenamsk.utils.EnumUtils
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.fragment_booked_pager_item.*
 import kotlinx.android.synthetic.main.fragment_places.*
 import kotlinx.android.synthetic.main.places_errors_form.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class BookedPagerItemFragment: BaseFragment(R.layout.fragment_booked_pager_item) {
 
@@ -78,6 +81,29 @@ class BookedPagerItemFragment: BaseFragment(R.layout.fragment_booked_pager_item)
         })
 
         getData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        EventBus.getDefault().unregister(this)
+
+        super.onStop()
+    }
+
+    @Subscribe
+    fun updatePlaceFavourite(event: ActionEvent.UpdatePlaceInPosition) {
+        with(event) {
+            if (position >= 0 && position < placeAdapter.places.size) {
+                val place = placeAdapter.places[position]
+                place.isFavourite = inFav
+                placeAdapter.notifyItemChanged(position)
+            }
+        }
     }
 
     private fun getData() {
