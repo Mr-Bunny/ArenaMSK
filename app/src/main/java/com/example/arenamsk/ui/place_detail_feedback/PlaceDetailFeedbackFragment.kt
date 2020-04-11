@@ -36,7 +36,7 @@ class PlaceDetailFeedbackFragment private constructor() :
     }
 
     private val feedbackViewModel by lazy {
-        ViewModelProviders.of(requireActivity()).get(PlaceDetailFeedbackViewModel::class.java)
+        ViewModelProviders.of(this).get(PlaceDetailFeedbackViewModel::class.java)
     }
 
     private val feedbackAdapter by lazy { PlaceDetailFeedbackAdapter() }

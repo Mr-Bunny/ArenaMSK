@@ -5,6 +5,13 @@ import java.util.*
 
 object TimeUtils {
 
+    /** Конвертируем время TimeStamp в формат dd MMMM yyyy */
+    fun convertTimeStampToDate(time: Long): String {
+        val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+
+        return dateFormat.format(Date(time))
+    }
+
     /** Конвертируем время из workStart = "12:11:10" и workEnd = "15:14:13" в "12.11-15.14" */
     fun convertWorkTime(workStart: String, workEnd: String): String {
         return try {
