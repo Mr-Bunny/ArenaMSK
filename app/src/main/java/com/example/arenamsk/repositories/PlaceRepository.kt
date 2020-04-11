@@ -2,8 +2,10 @@ package com.example.arenamsk.repositories
 
 import com.example.arenamsk.datasources.LocalDataSource
 import com.example.arenamsk.datasources.RemoteDataSource
+import com.example.arenamsk.models.FeedbackModel
 import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.network.models.FeedbackNetworkModel
 import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.room.tables.Subway
@@ -118,5 +120,19 @@ class PlaceRepository private constructor() : BaseRepository() {
             }
         }
     }
+
+    suspend fun getFeedbackList(
+        placeId: String,
+        success: (feedback: FeedbackNetworkModel) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = {
+            with(RemoteDataSource) {
+                getFeedbackList(placeId)
+            }
+        },
+        success = success,
+        errorHandler = errorHandler
+    )
 
 }

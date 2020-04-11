@@ -76,4 +76,6 @@ object RemoteDataSource {
 
     suspend fun getSubways() = authService.getAllSubways()
 
+    suspend fun getFeedbackList(placeId: String) = authService.getFeedbackList(placeId)
+
 }

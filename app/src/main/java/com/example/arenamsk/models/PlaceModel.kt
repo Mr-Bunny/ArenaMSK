@@ -74,9 +74,6 @@ data class PlaceModel(
     val hasLockers: Boolean = false,
 
     @SerializedName("hasBaths")
-    val hasBaths: Boolean = false,
-
-    @SerializedName("reviews")
-    val feedbackList: List<FeedbackModel> = emptyList()
+    val hasBaths: Boolean = false
 
 ) : Parcelable

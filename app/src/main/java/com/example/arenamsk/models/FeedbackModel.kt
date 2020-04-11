@@ -9,7 +9,7 @@ data class FeedbackModel(
     @SerializedName("authorName")
     val authorName: String = "",
 
-    @SerializedName("reviewDate")
+    @SerializedName("date")
     val date: String = "",
 
     @SerializedName("isRecommended")

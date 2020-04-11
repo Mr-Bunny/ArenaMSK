@@ -1,6 +1,7 @@
 package com.example.arenamsk.network.api
 
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.network.models.FeedbackNetworkModel
 import com.example.arenamsk.network.models.auth.*
 import com.example.arenamsk.room.tables.Subway
 import com.example.arenamsk.room.tables.User
@@ -26,6 +27,9 @@ interface ApiService {
 
     @GET("api/v1/account/")
     suspend fun getUserAccountInfo(): Response<User>
+
+    @GET("api/v1/feedback/{place}")
+    suspend fun getFeedbackList(@Path("place") place: String): Response<FeedbackNetworkModel>
 
     @GET("api/v1/subway/")
     suspend fun getAllSubways(): Response<List<Subway>>
