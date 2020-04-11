@@ -1,25 +1,36 @@
 package com.example.arenamsk.ui.booking
 
 import androidx.lifecycle.MutableLiveData
-import com.example.arenamsk.models.FeedbackModel
 import com.example.arenamsk.models.PlaceBookingModel
-import com.example.arenamsk.models.PlaceFilterModel
-import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseViewModel
+import com.example.arenamsk.utils.TimeUtils
 
 class PlaceBookingViewModel : BaseViewModel() {
 
     private var placeBookingLiveData = MutableLiveData<MutableList<PlaceBookingModel>>()
 
+    //Текущая дата в формате yyyy-MM-dd, которую будем передавать на бэк для получения расписания
+    private val choosedDateLiveData = MutableLiveData<String>()
+
+    private val currentDate: String = TimeUtils.getCurrentDay()
+
     init {
+        choosedDateLiveData.value = currentDate
+
         loadBookingData()
+    }
+
+    fun getPlaceBookingLiveData() = placeBookingLiveData
+
+    fun getCurrentDateLiveData() = choosedDateLiveData
+
+    fun setNextDate() {
+        choosedDateLiveData.value = TimeUtils.getNextDay(choosedDateLiveData.value ?: currentDate)
     }
 
     private fun loadBookingData() {
         placeBookingLiveData.value = getTestPlaces()
     }
-
-    fun getPlaceBookingLiveData() = placeBookingLiveData
 
     //TODO test - remove after get real data from server
     private fun getTestPlaces(): MutableList<PlaceBookingModel> = mutableListOf(

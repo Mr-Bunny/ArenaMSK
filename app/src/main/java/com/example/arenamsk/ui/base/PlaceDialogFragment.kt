@@ -94,14 +94,6 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        place_detail_favourite_image_btn.setOnClickListener {
-            //TODO add to favourites
-        }
-
-        place_detail_calendar_image_btn.setOnClickListener {
-            EventBus.getDefault().post(OpenCalendar())
-        }
-
         if (place.playgroundModels.size > 1) {
             place_detail_sport_type_image.setImageResource("sk".getSportIconDrawableId())
         } else if (place.playgroundModels.isNotEmpty()) {
@@ -113,6 +105,7 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
             setupToolbar(this)
 
             setUpFavouriteIcon(isFavourite)
+            //Добавляем или убираем площадку из избранного
             place_detail_favourite_image_btn.setOnClickListener {
                 val toFavourite = !place.isFavourite
 
@@ -133,6 +126,11 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
                         inFav = toFavourite
                     )
                 )
+            }
+
+            //Открываем dialog с выбором даты
+            place_detail_calendar_image_btn.setOnClickListener {
+                EventBus.getDefault().post(OpenCalendar())
             }
 
             try {
