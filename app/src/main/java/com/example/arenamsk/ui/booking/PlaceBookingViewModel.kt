@@ -1,6 +1,7 @@
 package com.example.arenamsk.ui.booking
 
 import androidx.lifecycle.MutableLiveData
+import com.example.arenamsk.models.DateModel
 import com.example.arenamsk.models.PlaceBookingModel
 import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.TimeUtils
@@ -23,6 +24,10 @@ class PlaceBookingViewModel : BaseViewModel() {
     fun getPlaceBookingLiveData() = placeBookingLiveData
 
     fun getCurrentDateLiveData() = choosedDateLiveData
+
+    fun setCurrentDate(dateModel: DateModel) {
+        choosedDateLiveData.value = TimeUtils.getDateByDateModel(dateModel)
+    }
 
     fun setNextDate() {
         choosedDateLiveData.value = TimeUtils.getNextDay(choosedDateLiveData.value ?: currentDate)

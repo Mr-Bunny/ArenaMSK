@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -177,6 +177,12 @@
         <item name="android:windowNoTitle">true</item> <!-- отключаем заголовок -->
         <item name="android:windowIsFloating">true</item> <!-- окно в любой части экрана -->
         <item name="android:backgroundDimEnabled">false</item> <!-- отключаем затемнение -->
+    </style>
+
+    <!--Date Picker-->
+    <style name="NumberPickerStyle">
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:colorControlNormal" tools:targetApi="lollipop">@color/colorAccent</item>
     </style>
 
 </resources>

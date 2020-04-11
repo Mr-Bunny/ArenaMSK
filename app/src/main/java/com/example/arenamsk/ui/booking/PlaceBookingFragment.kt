@@ -2,20 +2,24 @@ package com.example.arenamsk.ui.booking
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.arenamsk.R
+import com.example.arenamsk.models.DateModel
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.booking.adapter.PlaceBookingAdapter
 import com.example.arenamsk.utils.ActionEvent.OpenCalendar
 import com.example.arenamsk.utils.TimeUtils
+import com.tsongkha.spinnerdatepicker.DatePicker
+import com.tsongkha.spinnerdatepicker.DatePickerDialog
+import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import kotlinx.android.synthetic.main.fragment_place_booking.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.util.*
 
-class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking) {
+class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), DatePickerDialog.OnDateSetListener {
 
     companion object {
         const val PLACE_BOOKING_TAG = "place_booking_tag"
@@ -58,9 +62,29 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking) {
         super.onStop()
     }
 
+    override fun onDateSet(view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        placeBookingViewModel.setCurrentDate(DateModel(
+            year = year,
+            month = monthOfYear,
+            day = dayOfMonth
+        ))
+    }
+
     @Subscribe
     fun openCalendar(event: OpenCalendar) {
-        Toast.makeText(requireContext(), TimeUtils.getCurrentDay(), Toast.LENGTH_SHORT).show()
+        val minDateModel = TimeUtils.getCurrentDateModel("")
+        val defaultDateModel = TimeUtils.getCurrentDateModel(placeBookingViewModel.getCurrentDateLiveData().value ?: "")
+
+        SpinnerDatePickerDialogBuilder()
+            .context(requireContext())
+            .callback(this)
+            .spinnerTheme(R.style.NumberPickerStyle)
+            .showTitle(true)
+            .showDaySpinner(true)
+            .defaultDate(defaultDateModel.year, defaultDateModel.month, defaultDateModel.day)
+            .minDate(minDateModel.year, minDateModel.month, minDateModel.day)
+            .build()
+            .show()
     }
 
     private fun initRecycler() {
