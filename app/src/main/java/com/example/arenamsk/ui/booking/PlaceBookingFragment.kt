@@ -37,6 +37,8 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
         ViewModelProviders.of(this).get(PlaceBookingViewModel::class.java)
     }
 
+    private var selectedPlaygroundId = -1L
+
     private val place by lazy { arguments?.getParcelable(PLACE_BOOKING_ARG_TAG) ?: PlaceModel() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,14 +51,15 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
             booking_spinner_playground_type.onSpinnerItemSelectedListener =
                 OnSpinnerItemSelectedListener { _, _, position, _ ->
                     showProgressBar()
-                    placeBookingViewModel.loadBookingData(getPlaygroundIdByPosition(position))
+                    selectedPlaygroundId = getPlaygroundIdByPosition(position)
+                    placeBookingViewModel.loadBookingData(selectedPlaygroundId)
                 }
         }
 
         //Подписываемся на LiveData с выбранной датой, при ее изменении обновляем UI и подгружаем новое расписание
         placeBookingViewModel.getCurrentDateLiveData().observe(viewLifecycleOwner, Observer {
             showProgressBar()
-            placeBookingViewModel.loadBookingData(place.playgroundModels[0].id)
+            placeBookingViewModel.loadBookingData(if (selectedPlaygroundId == -1L) place.playgroundModels[0].id else selectedPlaygroundId)
             updateDates(it)
         })
 
