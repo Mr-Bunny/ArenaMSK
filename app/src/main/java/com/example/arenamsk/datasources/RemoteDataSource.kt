@@ -78,4 +78,6 @@ object RemoteDataSource {
 
     suspend fun getFeedbackList(placeId: String) = authService.getFeedbackList(placeId)
 
+    suspend fun getBookingTimeList(playgroundId: String, date: String) = authService.getBookingTimeList(playgroundId, date)
+
 }

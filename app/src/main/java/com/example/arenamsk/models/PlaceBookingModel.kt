@@ -1,6 +1,7 @@
 package com.example.arenamsk.models
 
 import android.os.Parcelable
+import com.example.arenamsk.network.models.BookingDateModel
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -8,13 +9,10 @@ import kotlinx.android.parcel.Parcelize
  * Используется на экране бронирования (ui/booking) */
 @Parcelize
 data class PlaceBookingModel(
-    @SerializedName("time")
-    val time: String = "",
+    @SerializedName("date")
+    val date: Long = 0,
 
-    @SerializedName("price")
-    val price: Float = 0.0f,
-
-    @SerializedName("status")
-    val statusIsFree: Boolean = true
+    @SerializedName("bookings")
+    val bookings: List<BookingDateModel> = emptyList()
 
 ) : Parcelable

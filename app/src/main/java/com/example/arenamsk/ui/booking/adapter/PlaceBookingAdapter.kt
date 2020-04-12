@@ -6,12 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceBookingModel
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.network.models.BookingDateModel
 import com.example.arenamsk.ui.places.adapter.PlacesViewHolder
 
 class PlaceBookingAdapter(private val itemClickCallback: () -> Unit) :
     RecyclerView.Adapter<PlaceBookingViewHolder>() {
 
-    private val times: MutableList<PlaceBookingModel> = mutableListOf()
+    private val times: MutableList<BookingDateModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceBookingViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -25,7 +26,7 @@ class PlaceBookingAdapter(private val itemClickCallback: () -> Unit) :
 
     override fun getItemCount(): Int = times.size
 
-    fun setNewList(newList: List<PlaceBookingModel>) {
+    fun setNewList(newList: List<BookingDateModel>) {
         if (times.isNotEmpty()) times.clear()
         times.addAll(newList)
         notifyDataSetChanged()

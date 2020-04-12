@@ -2,23 +2,27 @@ package com.example.arenamsk.ui.booking
 
 import androidx.lifecycle.MutableLiveData
 import com.example.arenamsk.models.DateModel
-import com.example.arenamsk.models.PlaceBookingModel
+import com.example.arenamsk.network.models.ApiError
+import com.example.arenamsk.network.models.BookingDateModel
+import com.example.arenamsk.network.models.RequestErrorHandler
+import com.example.arenamsk.repositories.PlaceRepository
 import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.TimeUtils
+import kotlinx.coroutines.launch
 
 class PlaceBookingViewModel : BaseViewModel() {
 
-    private var placeBookingLiveData = MutableLiveData<MutableList<PlaceBookingModel>>()
+    private var placeBookingLiveData = MutableLiveData<MutableList<BookingDateModel>>()
 
     //Текущая дата в формате yyyy-MM-dd, которую будем передавать на бэк для получения расписания
     private val choosedDateLiveData = MutableLiveData<String>()
 
     private val currentDate: String = TimeUtils.getCurrentDay()
 
+    private val repository = PlaceRepository.getInstance()
+
     init {
         choosedDateLiveData.value = currentDate
-
-        loadBookingData()
     }
 
     fun getPlaceBookingLiveData() = placeBookingLiveData
@@ -33,96 +37,33 @@ class PlaceBookingViewModel : BaseViewModel() {
         choosedDateLiveData.value = TimeUtils.getNextDay(choosedDateLiveData.value ?: currentDate)
     }
 
-    private fun loadBookingData() {
-        placeBookingLiveData.value = getTestPlaces()
-    }
+    /** Загружаем время доступное для бронирования для определенной площадки */
+    fun loadBookingData(playgroundId: Long) {
+        launch {
+            repository.getBookingTimeList(
+                playgroundId = playgroundId,
+                date = choosedDateLiveData.value ?: TimeUtils.getCurrentDay(),
+                success = {
+                    placeBookingLiveData.value = it.bookings as MutableList<BookingDateModel>
+                },
+                errorHandler = object : RequestErrorHandler {
+                    override suspend fun networkUnavailableError() {
+                        placeBookingLiveData.value = null
+                    }
 
-    //TODO test - remove after get real data from server
-    private fun getTestPlaces(): MutableList<PlaceBookingModel> = mutableListOf(
-        PlaceBookingModel(
-            time = "10.30 - 11.30",
-            price = 1000f,
-            statusIsFree = true
-        ),
-        PlaceBookingModel(
-            time = "12.30 - 13.30",
-            price = 2000f,
-            statusIsFree = false
-        ),
-        PlaceBookingModel(
-            time = "13.30 - 14.30",
-            price = 3000f,
-            statusIsFree = false
-        ),
-        PlaceBookingModel(
-            time = "14.30 - 15.30",
-            price = 4000f,
-            statusIsFree = true
-        ),
-        PlaceBookingModel(
-            time = "16.30 - 17.30",
-            price = 5000f,
-            statusIsFree = true
-        ),
-        PlaceBookingModel(
-            time = "10.30 - 11.30",
-            price = 1000f,
-            statusIsFree = true
-        ),
-        PlaceBookingModel(
-            time = "12.30 - 13.30",
-            price = 2000f,
-            statusIsFree = false
-        ),
-        PlaceBookingModel(
-            time = "13.30 - 14.30",
-            price = 3000f,
-            statusIsFree = false
-        ),
-        PlaceBookingModel(
-            time = "14.30 - 15.30",
-            price = 4000f,
-            statusIsFree = true
-        ),
-        PlaceBookingModel(
-            time = "16.30 - 17.30",
-            price = 5000f,
-            statusIsFree = true
-        ),
-        PlaceBookingModel(
-            time = "14.30 - 15.30",
-            price = 4000f,
-            statusIsFree = true
-        ),
-        PlaceBookingModel(
-            time = "16.30 - 17.30",
-            price = 5000f,
-            statusIsFree = true
-        ),
-        PlaceBookingModel(
-            time = "10.30 - 11.30",
-            price = 1000f,
-            statusIsFree = true
-        ),
-        PlaceBookingModel(
-            time = "12.30 - 13.30",
-            price = 2000f,
-            statusIsFree = false
-        ),
-        PlaceBookingModel(
-            time = "13.30 - 14.30",
-            price = 3000f,
-            statusIsFree = false
-        ),
-        PlaceBookingModel(
-            time = "14.30 - 15.30",
-            price = 4000f,
-            statusIsFree = true
-        ),
-        PlaceBookingModel(
-            time = "16.30 - 17.30",
-            price = 5000f,
-            statusIsFree = true
-        )
-    )
+                    override suspend fun requestFailedError(error: ApiError?) {
+                        placeBookingLiveData.value = null
+                    }
+
+                    override suspend fun requestSuccessButResponseIsNull() {
+                        placeBookingLiveData.value = null
+                    }
+
+                    override suspend fun timeoutException() {
+                        placeBookingLiveData.value = null
+                    }
+                }
+            )
+        }
+    }
 }

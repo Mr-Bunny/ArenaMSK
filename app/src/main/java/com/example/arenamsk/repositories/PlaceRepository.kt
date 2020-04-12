@@ -3,8 +3,10 @@ package com.example.arenamsk.repositories
 import com.example.arenamsk.datasources.LocalDataSource
 import com.example.arenamsk.datasources.RemoteDataSource
 import com.example.arenamsk.models.FeedbackModel
+import com.example.arenamsk.models.PlaceBookingModel
 import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.network.models.BookingDateModel
 import com.example.arenamsk.network.models.FeedbackNetworkModel
 import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.network.utils.AuthUtils
@@ -103,6 +105,19 @@ class PlaceRepository private constructor() : BaseRepository() {
             }
         },
         success = { },
+        errorHandler = errorHandler
+    )
+
+    suspend fun getBookingTimeList(
+        playgroundId: Long,
+        date: String,
+        success: (response: PlaceBookingModel) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = {
+            RemoteDataSource.getBookingTimeList(playgroundId.toString(), date)
+        },
+        success = success,
         errorHandler = errorHandler
     )
 

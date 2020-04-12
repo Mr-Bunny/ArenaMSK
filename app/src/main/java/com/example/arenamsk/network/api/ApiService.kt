@@ -1,6 +1,8 @@
 package com.example.arenamsk.network.api
 
+import com.example.arenamsk.models.PlaceBookingModel
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.network.models.BookingDateModel
 import com.example.arenamsk.network.models.FeedbackNetworkModel
 import com.example.arenamsk.network.models.auth.*
 import com.example.arenamsk.room.tables.Subway
@@ -30,6 +32,9 @@ interface ApiService {
 
     @GET("api/v1/feedback/{place}")
     suspend fun getFeedbackList(@Path("place") place: String): Response<FeedbackNetworkModel>
+
+    @GET("api/v1/booking/{playground}")
+    suspend fun getBookingTimeList(@Path("playground") playground: String, @Query("date") date: String): Response<PlaceBookingModel>
 
     @GET("api/v1/subway/")
     suspend fun getAllSubways(): Response<List<Subway>>
