@@ -74,14 +74,19 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
 
         initRecycler()
 
+        //Подписываемся на изменение расписания, сортируем по выбранному типу поля (целое или половина) и отображаем список
         placeBookingViewModel.getPlaceBookingLiveData().observe(this, Observer { list ->
-            val sorted = list.filter { it.isHalfBooking == booking_half_field_check_box.isChecked }
+            if (list != null) {
+                val sorted = list.filter { it.isHalfBooking == booking_half_field_check_box.isChecked }
 
-            if (sorted.isNullOrEmpty()) {
-                showError()
+                if (sorted.isNullOrEmpty()) {
+                    showError()
+                } else {
+                    showRecycler()
+                    placeBookingAdapter.setNewList(sorted)
+                }
             } else {
-                showRecycler()
-                placeBookingAdapter.setNewList(sorted)
+                showError()
             }
         })
 
