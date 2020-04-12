@@ -121,6 +121,30 @@
                         android:layout_marginEnd="20dp"
                         android:text="Половина \nплощадки" />
 
+                    <LinearLayout
+                        android:id="@+id/booking_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@id/booking_half_field_check_box"
+                        app:layout_constraintBottom_toBottomOf="@id/booking_half_field_check_box"
+                        app:layout_constraintLeft_toRightOf="@id/booking_half_field_check_box"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:visibility="gone"
+                        android:padding="1dp">
+
+                        <org.angmarch.views.NiceSpinner
+                            android:id="@+id/booking_spinner_playground_type"
+                            style="@style/BookingText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="40dp"
+                            app:textTint="@color/text_color_grey_light"
+                            app:arrowDrawable="@drawable/ic_spinner_arrow" />
+
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/booking_section_time"
                         android:layout_width="0dp"

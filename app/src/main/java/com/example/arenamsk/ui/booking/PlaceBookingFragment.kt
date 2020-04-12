@@ -2,7 +2,6 @@ package com.example.arenamsk.ui.booking
 
 import android.os.Bundle
 import android.view.View
-import android.widget.CompoundButton
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +19,7 @@ import com.tsongkha.spinnerdatepicker.DatePicker
 import com.tsongkha.spinnerdatepicker.DatePickerDialog
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import kotlinx.android.synthetic.main.fragment_place_booking.*
+import org.angmarch.views.OnSpinnerItemSelectedListener
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
@@ -42,8 +42,20 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Проверяем количество площадок у выбранного места, если их 2 и больше - показываем выпадающий список для выбора площадки
+        if (place.playgroundModels.size > 1) {
+            booking_spinner.enable()
+            booking_spinner_playground_type.attachDataSource(getPlaygroundList())
+            booking_spinner_playground_type.onSpinnerItemSelectedListener =
+                OnSpinnerItemSelectedListener { _, _, position, _ ->
+                    showProgressBar()
+                    placeBookingViewModel.loadBookingData(getPlaygroundIdByPosition(position))
+                }
+        }
+
         //Подписываемся на LiveData с выбранной датой, при ее изменении обновляем UI и подгружаем новое расписание
         placeBookingViewModel.getCurrentDateLiveData().observe(viewLifecycleOwner, Observer {
+            showProgressBar()
             placeBookingViewModel.loadBookingData(place.playgroundModels[0].id)
             updateDates(it)
         })
@@ -63,7 +75,6 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
 
         //Выбрали следующий день
         booking_date_next.setOnClickListener {
-            showProgressBar()
             placeBookingViewModel.setNextDate()
         }
 
@@ -94,7 +105,6 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
 
     /** Вызывается после выбора даты через DatePicker */
     override fun onDateSet(view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        showProgressBar()
         placeBookingViewModel.setCurrentDate(DateModel(
             year = year,
             month = monthOfYear,
@@ -134,6 +144,18 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
     private fun itemClickCallback() {
         //TODO сохранять кликнутый item
     }
+
+    /** Метод возвращает список площадок (вида спорта) открытой площадки (места) */
+    private fun getPlaygroundList(): List<String> {
+        return mutableListOf<String>().apply {
+            for (place in place.playgroundModels) {
+                add(place.sport?.name ?: "")
+            }
+        }
+    }
+
+    /** Возвращаем id площадки на основе позиции в спинере */
+    private fun getPlaygroundIdByPosition(position: Int) = place.playgroundModels[position].id
 
     /** Сохраняем в нужнгом формате текущую дату, выбранную дату, которая изначально равна текущей
      * @param currentDate - Текущий выбранный день */
@@ -176,5 +198,4 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
         btn_book.enable()
         recycler_place_booking.enable()
     }
-
 }
