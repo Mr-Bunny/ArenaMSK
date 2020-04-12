@@ -9,7 +9,7 @@ import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.BookingDateModel
 import com.example.arenamsk.ui.places.adapter.PlacesViewHolder
 
-class PlaceBookingAdapter(private val itemClickCallback: () -> Unit) :
+class PlaceBookingAdapter(private val itemClickCallback: (id: String, isSelected: Boolean) -> Unit) :
     RecyclerView.Adapter<PlaceBookingViewHolder>() {
 
     private val times: MutableList<BookingDateModel> = mutableListOf()

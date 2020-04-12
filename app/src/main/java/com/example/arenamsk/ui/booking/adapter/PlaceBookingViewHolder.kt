@@ -3,25 +3,22 @@ package com.example.arenamsk.ui.booking.adapter
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
-import com.example.arenamsk.models.PlaceBookingModel
 import com.example.arenamsk.network.models.BookingDateModel
 import com.example.arenamsk.utils.TimeUtils
 import kotlinx.android.synthetic.main.item_place_booking.view.*
 
 class PlaceBookingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private var isSelected = false
-
-    fun bind(place: BookingDateModel, itemClickCallback: () -> Unit) {
+    fun bind(bookingTime: BookingDateModel, itemClickCallback: (id: String, isSelected: Boolean) -> Unit) {
         with(itemView) {
-            setupItems(place, this)
+            setupItems(bookingTime, this)
 
             //Если площадка свободна
-            if (!place.isBooked) {
+            if (!bookingTime.isBooked) {
                 setOnClickListener {
                     isSelected = !isSelected
 
-                    //TODO сохранять id выбранного времени
+                    itemClickCallback.invoke(bookingTime.id.toString(), isSelected)
 
                     if (isSelected) {
                         this.setBackgroundColor(context.resources.getColor(R.color.colorPrimary))
@@ -29,7 +26,7 @@ class PlaceBookingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
                         booking_price.setTextColor(context.resources.getColor(R.color.colorWhite))
                         booking_status.setTextColor(context.resources.getColor(R.color.colorWhite))
                     } else {
-                        setupItems(place, this)
+                        setupItems(bookingTime, this)
                     }
                 }
             }

@@ -2,6 +2,7 @@ package com.example.arenamsk.ui.booking
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +24,7 @@ import org.angmarch.views.OnSpinnerItemSelectedListener
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
+import kotlin.collections.HashSet
 
 class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), DatePickerDialog.OnDateSetListener {
 
@@ -38,6 +40,8 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
     }
 
     private var selectedPlaygroundId = -1L
+
+    private val selectedBookingTimeId = HashSet<String>()
 
     private val place by lazy { arguments?.getParcelable(PLACE_BOOKING_ARG_TAG) ?: PlaceModel() }
 
@@ -59,7 +63,12 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
         //Подписываемся на LiveData с выбранной датой, при ее изменении обновляем UI и подгружаем новое расписание
         placeBookingViewModel.getCurrentDateLiveData().observe(viewLifecycleOwner, Observer {
             showProgressBar()
-            placeBookingViewModel.loadBookingData(if (selectedPlaygroundId == -1L) place.playgroundModels[0].id else selectedPlaygroundId)
+
+            if (selectedPlaygroundId == -1L) {
+                selectedPlaygroundId = place.playgroundModels[0].id
+            }
+
+            placeBookingViewModel.loadBookingData(selectedPlaygroundId)
             updateDates(it)
         })
 
@@ -91,6 +100,11 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
                 showRecycler()
                 placeBookingAdapter.setNewList(sorted)
             }
+        }
+
+        btn_book.setOnClickListener {
+            //TODO open webview with payment
+            Toast.makeText(requireContext(), "time: $selectedBookingTimeId \nplaygroundId: $selectedPlaygroundId \ndate: ${placeBookingViewModel.getCurrentDateLiveData().value} ", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -144,8 +158,13 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
         }
     }
 
-    private fun itemClickCallback() {
-        //TODO сохранять кликнутый item
+    /** Если мы выбрали какое-то время - сохраняем его id, если убрали - удаляем */
+    private fun itemClickCallback(id: String, isSelected: Boolean) {
+        if (isSelected) {
+            selectedBookingTimeId.add(id)
+        } else {
+            selectedBookingTimeId.remove(id)
+        }
     }
 
     /** Метод возвращает список площадок (вида спорта) открытой площадки (места) */
