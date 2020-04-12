@@ -2,12 +2,14 @@ package com.example.arenamsk.ui.booking
 
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.arenamsk.R
 import com.example.arenamsk.models.DateModel
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.network.models.BookingDateModel
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.booking.adapter.PlaceBookingAdapter
 import com.example.arenamsk.utils.ActionEvent.OpenCalendar
@@ -48,12 +50,14 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
 
         initRecycler()
 
-        placeBookingViewModel.getPlaceBookingLiveData().observe(this, Observer {
-            if (it.isNullOrEmpty()) {
+        placeBookingViewModel.getPlaceBookingLiveData().observe(this, Observer { list ->
+            val sorted = list.filter { it.isHalfBooking == booking_half_field_check_box.isChecked }
+
+            if (sorted.isNullOrEmpty()) {
                 showError()
             } else {
                 showRecycler()
-                placeBookingAdapter.setNewList(it)
+                placeBookingAdapter.setNewList(sorted)
             }
         })
 
@@ -61,6 +65,18 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
         booking_date_next.setOnClickListener {
             showProgressBar()
             placeBookingViewModel.setNextDate()
+        }
+
+        booking_half_field_check_box.setOnCheckedChangeListener { _, isChecked ->
+            val list = placeBookingViewModel.getPlaceBookingLiveData().value ?: emptyList<BookingDateModel>()
+            val sorted = list.filter { it.isHalfBooking == isChecked }
+
+            if (sorted.isNullOrEmpty()) {
+                showError()
+            } else {
+                showRecycler()
+                placeBookingAdapter.setNewList(sorted)
+            }
         }
     }
 
@@ -148,12 +164,15 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
     /** Показываем текст что ничего не нашлось */
     private fun showError() {
         hideProgressBar()
+        btn_book.disable()
+        recycler_place_booking.disable()
         booking_error_text.enable()
     }
 
     /** Показываем recycler с кнопкой бронирования */
     private fun showRecycler() {
         hideProgressBar()
+        booking_error_text.disable()
         btn_book.enable()
         recycler_place_booking.enable()
     }

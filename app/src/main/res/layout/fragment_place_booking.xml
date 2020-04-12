@@ -108,18 +108,31 @@
 
                     </LinearLayout>
 
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/booking_half_field_check_box"
+                        style="@style/BookingText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/booking_date_string"
+                        app:switchPadding="20dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:text="Половина \nплощадки" />
+
                     <TextView
                         android:id="@+id/booking_section_time"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="13dp"
+                        android:layout_marginTop="16dp"
                         android:fontFamily="@font/montserrat_bold"
                         android:text="@string/booking_section_time"
                         android:textColor="@color/booking_section_title"
                         android:textSize="12sp"
                         app:layout_constraintLeft_toLeftOf="@id/booking_date_string"
                         app:layout_constraintRight_toLeftOf="@id/booking_section_price"
-                        app:layout_constraintTop_toBottomOf="@id/booking_date_string" />
+                        app:layout_constraintTop_toBottomOf="@id/booking_half_field_check_box" />
 
                     <TextView
                         android:id="@+id/booking_section_price"
@@ -216,11 +229,10 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginRight="16dp"
-                    android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
                     android:text="На выбранную дату нет свободных мест"
                     android:textColor="@color/text_color_grey"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
