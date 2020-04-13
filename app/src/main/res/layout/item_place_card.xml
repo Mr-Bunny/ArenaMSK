@@ -42,7 +42,7 @@
             app:srb_rating="3"
             app:srb_starBorderWidth="3"
             app:srb_starSize="13dp"
-            app:srb_stepSize="2" />
+            app:srb_stepSize="1" />
 
         <TextView
             android:id="@+id/place_item_rating_text"

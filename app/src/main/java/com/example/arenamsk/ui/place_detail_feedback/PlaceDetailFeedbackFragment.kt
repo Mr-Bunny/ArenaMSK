@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.arenamsk.R
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
+import com.example.arenamsk.ui.feedback.FeedbackDialogFragment
 import com.example.arenamsk.ui.place_detail.PlaceDetailFragment.Companion.PLACE_DETAIL_ARG_TAG
 import com.example.arenamsk.ui.place_detail_feedback.adapter.PlaceDetailFeedbackAdapter
 import com.example.arenamsk.ui.places.PlacesViewModel
@@ -41,6 +42,8 @@ class PlaceDetailFeedbackFragment private constructor() :
 
     private val feedbackAdapter by lazy { PlaceDetailFeedbackAdapter() }
 
+    private var feedbackFragment: FeedbackDialogFragment? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,12 +59,13 @@ class PlaceDetailFeedbackFragment private constructor() :
 
             //Если бронировали и отзывов нет
             if (place.inHistory && it.isNullOrEmpty()) {
-                //TODO set OnClick to the feedback_no_reviews_text
                 feedback_no_reviews_text_send_text_view.enable()
+                feedback_no_reviews_text_send_text_view.setOnClickListener { openFeedbackScreen() }
             } else if (!place.inHistory && it.isNullOrEmpty()) { //Если не бронировали и отзывов нет
                 feedback_no_reviews_text_view.enable()
             } else if (place.inHistory && it.isNotEmpty()) { //Если бронировали и есть отзывы
                 feedback_button.enable()
+                feedback_button.setOnClickListener { openFeedbackScreen() }
             }
         })
     }
@@ -77,4 +81,12 @@ class PlaceDetailFeedbackFragment private constructor() :
         }
     }
 
+    private fun openFeedbackScreen() {
+        feedbackFragment?.dismiss()
+        feedbackFragment = FeedbackDialogFragment.getInstance(true)
+        feedbackFragment?.show(
+            activity!!.supportFragmentManager,
+            FeedbackDialogFragment.FEEDBACK_TAG
+        )
+    }
 }

@@ -8,6 +8,9 @@ import com.example.arenamsk.R
 import com.example.arenamsk.datasources.LocalDataSource
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.ui.base.BaseFragment
+import com.example.arenamsk.ui.base.PlaceDialogFragment
+import com.example.arenamsk.ui.feedback.FeedbackDialogFragment
+import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
 import com.example.arenamsk.utils.disable
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -18,6 +21,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private val profileViewModel by lazy {
         ViewModelProviders.of(this).get(ProfileViewModel::class.java)
     }
+
+    private var feedbackFragment: FeedbackDialogFragment? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,10 +54,23 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         profile_item_booked.setOnClickListener {
             openBookedFragment()
         }
+
+        profile_item_contact.setOnClickListener {
+            openFeedbackScreen()
+        }
     }
 
     /** Открываем фрагмент с историей бронирования */
     private fun openBookedFragment() {
         findNavController().navigate(R.id.navigation_booked)
+    }
+
+    private fun openFeedbackScreen() {
+        feedbackFragment?.dismiss()
+        feedbackFragment = FeedbackDialogFragment.getInstance(false)
+        feedbackFragment?.show(
+            activity!!.supportFragmentManager,
+            FeedbackDialogFragment.FEEDBACK_TAG
+        )
     }
 }

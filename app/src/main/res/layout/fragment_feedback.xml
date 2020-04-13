@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/feedback_screen_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="54dp"
+        android:text="Написать отзыв"
+        android:textColor="@color/text_dark_grey"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/feedback_mark_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="Ваша оценка"
+        android:textColor="@color/text_color_grey"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toLeftOf="@id/feedback_screen_title"
+        app:layout_constraintRight_toLeftOf="@id/feedback_rating"
+        app:layout_constraintTop_toBottomOf="@id/feedback_screen_title" />
+
+    <com.iarcuschin.simpleratingbar.SimpleRatingBar
+        android:id="@+id/feedback_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/feedback_mark_title"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintLeft_toRightOf="@id/feedback_mark_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/feedback_mark_title"
+        app:srb_fillColor="@color/rating_bar_star"
+        app:srb_starBorderWidth="3"
+        app:srb_starSize="16dp" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/feedback_name_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_text_feedback_background"
+        android:gravity="top"
+        android:hint="Имя"
+        android:inputType="text"
+        android:maxLines="1"
+        android:minHeight="40dp"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:textColor="@color/text_color_grey"
+        android:textColorHint="@color/text_color_grey_light"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/feedback_mark_title" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/feedback_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_feedback_background"
+        android:gravity="top"
+        android:hint="Расскажите о своих впечатлениях"
+        android:inputType="textMultiLine"
+        android:maxHeight="200dp"
+        android:minHeight="128dp"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="25dp"
+        android:paddingBottom="12dp"
+        android:textColor="@color/text_color_grey"
+        android:textColorHint="@color/text_color_grey_light"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@id/feedback_name_edit_text"
+        app:layout_constraintRight_toRightOf="@id/feedback_name_edit_text"
+        app:layout_constraintTop_toBottomOf="@id/feedback_name_edit_text" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/feedback_recommendation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawablePadding="4dp"
+        android:padding="16dp"
+        android:gravity="center"
+        android:text="@string/text_recommendation"
+        android:textColor="@color/booking_section_title"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        app:drawableStartCompat="@drawable/ic_recommendation_grey"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/feedback_edit_text" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/feedback_send_btn"
+        style="@style/FilterResetButton"
+        android:layout_width="0dp"
+        android:layout_marginBottom="28dp"
+        android:text="Отправить отзыв"
+        app:cornerRadius="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/feedback_edit_text"
+        app:layout_constraintRight_toRightOf="@id/feedback_edit_text"
+        app:layout_constraintTop_toBottomOf="@id/feedback_edit_text"
+        app:layout_constraintVertical_bias="1"
+        app:strokeColor="@color/colorPrimary"
+        app:strokeWidth="1dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
