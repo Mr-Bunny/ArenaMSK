@@ -83,7 +83,6 @@ class PlaceRepository private constructor() : BaseRepository() {
     )
 
     /** Загрузка площадок в истории бронирования */
-    //TODO
     fun getBookedHistoryPlaces(
         success: (response: List<PlaceModel>) -> Unit,
         errorHandler: RequestErrorHandler

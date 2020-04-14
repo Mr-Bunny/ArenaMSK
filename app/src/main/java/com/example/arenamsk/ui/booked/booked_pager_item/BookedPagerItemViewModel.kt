@@ -62,11 +62,11 @@ class BookedPagerItemViewModel: BaseViewModel() {
     fun loadInBookedHistoryPlaces() {
         placesStatus.value = EnumUtils.GetPlacesStatus.LOAD_PLACES
 
-//        launch(Dispatchers.IO) {
-//            repository.getBookedHistoryPlaces(
-//                success = { bookedHistoryPlacesLiveData.value = it as MutableList<PlaceModel> },
-//                errorHandler = errorHandler
-//            )
-//        }
+        launch(Dispatchers.IO) {
+            repository.getBookedHistoryPlaces(
+                success = { bookedHistoryPlacesLiveData.value = (it.filter { place -> place.inHistory }) as MutableList<PlaceModel> },
+                errorHandler = errorHandler
+            )
+        }
     }
 }
