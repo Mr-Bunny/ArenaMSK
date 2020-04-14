@@ -59,8 +59,7 @@
         app:srb_isIndicator="true"
         app:srb_rating="3"
         app:srb_starBorderWidth="3"
-        app:srb_starSize="13dp"
-        app:srb_stepSize="2" />
+        app:srb_starSize="13dp" />
 
     <TextView
         android:id="@+id/feedback_text"

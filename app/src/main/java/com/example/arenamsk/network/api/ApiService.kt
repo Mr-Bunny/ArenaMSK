@@ -1,7 +1,9 @@
 package com.example.arenamsk.network.api
 
+import com.example.arenamsk.models.FeedbackModel
 import com.example.arenamsk.models.PlaceBookingModel
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.network.models.AppFeedbackModel
 import com.example.arenamsk.network.models.BookingDateModel
 import com.example.arenamsk.network.models.FeedbackNetworkModel
 import com.example.arenamsk.network.models.auth.*
@@ -64,4 +66,10 @@ interface ApiService {
 
     @POST("api/v1/favorite/unmark/{place}")
     suspend fun addRemoveFromFavourite(@Path("place") place: String): Response<Unit>
+
+    @POST("api/v1/feedback/service")
+    suspend fun postAppFeedback(@Body feedback: AppFeedbackModel): Response<Unit>
+
+    @POST("api/v1/feedback/{place}")
+    suspend fun postPlaceFeedback(@Path("place") place: String, @Body feedback: FeedbackModel): Response<Unit>
 }

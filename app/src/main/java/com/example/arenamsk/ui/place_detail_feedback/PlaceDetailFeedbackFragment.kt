@@ -44,12 +44,12 @@ class PlaceDetailFeedbackFragment private constructor() :
 
     private var feedbackFragment: FeedbackDialogFragment? = null
 
+    private val place by lazy { arguments?.getParcelable(PLACE_DETAIL_ARG_TAG) ?: PlaceModel() }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initRecycler()
-
-        val place = arguments?.getParcelable(PLACE_DETAIL_ARG_TAG) ?: PlaceModel()
 
         feedbackViewModel.getFeedbackList(place.id.toString())
 
@@ -83,7 +83,7 @@ class PlaceDetailFeedbackFragment private constructor() :
 
     private fun openFeedbackScreen() {
         feedbackFragment?.dismiss()
-        feedbackFragment = FeedbackDialogFragment.getInstance(true)
+        feedbackFragment = FeedbackDialogFragment.getInstance(true, place.id.toString())
         feedbackFragment?.show(
             activity!!.supportFragmentManager,
             FeedbackDialogFragment.FEEDBACK_TAG

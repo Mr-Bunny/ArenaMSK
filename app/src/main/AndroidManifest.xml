@@ -22,7 +22,8 @@
         <activity android:name=".ui.FullScreenImageActivity"></activity>
         <activity
             android:name=".ui.MainActivity"
-            android:theme="@style/MainAppTheme" />
+            android:theme="@style/MainAppTheme"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.AuthActivity"
             android:screenOrientation="portrait"

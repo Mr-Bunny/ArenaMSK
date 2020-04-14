@@ -1,7 +1,9 @@
 package com.example.arenamsk.datasources
 
+import com.example.arenamsk.models.FeedbackModel
 import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.network.api.ApiService
+import com.example.arenamsk.network.models.AppFeedbackModel
 import com.example.arenamsk.network.models.auth.LogInUserModel
 import com.example.arenamsk.network.models.auth.RefreshTokenModel
 import com.example.arenamsk.network.models.auth.SignUpUserModel
@@ -79,5 +81,9 @@ object RemoteDataSource {
     suspend fun getFeedbackList(placeId: String) = authService.getFeedbackList(placeId)
 
     suspend fun getBookingTimeList(playgroundId: String, date: String) = authService.getBookingTimeList(playgroundId, date)
+
+    suspend fun sendAppFeedback(feedback: AppFeedbackModel) = authService.postAppFeedback(feedback)
+
+    suspend fun sendPlaceFeedback(placeId:String, feedback: FeedbackModel) = service.postPlaceFeedback(placeId, feedback)
 
 }

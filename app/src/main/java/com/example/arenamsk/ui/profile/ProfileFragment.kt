@@ -67,7 +67,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     private fun openFeedbackScreen() {
         feedbackFragment?.dismiss()
-        feedbackFragment = FeedbackDialogFragment.getInstance(false)
+        feedbackFragment = FeedbackDialogFragment.getInstance()
         feedbackFragment?.show(
             activity!!.supportFragmentManager,
             FeedbackDialogFragment.FEEDBACK_TAG

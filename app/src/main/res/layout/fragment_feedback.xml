@@ -47,7 +47,8 @@
         app:layout_constraintTop_toTopOf="@id/feedback_mark_title"
         app:srb_fillColor="@color/rating_bar_star"
         app:srb_starBorderWidth="3"
-        app:srb_starSize="16dp" />
+        app:srb_starSize="16dp"
+        app:srb_stepSize="1" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/feedback_name_edit_text"
@@ -69,6 +70,7 @@
         android:textColorHint="@color/text_color_grey_light"
         android:textSize="12sp"
         android:visibility="gone"
+        android:maxLength="255"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -92,6 +94,7 @@
         android:textColor="@color/text_color_grey"
         android:textColorHint="@color/text_color_grey_light"
         android:textSize="12sp"
+        android:maxLength="255"
         app:layout_constraintLeft_toLeftOf="@id/feedback_name_edit_text"
         app:layout_constraintRight_toRightOf="@id/feedback_name_edit_text"
         app:layout_constraintTop_toBottomOf="@id/feedback_name_edit_text" />

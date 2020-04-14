@@ -6,6 +6,7 @@ import com.example.arenamsk.models.FeedbackModel
 import com.example.arenamsk.models.PlaceBookingModel
 import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.network.models.AppFeedbackModel
 import com.example.arenamsk.network.models.BookingDateModel
 import com.example.arenamsk.network.models.FeedbackNetworkModel
 import com.example.arenamsk.network.models.RequestErrorHandler
@@ -121,8 +122,10 @@ class PlaceRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
-    suspend fun getSubways(success: (response: List<Subway>) -> Unit,
-                   errorHandler: RequestErrorHandler) {
+    suspend fun getSubways(
+        success: (response: List<Subway>) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) {
         LocalDataSource.getLocalSubwayList().also {
             if (it.isNullOrEmpty()) {
                 makeRequest(
@@ -142,9 +145,34 @@ class PlaceRepository private constructor() : BaseRepository() {
         errorHandler: RequestErrorHandler
     ) = makeRequest(
         call = {
-            with(RemoteDataSource) {
-                getFeedbackList(placeId)
-            }
+            RemoteDataSource.getFeedbackList(placeId)
+        },
+        success = success,
+        errorHandler = errorHandler
+    )
+
+    /** Отправляем отзыв о приложении */
+    fun sendAppFeedback(
+        feedback: AppFeedbackModel,
+        success: (Unit) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = {
+            RemoteDataSource.sendAppFeedback(feedback)
+        },
+        success = success,
+        errorHandler = errorHandler
+    )
+
+    /** Отправляем отзыв о площадке */
+    fun sendPlaceFeedback(
+        placeId: String,
+        feedback: FeedbackModel,
+        success: (Unit) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = {
+            RemoteDataSource.sendPlaceFeedback(placeId, feedback)
         },
         success = success,
         errorHandler = errorHandler
