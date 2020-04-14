@@ -6,9 +6,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.arenamsk.R
+import com.example.arenamsk.models.OrderModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.base.PlaceDialogFragment
+import com.example.arenamsk.ui.booked.adapter.CurrentOrdersAdapter
 import com.example.arenamsk.ui.places.PlacesViewModel
 import com.example.arenamsk.ui.places.adapter.PlacesAdapter
 import com.example.arenamsk.utils.ActionEvent
@@ -47,6 +49,8 @@ class BookedPagerItemFragment: BaseFragment(R.layout.fragment_booked_pager_item)
         )
     }
 
+    private val currentOrdersAdapter by lazy { CurrentOrdersAdapter() }
+
     private val bookedPlacesViewModel by lazy {
         ViewModelProviders.of(this).get(BookedPagerItemViewModel::class.java)
     }
@@ -60,7 +64,7 @@ class BookedPagerItemFragment: BaseFragment(R.layout.fragment_booked_pager_item)
 
         with(booked_pager_recycler) {
             setHasFixedSize(true)
-            adapter = placeAdapter
+            adapter =  if (arguments?.getString(SCREEN_TYPE_ARG, CURRENT_SCREEN_TYPE) == CURRENT_SCREEN_TYPE) currentOrdersAdapter else placeAdapter
             layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.VERTICAL,
@@ -73,7 +77,7 @@ class BookedPagerItemFragment: BaseFragment(R.layout.fragment_booked_pager_item)
         })
 
         bookedPlacesViewModel.getCurrentBookedPlacesLiveData().observe(this, Observer {
-            showData(it)
+            showCurrentOrdersData(it)
         })
 
         bookedPlacesViewModel.getInBookedHistoryPlacesLiveData().observe(this, Observer {
@@ -124,6 +128,16 @@ class BookedPagerItemFragment: BaseFragment(R.layout.fragment_booked_pager_item)
             placeAdapter.setNewList(list)
         }
     }
+
+    private fun showCurrentOrdersData(list: MutableList<OrderModel>) {
+        if (list.isNullOrEmpty()) {
+            showPlacesNotFoundForm()
+        } else {
+            showRecycler()
+            currentOrdersAdapter.setNewList(list)
+        }
+    }
+
 
     /** Обрабатываем ошибки запроса площадок */
     private fun handlePlacesLoadingStatus(status: EnumUtils.GetPlacesStatus) {

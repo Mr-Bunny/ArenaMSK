@@ -1,6 +1,7 @@
 package com.example.arenamsk.network.api
 
 import com.example.arenamsk.models.FeedbackModel
+import com.example.arenamsk.models.OrderModel
 import com.example.arenamsk.models.PlaceBookingModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.AppFeedbackModel
@@ -72,4 +73,7 @@ interface ApiService {
 
     @POST("api/v1/feedback/{place}")
     suspend fun postPlaceFeedback(@Path("place") place: String, @Body feedback: FeedbackModel): Response<Unit>
+
+    @GET("api/v1/booking/booked")
+    suspend fun getCurrentOrders(): Response<List<OrderModel>>
 }

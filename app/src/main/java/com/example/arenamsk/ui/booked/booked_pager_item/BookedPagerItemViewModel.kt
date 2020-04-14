@@ -1,6 +1,7 @@
 package com.example.arenamsk.ui.booked.booked_pager_item
 
 import androidx.lifecycle.MutableLiveData
+import com.example.arenamsk.models.OrderModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.ApiError
 import com.example.arenamsk.network.models.RequestErrorHandler
@@ -19,7 +20,7 @@ class BookedPagerItemViewModel: BaseViewModel() {
     private val repository = PlaceRepository.getInstance()
 
     //Список текущих забронированных площадок
-    private var currentBookedPlacesLiveData = MutableLiveData<MutableList<PlaceModel>>()
+    private var currentBookedPlacesLiveData = MutableLiveData<MutableList<OrderModel>>()
     //Список площадок в истории бронирования
     private var bookedHistoryPlacesLiveData = MutableLiveData<MutableList<PlaceModel>>()
 
@@ -53,7 +54,7 @@ class BookedPagerItemViewModel: BaseViewModel() {
 
         launch(Dispatchers.IO) {
             repository.getCurrentBookedPlaces(
-                success = { currentBookedPlacesLiveData.value = it as MutableList<PlaceModel> },
+                success = { currentBookedPlacesLiveData.value = it as MutableList<OrderModel> },
                 errorHandler = errorHandler
             )
         }

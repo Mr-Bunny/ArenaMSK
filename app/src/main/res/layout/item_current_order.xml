@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="24dp"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="3dp"
+    app:elevation="6dp"
+    app:strokeColor="@color/place_card_background_border"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:id="@+id/order_place_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Теннисный корт «Клуб тенниса»"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/order_place_work_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/text_title_place_work_time"
+            android:textColor="@color/text_color_grey_light"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/order_place_title"
+            app:layout_constraintTop_toBottomOf="@id/order_place_title" />
+
+        <TextView
+            android:id="@+id/order_place_work_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="8.00–22.00"
+            android:textColor="@color/text_color_grey"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/order_place_work_time_title"
+            app:layout_constraintLeft_toRightOf="@id/order_place_work_time_title"
+            app:layout_constraintTop_toTopOf="@id/order_place_work_time_title" />
+
+        <TextView
+            android:id="@+id/order_place_address_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="@string/text_title_place_address"
+            android:textColor="@color/text_color_grey_light"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/order_place_work_time_title"
+            app:layout_constraintTop_toBottomOf="@id/order_place_work_time_title" />
+
+        <TextView
+            android:id="@+id/order_place_address_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:paddingEnd="88dp"
+            android:text="ул. Комсомольская, д. 2, корп. 1"
+            android:textColor="@color/text_color_grey"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/order_place_address_title"
+            app:layout_constraintLeft_toRightOf="@id/order_place_address_title"
+            app:layout_constraintTop_toTopOf="@id/order_place_address_title" />
+
+        <TextView
+            android:id="@+id/order_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Вы забронировали:"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/order_place_address_title"
+            app:layout_constraintTop_toBottomOf="@id/order_place_address_title" />
+
+        <TextView
+            android:id="@+id/order_playground_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Площадка: "
+            android:textColor="@color/text_color_grey_light"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/order_title"
+            app:layout_constraintTop_toBottomOf="@id/order_title" />
+
+        <TextView
+            android:id="@+id/order_playground_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/text_color_grey"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/order_playground_title"
+            app:layout_constraintLeft_toRightOf="@id/order_playground_title"
+            app:layout_constraintTop_toTopOf="@id/order_playground_title"
+            tools:text="Футбол" />
+
+        <TextView
+            android:id="@+id/order_price_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="Цена: "
+            android:textColor="@color/text_color_grey_light"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/order_playground_title"
+            app:layout_constraintTop_toBottomOf="@id/order_playground_title" />
+
+        <TextView
+            android:id="@+id/place_price_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/text_color_grey"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/order_price_title"
+            app:layout_constraintTop_toTopOf="@id/order_price_title"
+            tools:text="1 200" />
+
+        <TextView
+            android:id="@+id/order_date_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="Время: "
+            android:textColor="@color/text_color_grey_light"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/order_price_title"
+            app:layout_constraintTop_toBottomOf="@id/order_price_title" />
+
+        <TextView
+            android:id="@+id/place_date_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/text_color_grey"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/order_date_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/order_date_title"
+            android:text="12 июня 2020 с 15:00 до 16:00" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

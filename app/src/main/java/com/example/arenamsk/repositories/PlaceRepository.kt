@@ -2,10 +2,7 @@ package com.example.arenamsk.repositories
 
 import com.example.arenamsk.datasources.LocalDataSource
 import com.example.arenamsk.datasources.RemoteDataSource
-import com.example.arenamsk.models.FeedbackModel
-import com.example.arenamsk.models.PlaceBookingModel
-import com.example.arenamsk.models.PlaceFilterModel
-import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.models.*
 import com.example.arenamsk.network.models.AppFeedbackModel
 import com.example.arenamsk.network.models.BookingDateModel
 import com.example.arenamsk.network.models.FeedbackNetworkModel
@@ -70,13 +67,12 @@ class PlaceRepository private constructor() : BaseRepository() {
     )
 
     /** Загрузка текущих забронированных площадок */
-    //TODO
     fun getCurrentBookedPlaces(
-        success: (response: List<PlaceModel>) -> Unit,
+        success: (response: List<OrderModel>) -> Unit,
         errorHandler: RequestErrorHandler
     ) = makeRequest(
         call = {
-            RemoteDataSource.getPlaces()
+            RemoteDataSource.getCurrentOrders()
         },
         success = success,
         errorHandler = errorHandler

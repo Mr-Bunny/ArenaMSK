@@ -29,7 +29,7 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         ) -> Unit
     ) {
         with(itemView) {
-            place_item_title.text = place.placeTitle
+            order_place_title.text = place.placeTitle
             place_item_description.text = place.description
 
             place_item_rating_bar.rating = place.rating
@@ -39,9 +39,9 @@ class PlacesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 place.feedbackNumber.toString()
             )
 
-            place_item_work_time_text.text = TimeUtils.convertWorkTime(place.workDayStartAt, place.workDayEndAt)
+            order_place_work_time_text.text = TimeUtils.convertWorkTime(place.workDayStartAt, place.workDayEndAt)
 
-            place_item_address_text.text = place.address
+            order_place_address_text.text = place.address
 
             setUpFavouriteIcon(place.isFavourite)
 

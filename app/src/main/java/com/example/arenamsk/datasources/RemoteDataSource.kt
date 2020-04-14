@@ -78,6 +78,8 @@ object RemoteDataSource {
 
     suspend fun getSubways() = authService.getAllSubways()
 
+    suspend fun getCurrentOrders() = service.getCurrentOrders()
+
     suspend fun getFeedbackList(placeId: String) = authService.getFeedbackList(placeId)
 
     suspend fun getBookingTimeList(playgroundId: String, date: String) = authService.getBookingTimeList(playgroundId, date)
