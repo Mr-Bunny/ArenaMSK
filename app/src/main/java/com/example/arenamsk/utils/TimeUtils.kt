@@ -12,6 +12,8 @@ object TimeUtils {
 
     /** Конвертируем время TimeStamp в формат dd MMMM yyyy */
     fun convertTimeStampToDate(time: Long): String {
+        val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+
         return dateFormat.format(Date(time))
     }
 

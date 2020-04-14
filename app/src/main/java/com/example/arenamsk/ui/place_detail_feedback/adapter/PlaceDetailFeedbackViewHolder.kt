@@ -17,7 +17,7 @@ class PlaceDetailFeedbackViewHolder(itemView: View) : RecyclerView.ViewHolder(it
 
             feedback_date.text = TimeUtils.convertTimeStampToDate(
                 try {
-                    feedback.date.toLong()
+                    feedback.date.toLong() * 1000L
                 } catch (e: Exception) {
                     System.currentTimeMillis()
                 }
