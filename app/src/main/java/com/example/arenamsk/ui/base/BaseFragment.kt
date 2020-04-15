@@ -101,16 +101,4 @@ abstract class BaseFragment(private val layoutId: Int): Fragment(), LifecycleOwn
             MyLocation().getLocation(requireActivity(), locationResult)
         }
     }
-
-    /** Метод добавляет отступ сверху равный размеру statusBar
-     * @param view - View для которого нужно установить размер*/
-    protected fun setupTopPadding(view: View) {
-        val statusBarHeight = requireContext().getStatusBarHeight()
-        val params = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        params.setMargins(0, statusBarHeight, 0, 0)
-        view.layoutParams = params
-    }
 }

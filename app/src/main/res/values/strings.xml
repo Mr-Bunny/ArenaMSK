@@ -17,6 +17,7 @@
     <string name="edit_text_password_hint">Password</string>
     <string name="text_toolbar_sign_up">Sign up</string>
     <string name="text_sign_up">SIGN UP</string>
+    <string name="text_edit_profile_btn">Save changes</string>
     <string name="edit_text_name_hint">Name</string>
     <string name="text_close_app_toast_hint">Please click BACK again to exit</string>
     <string name="text_hint_sign_up_fail">Sign up failed</string>

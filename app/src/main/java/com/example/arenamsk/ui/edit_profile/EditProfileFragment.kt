@@ -2,33 +2,17 @@ package com.example.arenamsk.ui.edit_profile
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.arenamsk.R
-import com.example.arenamsk.models.DateModel
-import com.example.arenamsk.models.PlaceModel
-import com.example.arenamsk.network.models.BookingDateModel
+import com.example.arenamsk.datasources.LocalDataSource
 import com.example.arenamsk.ui.base.BaseFragment
-import com.example.arenamsk.ui.booked.adapter.BookedViewPagerAdapter
-import com.example.arenamsk.ui.booking.adapter.PlaceBookingAdapter
-import com.example.arenamsk.utils.ActionEvent.OpenCalendar
-import com.example.arenamsk.utils.TimeUtils
-import com.example.arenamsk.utils.disable
-import com.example.arenamsk.utils.enable
-import com.tsongkha.spinnerdatepicker.DatePicker
-import com.tsongkha.spinnerdatepicker.DatePickerDialog
-import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
-import kotlinx.android.synthetic.main.fragment_booked.*
-import kotlinx.android.synthetic.main.fragment_place_booking.*
-import org.angmarch.views.OnSpinnerItemSelectedListener
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import java.util.*
-import kotlin.collections.HashSet
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_edit_profile.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
 
@@ -45,7 +29,21 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //setupTopPadding(booked_tab_layout)
+        CoroutineScope(Dispatchers.IO).launch {
+            LocalDataSource.getUserData()?.let {
+                withContext(Dispatchers.Main) {
+                    if (it.imageUrl?.isNotEmpty() == true && profile_avatar != null) {
+                        Picasso.get()
+                            .load(it.imageUrl)
+                            .error(R.drawable.image_placeholder)
+                            .placeholder(R.drawable.image_placeholder)
+                            .into(profile_avatar)
+                    }
+
+                    name_edit_text.getEditText().setText(it.firstName)
+                }
+            }
+        }
 
     }
 }

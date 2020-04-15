@@ -27,11 +27,22 @@ class BookedFragment: BaseFragment(R.layout.fragment_booked) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupTopPadding(booked_tab_layout)
+        setupTopPadding()
 
         with(booked_view_pager) {
             adapter = BookedViewPagerAdapter(childFragmentManager)
             booked_tab_layout.setupWithViewPager(this)
         }
+    }
+
+    /** Метод добавляет отступ сверху равный размеру statusBar */
+    protected fun setupTopPadding() {
+        val statusBarHeight = requireContext().getStatusBarHeight()
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        params.setMargins(0, statusBarHeight, 0, 0)
+        booked_tab_layout.layoutParams = params
     }
 }
