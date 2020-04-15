@@ -103,4 +103,7 @@
         <item>In history</item>
     </string-array>
 
+
+    <string name="title_edit_profile_fragment">@string/text_profile_item_edit</string>
+
 </resources>

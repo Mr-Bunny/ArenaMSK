@@ -49,6 +49,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             profile_item_edit.disable()
         }
 
+        profile_item_edit.setOnClickListener { openEditProfileFragment() }
+
         profile_item_exit.setOnClickListener { exitFromProfile() }
 
         profile_item_booked.setOnClickListener {
@@ -63,6 +65,11 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     /** Открываем фрагмент с историей бронирования */
     private fun openBookedFragment() {
         findNavController().navigate(R.id.navigation_booked)
+    }
+
+    /** Открываем фрагмент редактирования профиля */
+    private fun openEditProfileFragment() {
+        findNavController().navigate(R.id.navigation_edit_profile)
     }
 
     private fun openFeedbackScreen() {

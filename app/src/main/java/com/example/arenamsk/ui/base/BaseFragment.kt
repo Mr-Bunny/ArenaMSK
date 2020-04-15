@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -22,7 +23,9 @@ import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.ui.AuthActivity
 import com.example.arenamsk.ui.MainActivity
 import com.example.arenamsk.utils.MyLocation
+import com.example.arenamsk.utils.getStatusBarHeight
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.android.synthetic.main.fragment_booked.*
 
 abstract class BaseFragment(private val layoutId: Int): Fragment(), LifecycleOwner {
 
@@ -97,5 +100,17 @@ abstract class BaseFragment(private val layoutId: Int): Fragment(), LifecycleOwn
 
             MyLocation().getLocation(requireActivity(), locationResult)
         }
+    }
+
+    /** Метод добавляет отступ сверху равный размеру statusBar
+     * @param view - View для которого нужно установить размер*/
+    protected fun setupTopPadding(view: View) {
+        val statusBarHeight = requireContext().getStatusBarHeight()
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        params.setMargins(0, statusBarHeight, 0, 0)
+        view.layoutParams = params
     }
 }

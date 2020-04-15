@@ -55,4 +55,10 @@
         android:label="@string/title_booked_fragment"
         tools:layout="@layout/fragment_booked" />
 
+    <fragment
+        android:id="@+id/navigation_edit_profile"
+        android:name="com.example.arenamsk.ui.edit_profile.EditProfileFragment"
+        android:label="@string/title_edit_profile_fragment"
+        tools:layout="@layout/fragment_edit_profile" />
+
 </navigation>
