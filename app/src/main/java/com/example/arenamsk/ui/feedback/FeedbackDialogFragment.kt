@@ -177,10 +177,11 @@ class FeedbackDialogFragment private constructor() : DialogFragment(), Lifecycle
     /** Сбрасываем все измененные значения */
     private fun feedbackSent() {
         showToast("Отзыв отправлен!")
-        feedback_name_edit_text.setText("")
-        feedback_edit_text.setText("")
-        feedback_send_btn.isClickable = true
-        feedback_rating.rating = 0f
-        if (isRecommended) feedback_recommendation.callOnClick()
+        dismiss()
+//        feedback_name_edit_text.setText("")
+//        feedback_edit_text.setText("")
+//        feedback_send_btn.isClickable = true
+//        feedback_rating.rating = 0f
+//        if (isRecommended) feedback_recommendation.callOnClick()
     }
 }
