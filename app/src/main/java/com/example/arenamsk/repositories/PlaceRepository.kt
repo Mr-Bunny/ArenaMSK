@@ -204,4 +204,16 @@ class PlaceRepository private constructor() : BaseRepository() {
         success = success,
         errorHandler = errorHandler
     )
+
+    /** ЗАпрос на удаление аккаунта */
+    fun deleteAccount(
+        success: (Unit) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = {
+            RemoteDataSource.deleteAccount()
+        },
+        success = success,
+        errorHandler = errorHandler
+    )
 }

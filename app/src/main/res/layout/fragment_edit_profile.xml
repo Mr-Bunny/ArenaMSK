@@ -10,6 +10,21 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <TextView
+            android:id="@+id/edit_profile_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/montserrat_bold"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:text="Редактирование профиля"
+            android:textColor="@color/colorPrimary"
+            android:textSize="22sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <RelativeLayout
             android:id="@+id/profile_avatar"
             android:layout_width="200dp"
@@ -19,7 +34,7 @@
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_profile_title"
             app:layout_constraintBottom_toTopOf="@id/edit_add_new_photo">
 
             <ImageView
@@ -43,7 +58,7 @@
 
         <TextView
             android:id="@+id/edit_add_new_photo"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="?attr/selectableItemBackground"
@@ -55,6 +70,8 @@
             android:text="Изменить фотографию"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toTopOf="@id/edit_name_title"
             app:layout_constraintTop_toBottomOf="@id/profile_avatar" />
 
@@ -88,10 +105,24 @@
             style="@style/AuthButton"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="32dp"
             android:text="@string/text_edit_profile_btn"
             app:backgroundTint="@color/auth_button_color"
             app:cornerRadius="25dp"
+            app:layout_constraintBottom_toTopOf="@id/delete_profile"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/delete_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Удалить аккаунт"
+            android:textColor="@color/text_color_grey_light"
+            android:textSize="14sp"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>

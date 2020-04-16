@@ -36,6 +36,10 @@ interface ApiService {
     @POST("api/v1/account/")
     suspend fun postUserAccountInfo(@Body user: User): Response<User>
 
+    //TODO
+    @POST("api/v1/account/")
+    suspend fun deleteAccount(@Body user: User): Response<Unit>
+
     @POST("api/v1/account/reset-password/init")
     suspend fun postUserAccountInfo(@Body resetPasswordModel: ResetPasswordModel): Response<Unit>
 

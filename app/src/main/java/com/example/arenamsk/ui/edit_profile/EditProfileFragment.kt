@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.example.arenamsk.R
 import com.example.arenamsk.datasources.LocalDataSource
@@ -90,6 +91,8 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile), Galler
         }
 
         btn_edit.setOnClickListener { saveNewData() }
+
+        delete_profile.setOnClickListener { showDeleteAccountConfirmWindow() }
     }
 
     override fun galleryPermissionGranted() {
@@ -169,7 +172,7 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile), Galler
 
         repository.updateUserData(
             name = name,
-            success =  ::updateSuccess,
+            success = ::updateSuccess,
             errorHandler = errorHandler
         )
     }
@@ -197,10 +200,49 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile), Galler
                         }
                     }
                 },
-                errorHandler = errorHandler)
+                errorHandler = errorHandler
+            )
         } else {
             showToast("Данные обновлены!")
             findNavController().popBackStack()
         }
+    }
+
+    private fun showDeleteAccountConfirmWindow() {
+        AlertDialog.Builder(requireContext(), R.style.FavouriteAlertDialog)
+            .setTitle("Вы уверены?")
+            .setMessage("Ваш аккаунт будет удален навсегда")
+            .setPositiveButton("Удалить") { _, _ ->
+                sendDeleteRequest()
+            }
+            .setNegativeButton("Отменить") { _, _ ->
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun sendDeleteRequest() {
+        repository.deleteAccount(
+            success = {
+                exitFromProfile()
+                showToast("Аккаунт удален!")
+            }, errorHandler = object : RequestErrorHandler {
+                override suspend fun networkUnavailableError() {
+                    showToast("Нет соединения с интернетом")
+                }
+
+                override suspend fun requestFailedError(error: ApiError?) {
+                    showToast("Не удалось удалить аккаунт")
+                }
+
+                override suspend fun timeoutException() {
+                    showToast("Не удалось удалить")
+                }
+
+                override suspend fun requestSuccessButResponseIsNull() {
+                    showToast("Не удалось удалить")
+                }
+            })
+
     }
 }

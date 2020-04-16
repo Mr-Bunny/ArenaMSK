@@ -97,4 +97,6 @@ object RemoteDataSource {
 
     suspend fun sendEmailToResetPassword(email: String) = service.postUserAccountInfo(ResetPasswordModel(email))
 
+    suspend fun deleteAccount() = service.deleteAccount(LocalDataSource.getUserData()!!)
+
 }
