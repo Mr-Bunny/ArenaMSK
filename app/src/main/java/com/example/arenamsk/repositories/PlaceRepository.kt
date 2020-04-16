@@ -1,5 +1,6 @@
 package com.example.arenamsk.repositories
 
+import android.graphics.Bitmap
 import com.example.arenamsk.datasources.LocalDataSource
 import com.example.arenamsk.datasources.RemoteDataSource
 import com.example.arenamsk.models.*
@@ -9,8 +10,13 @@ import com.example.arenamsk.network.models.FeedbackNetworkModel
 import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.room.tables.Subway
+import com.example.arenamsk.room.tables.User
+import com.example.arenamsk.utils.ImageUtils
 import com.example.arenamsk.utils.toStringTypedArray
 import kotlinx.coroutines.CoroutineScope
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class PlaceRepository private constructor() : BaseRepository() {
 
@@ -168,6 +174,19 @@ class PlaceRepository private constructor() : BaseRepository() {
     ) = makeRequest(
         call = {
             RemoteDataSource.sendPlaceFeedback(placeId, feedback)
+        },
+        success = success,
+        errorHandler = errorHandler
+    )
+
+    /** Отправляем отзыв о площадке */
+    fun updateUserData(
+        name: String,
+        success: (User) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = {
+            RemoteDataSource.updateUserData(name)
         },
         success = success,
         errorHandler = errorHandler

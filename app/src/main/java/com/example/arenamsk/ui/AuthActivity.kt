@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
 import com.example.arenamsk.ui.auth.log_in.LogInFragment
-import com.example.arenamsk.ui.auth.sign_up.SignUpFragmentCallback
+import com.example.arenamsk.ui.auth.sign_up.GalleryCallback
 import android.graphics.BitmapFactory
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.utils.Constants.DOUBLE_CLICK_DELAY
@@ -72,7 +72,7 @@ class AuthActivity : AppCompatActivity() {
                     val imageStream = contentResolver.openInputStream(uri)
 
                     signUpFragment?.let { fragment ->
-                        (fragment as SignUpFragmentCallback).galleryRequest(
+                        (fragment as GalleryCallback).galleryRequest(
                             BitmapFactory.decodeStream(imageStream)
                         )
                     }
@@ -95,9 +95,9 @@ class AuthActivity : AppCompatActivity() {
                     }
 
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    signUpFragment?.let { (it as SignUpFragmentCallback).galleryPermissionGranted() }
+                    signUpFragment?.let { (it as GalleryCallback).galleryPermissionGranted() }
                 } else {
-                    signUpFragment?.let { (it as SignUpFragmentCallback).galleryPermissionDenied() }
+                    signUpFragment?.let { (it as GalleryCallback).galleryPermissionDenied() }
                 }
             }
         }

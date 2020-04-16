@@ -33,6 +33,9 @@ interface ApiService {
     @GET("api/v1/account/")
     suspend fun getUserAccountInfo(): Response<User>
 
+    @POST("api/v1/account/")
+    suspend fun postUserAccountInfo(@Body user: User): Response<User>
+
     @GET("api/v1/feedback/{place}")
     suspend fun getFeedbackList(@Path("place") place: String): Response<FeedbackNetworkModel>
 

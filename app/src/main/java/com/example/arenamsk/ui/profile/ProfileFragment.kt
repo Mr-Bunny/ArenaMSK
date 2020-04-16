@@ -3,6 +3,8 @@ package com.example.arenamsk.ui.profile
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.findNavController
 import com.example.arenamsk.R
 import com.example.arenamsk.datasources.LocalDataSource

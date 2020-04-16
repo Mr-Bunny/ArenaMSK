@@ -2,7 +2,7 @@ package com.example.arenamsk.ui.auth.sign_up
 
 import android.graphics.Bitmap
 
-interface SignUpFragmentCallback {
+interface GalleryCallback {
 
     fun galleryPermissionGranted()
 
