@@ -7,6 +7,7 @@ import com.example.arenamsk.network.api.ApiService
 import com.example.arenamsk.network.models.AppFeedbackModel
 import com.example.arenamsk.network.models.auth.LogInUserModel
 import com.example.arenamsk.network.models.auth.RefreshTokenModel
+import com.example.arenamsk.network.models.auth.ResetPasswordModel
 import com.example.arenamsk.network.models.auth.SignUpUserModel
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.network.utils.RetrofitFactory
@@ -93,5 +94,7 @@ object RemoteDataSource {
     suspend fun sendPlaceFeedback(placeId: String, feedback: FeedbackModel) = service.postPlaceFeedback(placeId, feedback)
 
     suspend fun updateUserData(name: String) = service.postUserAccountInfo(LocalDataSource.getUserData()!!.copy(firstName = name))
+
+    suspend fun sendEmailToResetPassword(email: String) = service.postUserAccountInfo(ResetPasswordModel(email))
 
 }

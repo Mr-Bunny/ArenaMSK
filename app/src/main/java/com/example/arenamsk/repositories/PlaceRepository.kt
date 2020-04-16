@@ -192,4 +192,16 @@ class PlaceRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
+    /** Отправляем email или телефон, на который должен прийти новый пароль */
+    fun sendEmailToResetPassword(
+        email: String,
+        success: (Unit) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = {
+            RemoteDataSource.sendEmailToResetPassword(email)
+        },
+        success = success,
+        errorHandler = errorHandler
+    )
 }

@@ -36,6 +36,9 @@ interface ApiService {
     @POST("api/v1/account/")
     suspend fun postUserAccountInfo(@Body user: User): Response<User>
 
+    @POST("api/v1/account/reset-password/init")
+    suspend fun postUserAccountInfo(@Body resetPasswordModel: ResetPasswordModel): Response<Unit>
+
     @GET("api/v1/feedback/{place}")
     suspend fun getFeedbackList(@Path("place") place: String): Response<FeedbackNetworkModel>
 

@@ -6,8 +6,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
 import com.example.arenamsk.ui.AuthActivity
+import com.example.arenamsk.ui.auth.password_reset.PasswordResetDialogFragment
+import com.example.arenamsk.ui.auth.password_reset.PasswordResetDialogFragment.Companion.RESET_TAG
 import com.example.arenamsk.ui.auth.sign_up.SignUpFragment
 import com.example.arenamsk.ui.base.BaseAuthFragment
+import com.example.arenamsk.ui.feedback.FeedbackDialogFragment
 import com.example.arenamsk.utils.EnumUtils.LogInStatus
 import kotlinx.android.synthetic.main.fragment_log_in.*
 
@@ -17,12 +20,16 @@ class LogInFragment : BaseAuthFragment(R.layout.fragment_log_in) {
         ViewModelProviders.of(this).get(LogInViewModel::class.java)
     }
 
+    private var passwordResetDialogFragment: PasswordResetDialogFragment? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         text_create_new_user.setOnClickListener { openSignUpFragment() }
 
         text_without_registration.setOnClickListener { logInViewModel.skipAuth() }
+
+        text_forget_password.setOnClickListener { openFeedbackScreen() }
 
         btn_log_in.setOnClickListener {
             auth_email_text_layout.clearFocus()
@@ -84,5 +91,14 @@ class LogInFragment : BaseAuthFragment(R.layout.fragment_log_in) {
             addToBackStack(null)
             commit()
         }
+    }
+
+    private fun openFeedbackScreen() {
+        passwordResetDialogFragment?.dismiss()
+        passwordResetDialogFragment = PasswordResetDialogFragment.getInstance()
+        passwordResetDialogFragment?.show(
+            activity!!.supportFragmentManager,
+            RESET_TAG
+        )
     }
 }
