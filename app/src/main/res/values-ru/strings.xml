@@ -98,5 +98,6 @@
     </string-array>
 
     <string name="title_edit_profile_fragment">@string/text_profile_item_edit</string>
+    <string name="title_settings_fragment">@string/text_profile_item_settings</string>
 
 </resources>

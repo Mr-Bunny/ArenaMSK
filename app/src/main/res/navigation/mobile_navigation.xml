@@ -61,4 +61,10 @@
         android:label="@string/title_edit_profile_fragment"
         tools:layout="@layout/fragment_edit_profile" />
 
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.example.arenamsk.ui.settings.SettingsFragment"
+        android:label="@string/title_settings_fragment"
+        tools:layout="@layout/fragment_settings" />
+
 </navigation>
