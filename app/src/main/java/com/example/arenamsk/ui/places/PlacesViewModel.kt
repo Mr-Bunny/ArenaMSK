@@ -184,11 +184,6 @@ class PlacesViewModel : BaseViewModel() {
         return placesLiveData.value?.firstOrNull { title == it.placeTitle }
     }
 
-    /** Отображаем данные */
-    private fun getPlacesSuccess(places: List<PlaceModel>) {
-        handlePlaces(places)
-    }
-
     private fun getFilteredPlacesSuccess(places: List<PlaceModel>) {
         handlePlaces(places)
     }

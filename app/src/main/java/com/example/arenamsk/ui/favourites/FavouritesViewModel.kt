@@ -8,6 +8,7 @@ import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.repositories.PlaceRepository
 import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.EnumUtils.GetPlacesStatus
+import com.example.arenamsk.utils.MyLocation
 import com.example.arenamsk.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -118,6 +119,6 @@ class FavouritesViewModel : BaseViewModel() {
     /** Отображаем данные */
     private fun getPlacesSuccess(places: List<PlaceModel>) {
         //Сохраняем площадки добавленные в избранное
-        favouritesPlacesLiveData.value = places as MutableList<PlaceModel>
+        favouritesPlacesLiveData.value = MyLocation.getPlacesWithDistance(places) as MutableList<PlaceModel>
     }
 }

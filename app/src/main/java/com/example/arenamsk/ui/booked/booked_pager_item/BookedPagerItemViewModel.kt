@@ -8,6 +8,7 @@ import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.repositories.PlaceRepository
 import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.EnumUtils
+import com.example.arenamsk.utils.MyLocation
 import com.example.arenamsk.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -65,7 +66,7 @@ class BookedPagerItemViewModel: BaseViewModel() {
 
         launch(Dispatchers.IO) {
             repository.getBookedHistoryPlaces(
-                success = { bookedHistoryPlacesLiveData.value = (it.filter { place -> place.inHistory }) as MutableList<PlaceModel> },
+                success = { bookedHistoryPlacesLiveData.value =  MyLocation.getPlacesWithDistance((it.filter { place -> place.inHistory })) as MutableList<PlaceModel>},
                 errorHandler = errorHandler
             )
         }
