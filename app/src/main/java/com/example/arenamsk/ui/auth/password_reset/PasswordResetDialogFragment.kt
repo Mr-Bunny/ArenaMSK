@@ -11,6 +11,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.arenamsk.R
 import com.example.arenamsk.network.models.ApiError
 import com.example.arenamsk.network.models.RequestErrorHandler
+import com.example.arenamsk.network.models.auth.ResetPasswordModel
 import com.example.arenamsk.repositories.PlaceRepository
 import kotlinx.android.synthetic.main.fragment_password_reset.*
 
@@ -77,7 +78,14 @@ class PasswordResetDialogFragment private constructor() : DialogFragment() {
 
             else -> {
                 repository.sendEmailToResetPassword(
-                    email = email,
+                    resetModel = if (Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                        ResetPasswordModel(
+                            email = email
+                        )
+                    else
+                        ResetPasswordModel(
+                            phone = email
+                        ),
                     success = {
                         showToast("Мы отправили вам новый пароль!")
                         dismiss()

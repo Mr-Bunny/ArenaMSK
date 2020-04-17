@@ -1,22 +1,18 @@
 package com.example.arenamsk.datasources
 
-import android.graphics.Bitmap
 import com.example.arenamsk.models.FeedbackModel
 import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.network.api.ApiService
 import com.example.arenamsk.network.models.AppFeedbackModel
+import com.example.arenamsk.network.models.auth.ResetPasswordModel
 import com.example.arenamsk.network.models.auth.LogInUserModel
 import com.example.arenamsk.network.models.auth.RefreshTokenModel
-import com.example.arenamsk.network.models.auth.ResetPasswordModel
 import com.example.arenamsk.network.models.auth.SignUpUserModel
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.network.utils.RetrofitFactory
 import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
-import com.example.arenamsk.utils.ImageUtils
 import com.example.arenamsk.utils.toStringTypedArray
-import okhttp3.MediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 
 object RemoteDataSource {
     private val service: ApiService
@@ -95,7 +91,7 @@ object RemoteDataSource {
 
     suspend fun updateUserData(name: String) = service.postUserAccountInfo(LocalDataSource.getUserData()!!.copy(firstName = name))
 
-    suspend fun sendEmailToResetPassword(email: String) = service.postUserAccountInfo(ResetPasswordModel(email))
+    suspend fun sendEmailToResetPassword(resetModel: ResetPasswordModel) = service.postUserAccountInfo(resetModel)
 
     suspend fun deleteAccount() = service.deleteAccount(LocalDataSource.getUserData()!!)
 
