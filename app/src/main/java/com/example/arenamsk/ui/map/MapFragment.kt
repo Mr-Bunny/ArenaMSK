@@ -175,7 +175,7 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
     private fun setClusterParameters() {
         clusterManager = ClusterManager(requireContext(), mMap)
         clusterManager?.let {
-            it.renderer = MapRenderer(context!!, mMap!!, clusterManager!!)
+            it.renderer = MapRenderer(requireContext(), mMap!!, clusterManager!!)
             it.algorithm = NonHierarchicalDistanceBasedAlgorithm()
             it.setOnClusterClickListener { c -> onClusterClick(c!!) }
             it.setOnClusterItemClickListener { item -> onClusterItemClick(item) }

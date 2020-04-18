@@ -6,10 +6,12 @@ import android.graphics.Canvas
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.example.arenamsk.App
 import com.example.arenamsk.R
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.maps.android.ui.IconGenerator
 
 fun View.showKeyboard() {
     this.requestFocus()
@@ -54,26 +56,26 @@ fun Context.getStatusBarHeight(): Int {
     return result
 }
 
-fun String?.getSportIcon(): BitmapDescriptor {
+fun String?.getSportIcon(context: Context): BitmapDescriptor {
     val result = when (this) {
         EnumUtils.Sports.SPORT_FOOTBALL.type, EnumUtils.Sports.SPORT_MINI_FOOTBALL.type -> {
-            bitmapDescriptorFromVector(R.drawable.ic_marker_soccer)
+            bitmapDescriptorFromVector(context, R.drawable.ic_marker_soccer)
         }
 
         EnumUtils.Sports.SPORT_BASKETBALL.type -> {
-            bitmapDescriptorFromVector(R.drawable.ic_marker_basket)
+            bitmapDescriptorFromVector(context, R.drawable.ic_marker_basket)
         }
 
         EnumUtils.Sports.SPORT_VOLLEYBALL.type -> {
-            bitmapDescriptorFromVector(R.drawable.ic_marker_volley)
+            bitmapDescriptorFromVector(context, R.drawable.ic_marker_volley)
         }
 
         EnumUtils.Sports.SPORT_TENNIS.type -> {
-            bitmapDescriptorFromVector(R.drawable.ic_marker_tennis)
+            bitmapDescriptorFromVector(context, R.drawable.ic_marker_tennis)
         }
 
         else -> {
-            bitmapDescriptorFromVector(R.drawable.ic_marker_sk)
+            bitmapDescriptorFromVector(context, R.drawable.ic_marker_sk)
         }
     }
 
@@ -102,8 +104,8 @@ fun String?.getSportIconDrawableId(): Int = when (this) {
         }
 }
 
-private fun bitmapDescriptorFromVector(vectorResId: Int): BitmapDescriptor? {
-    return ContextCompat.getDrawable(App.appContext(), vectorResId)?.run {
+private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
+    return ContextCompat.getDrawable(context, vectorResId)?.run {
         setBounds(0, 0, intrinsicWidth, intrinsicHeight)
         val bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
         draw(Canvas(bitmap))
