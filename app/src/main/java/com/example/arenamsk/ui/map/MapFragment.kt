@@ -1,24 +1,18 @@
 package com.example.arenamsk.ui.map
 
 import android.Manifest
-import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
-import com.example.arenamsk.App
 import com.example.arenamsk.R
+import com.example.arenamsk.models.PlaceItem
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.base.PlaceDialogFragment
@@ -27,40 +21,25 @@ import com.example.arenamsk.ui.places.PlacesViewModel
 import com.example.arenamsk.utils.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.maps.android.clustering.Cluster
+import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.android.synthetic.main.map_bottom_layout.*
-import kotlinx.android.synthetic.main.map_marker_info_window.view.*
 
 class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
 
     companion object {
+        private const val DELTA_ZOOM = 1.5f
+        private const val ZOOM_SPEED = 400
         private const val ZOOM_VALUE = 2f
         private const val GEO_REQUEST = 1002
     }
 
-    private var currentLocation: Location? = null
+    private var clusterManager: ClusterManager<PlaceItem>? = null
 
     private lateinit var bottomDialogBehavior: BottomSheetBehavior<FrameLayout>
-
-    private val mLocationListener: LocationListener = object : LocationListener {
-        override fun onLocationChanged(location: Location?) {
-            currentLocation = location
-        }
-
-        override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
-        }
-
-        override fun onProviderEnabled(p0: String?) {
-        }
-
-        override fun onProviderDisabled(p0: String?) {
-        }
-    }
-
-    private var mLocationManager: LocationManager? = null
 
     private var currentZoom = 1f
     set(value) {
@@ -70,10 +49,6 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
     private var mMap: GoogleMap? = null
 
     private val args: MapFragmentArgs by navArgs()
-
-    private val mapViewModel by lazy {
-        ViewModelProviders.of(this).get(MapViewModel::class.java)
-    }
 
     //Нам также нужна PlacesViewModel для получения списка площадок
     private val placeViewModel by lazy {
@@ -116,6 +91,8 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
 
         mMap?.uiSettings?.isMyLocationButtonEnabled = false
         mMap?.uiSettings?.isCompassEnabled = false
+
+        setClusterParameters()
 
         //Если есть аргументы, то значит был переход с другого экрана и нам надо показать нужную площадку
         val coordinatesModel = args.coordinates
@@ -195,13 +172,40 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+    private fun setClusterParameters() {
+        clusterManager = ClusterManager(requireContext(), mMap)
+        clusterManager?.let {
+            it.renderer = MapRenderer(context!!, mMap!!, clusterManager!!)
+            it.algorithm = NonHierarchicalDistanceBasedAlgorithm()
+            it.setOnClusterClickListener { c -> onClusterClick(c!!) }
+            it.setOnClusterItemClickListener { item -> onClusterItemClick(item) }
+        }
+
+        mMap?.let {
+            it.setOnCameraIdleListener(clusterManager)
+            it.setOnMarkerClickListener(clusterManager)
+            it.setOnMapClickListener {
+                bottomDialogBehavior.setState(BottomSheetBehavior.STATE_HIDDEN)
+            }
+        }
+    }
+
+    private fun onClusterClick(cluster: Cluster<PlaceItem>): Boolean {
+        return mMap?.let {
+            it.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                LatLng(cluster.position?.latitude ?: 0.0, cluster.position?.longitude ?: 0.0),
+                it.cameraPosition.zoom + DELTA_ZOOM),
+                ZOOM_SPEED,
+                null)
+
+            true
+        } ?: false
+    }
+
+
     /** Добавляем площадки на карту */
     private fun showPlacesOnMap(list: List<PlaceModel>) {
         mMap?.clear()
-        mMap?.setOnMarkerClickListener {
-            onClusterItemClick(it)
-            true
-        }
 
         marker_info.setOnClickListener {
             placeViewModel.getPlaceByTilte(map_place_title.text.toString())?.let {
@@ -214,29 +218,12 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
             }
         }
 
+        //Добавляем точку в clusterManager
         list.forEach { place ->
-            val coordinates = LatLng(place.latitude, place.longitude)
-            MarkerOptions().position(coordinates).apply {
-                mMap?.addMarker(this)?.let {
-                    //set tag
-                    it.tag = place.id
-                    //set icon
-                    if (place.playgroundModels.size > 1) {
-                        it.setIcon("sk".getSportIcon())
-                    } else if (place.playgroundModels.isNotEmpty()) {
-                        it.setIcon(place.playgroundModels[0].sport?.name.getSportIcon())
-                    }
-                    //set coordinates
-                    val coordinatesModel = args.coordinates
-                    if (coordinatesModel != null &&
-                        (coordinatesModel.latitude == place.latitude &&
-                                coordinatesModel.longitude == place.longitude)
-                    ) onClusterItemClick(it)
-
-                    //it.showInfoWindow()
-                }
-            }
+            clusterManager?.addItem(PlaceItem(place))
         }
+
+        clusterManager?.cluster()
     }
 
     /** @param isEmptyText if true we set fab is visible and hide edit text */
@@ -258,8 +245,8 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         }
     }
 
-    private fun onClusterItemClick(placeMarker: Marker): Boolean {
-        placeViewModel.getPlaceByMarker(placeMarker)?.let {
+    private fun onClusterItemClick(placeItem: PlaceItem): Boolean {
+        placeItem.place.let {
             mMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(it.latitude, it.longitude)))
             bottomDialogBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             setPlaceInfo(it)
