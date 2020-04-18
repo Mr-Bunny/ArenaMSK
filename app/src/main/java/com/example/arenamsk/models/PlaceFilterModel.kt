@@ -26,7 +26,7 @@ data class PlaceFilterModel(
     var priceFrom: Int = 0,
 
     @SerializedName("priceTo")
-    var priceTo: Int = 100000,
+    var priceTo: Int = 5000,
 
     @SerializedName("sports")
     var sportList: ArrayList<String>? = ArrayList(),

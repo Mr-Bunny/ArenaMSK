@@ -36,7 +36,7 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
     companion object {
         const val FILTER_MODEL_TAG = "filter_tag"
         const val MIN_PRICE = 0
-        const val MAX_PRICE = 100000
+        const val MAX_PRICE = 5000
         const val PRICE_STEP = 1
         const val DEFAULT_SUBWAY = "Все станции"
         const val DEFAULT_SUBWAY_ID = 0
@@ -271,16 +271,16 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
                 rightValue: Float,
                 isFromUser: Boolean
             ) {
-                //Если число делится на тысячу без остатка, то выставляем его,
-                //иначе считаем ближайшее число, которое делится на 1000 без остатка
+                //Если число делится на 100 без остатка, то выставляем его,
+                //иначе считаем ближайшее число, которое делится на 100 без остатка
                 if (isFromUser) {
                     filter_start_price_edit_text.setText(
-                        if (leftValue.toInt() % 1000f != 0f) getValueFromSeekBar(
+                        if (leftValue.toInt() % 100f != 0f) getValueFromSeekBar(
                             leftValue.toInt()
                         ).toString() else leftValue.toInt().toString()
                     )
                     filter_end_price_edit_text.setText(
-                        if (rightValue.toInt() % 1000f != 0f) getValueFromSeekBar(
+                        if (rightValue.toInt() % 100f != 0f) getValueFromSeekBar(
                             rightValue.toInt()
                         ).toString() else rightValue.toInt().toString()
                     )
@@ -299,8 +299,8 @@ class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwn
 
     //Определяем в каком диапозоне число
     private fun getValueFromSeekBar(value: Int): Int {
-        val steps = value / 1000
-        return if (steps < 1) 0 else steps * 1000
+        val steps = value / 100
+        return if (steps < 1) 0 else steps * 100
     }
 
     private fun updateRangeBar() {
