@@ -206,6 +206,7 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
     /** Добавляем площадки на карту */
     private fun showPlacesOnMap(list: List<PlaceModel>) {
         mMap?.clear()
+        clusterManager?.clearItems()
 
         marker_info.setOnClickListener {
             placeViewModel.getPlaceByTilte(map_place_title.text.toString())?.let {
