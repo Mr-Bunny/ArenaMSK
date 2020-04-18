@@ -28,4 +28,8 @@ class CustomSignUpPasswordEditText:
     }
 
     override fun getEditText(): TextInputEditText = custom_sign_up_password_edit_text
+
+    fun setHintText(hint: String) {
+        custom_sign_up_password_edit_text.hint = hint
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.arenamsk.utils
 
+import android.app.Notification
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.arenamsk.App
@@ -86,5 +87,7 @@ class SharedPreferenceManager private constructor() {
         const val AUTH_TOKEN = "auth_token"
         const val REFRESH_TOKEN = "refresh_token"
         const val EXPIRED_IN = "expired_in"
+        const val NOTIFICATION_IS_ENABLED = "notifications_is_enabled"
+        const val NOTIFICATION_TIME = "notifications_time"
     }
 }
