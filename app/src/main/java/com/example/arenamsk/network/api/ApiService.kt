@@ -29,6 +29,9 @@ interface ApiService {
     @POST("api/v1/auth/sign-in/")
     suspend fun postLogInRequest(@Body logInModel: LogInUserModel): Response<UpdatedTokensModel>
 
+    @POST("api/v1/account/change-password")
+    suspend fun changePassword(@Body passwordChangeModel: PasswordChangeDto): Response<Unit>
+
     @GET("api/v1/account/")
     suspend fun getUserAccountInfo(): Response<User>
 

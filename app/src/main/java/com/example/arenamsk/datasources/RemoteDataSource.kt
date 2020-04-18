@@ -5,10 +5,7 @@ import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.network.api.ApiService
 import com.example.arenamsk.network.models.AppFeedbackModel
 import com.example.arenamsk.network.models.BookingPlaceModel
-import com.example.arenamsk.network.models.auth.ResetPasswordModel
-import com.example.arenamsk.network.models.auth.LogInUserModel
-import com.example.arenamsk.network.models.auth.RefreshTokenModel
-import com.example.arenamsk.network.models.auth.SignUpUserModel
+import com.example.arenamsk.network.models.auth.*
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.network.utils.RetrofitFactory
 import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
@@ -31,6 +28,8 @@ object RemoteDataSource {
     suspend fun startLogIn(model: LogInUserModel) = authService.postLogInRequest(model)
 
     suspend fun getAccountInfo() = service.getUserAccountInfo()
+
+    suspend fun changePassword(passwordChangeModel: PasswordChangeDto) = service.changePassword(passwordChangeModel)
 
     /** Places */
     //Если пользователь дефолтный, то запрос площадок без токена

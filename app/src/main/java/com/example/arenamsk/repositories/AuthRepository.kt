@@ -3,10 +3,7 @@ package com.example.arenamsk.repositories
 import android.graphics.Bitmap
 import com.example.arenamsk.datasources.RemoteDataSource
 import com.example.arenamsk.network.models.RequestErrorHandler
-import com.example.arenamsk.network.models.auth.LogInUserModel
-import com.example.arenamsk.network.models.auth.SignUpUserModel
-import com.example.arenamsk.network.models.auth.UpdatedTokensModel
-import com.example.arenamsk.network.models.auth.UserImageUrl
+import com.example.arenamsk.network.models.auth.*
 import com.example.arenamsk.room.tables.User
 import com.example.arenamsk.utils.ImageUtils
 import okhttp3.MediaType
@@ -74,4 +71,14 @@ class AuthRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
+    fun changePassword(
+        currentPassword: String,
+        newPassword: String,
+        success: (Unit) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = { RemoteDataSource.changePassword(PasswordChangeDto(currentPassword, newPassword)) },
+        success = success,
+        errorHandler = errorHandler
+    )
 }
