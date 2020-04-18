@@ -87,7 +87,7 @@ object RemoteDataSource {
 
     suspend fun sendAppFeedback(feedback: AppFeedbackModel) = authService.postAppFeedback(feedback)
 
-    suspend fun postBookingModel(bookingPlaceModel: BookingPlaceModel) = authService.postBookingModel(bookingPlaceModel)
+    suspend fun postBookingModel(bookingPlaceModel: BookingPlaceModel) = service.postBookingModel(bookingPlaceModel)
 
     suspend fun sendPlaceFeedback(placeId: String, feedback: FeedbackModel) = service.postPlaceFeedback(placeId, feedback)
 
