@@ -156,6 +156,19 @@ class PlaceRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
+    /** Бронируем площадку по времени */
+    fun bookPlace(
+        bookingPlaceModel: BookingPlaceModel,
+        success: (Unit) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = {
+            RemoteDataSource.postBookingModel(bookingPlaceModel)
+        },
+        success = success,
+        errorHandler = errorHandler
+    )
+
     /** Отправляем отзыв о площадке */
     fun sendPlaceFeedback(
         placeId: String,

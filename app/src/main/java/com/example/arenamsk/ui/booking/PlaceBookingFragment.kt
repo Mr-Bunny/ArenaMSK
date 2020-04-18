@@ -13,6 +13,7 @@ import com.example.arenamsk.network.models.BookingDateModel
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.booking.adapter.PlaceBookingAdapter
 import com.example.arenamsk.utils.ActionEvent.OpenCalendar
+import com.example.arenamsk.utils.EnumUtils
 import com.example.arenamsk.utils.TimeUtils
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
@@ -90,6 +91,19 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
             }
         })
 
+        //Подписываемся на статус бронирования
+        placeBookingViewModel.getBookingStatusLiveData().observe(viewLifecycleOwner, Observer {
+            when (it) {
+                EnumUtils.BookingStatus.BOOKED -> {
+                    showToast("Площадка забронирована")
+                }
+
+                else -> {
+                    showToast("Не удалось забронировать площадку")
+                }
+            }
+        })
+
         //Выбрали следующий день
         booking_date_next.setOnClickListener {
             placeBookingViewModel.setNextDate()
@@ -108,8 +122,7 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
         }
 
         btn_book.setOnClickListener {
-            //TODO open webview with payment
-            Toast.makeText(requireContext(), "time: $selectedBookingTimeId \nplaygroundId: $selectedPlaygroundId \ndate: ${placeBookingViewModel.getCurrentDateLiveData().value} ", Toast.LENGTH_LONG).show()
+            placeBookingViewModel.bookPlace(selectedBookingTimeId.toList())
         }
     }
 

@@ -32,6 +32,11 @@ object EnumUtils {
         NETWORK_OFFLINE
     }
 
+    enum class BookingStatus {
+        BOOKED,
+        BOOKING_ERROR
+    }
+
     enum class Sports(val type: String) {
         SPORT_ALL("Все виды"),
         SPORT_FOOTBALL("Футбол"),

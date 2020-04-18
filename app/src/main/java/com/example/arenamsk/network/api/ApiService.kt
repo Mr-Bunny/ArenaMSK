@@ -5,6 +5,7 @@ import com.example.arenamsk.models.OrderModel
 import com.example.arenamsk.models.PlaceBookingModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.AppFeedbackModel
+import com.example.arenamsk.network.models.BookingPlaceModel
 import com.example.arenamsk.network.models.FeedbackNetworkModel
 import com.example.arenamsk.network.models.auth.ResetPasswordModel
 import com.example.arenamsk.network.models.auth.*
@@ -78,6 +79,9 @@ interface ApiService {
 
     @POST("api/v1/feedback/service")
     suspend fun postAppFeedback(@Body feedback: AppFeedbackModel): Response<Unit>
+
+    @POST("api/v1/booking/booking")
+    suspend fun postBookingModel(@Body bookingPlaceModel: BookingPlaceModel): Response<Unit>
 
     @POST("api/v1/feedback/{place}")
     suspend fun postPlaceFeedback(@Path("place") place: String, @Body feedback: FeedbackModel): Response<Unit>
