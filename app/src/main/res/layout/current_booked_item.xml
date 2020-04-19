@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/order_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:text="1) "/>
+
+    <TextView
+        android:id="@+id/order_playground_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/text_color_grey_light"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/order_number"
+        app:layout_constraintLeft_toRightOf="@id/order_number"
+        tools:text="Площадка: "/>
+
+    <TextView
+        android:id="@+id/order_playground_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/text_color_grey"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/order_playground_title"
+        app:layout_constraintLeft_toRightOf="@id/order_playground_title"
+        app:layout_constraintTop_toTopOf="@id/order_playground_title"
+        tools:text="Футбол" />
+
+    <TextView
+        android:id="@+id/order_price_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:text="Цена: "
+        android:textColor="@color/text_color_grey_light"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/order_playground_title"
+        app:layout_constraintTop_toBottomOf="@id/order_playground_title" />
+
+    <TextView
+        android:id="@+id/order_price_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/text_color_grey"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/order_price_title"
+        app:layout_constraintTop_toTopOf="@id/order_price_title"
+        tools:text="1 200" />
+
+    <TextView
+        android:id="@+id/order_date_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:text="Время: "
+        android:textColor="@color/text_color_grey_light"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/order_price_title"
+        app:layout_constraintTop_toBottomOf="@id/order_price_title" />
+
+    <TextView
+        android:id="@+id/order_date_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/text_color_grey"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/order_date_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/order_date_title"
+        android:text="12 июня 2020 с 15:00 до 16:00" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

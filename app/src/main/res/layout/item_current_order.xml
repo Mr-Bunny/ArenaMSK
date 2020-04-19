@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="24dp"
@@ -95,80 +94,15 @@
             app:layout_constraintLeft_toLeftOf="@id/order_place_address_title"
             app:layout_constraintTop_toBottomOf="@id/order_place_address_title" />
 
-        <TextView
-            android:id="@+id/order_playground_title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/booked_container"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/text_color_grey_light"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="@id/order_title"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/order_title"
-            tools:text="Площадка: "/>
-
-        <TextView
-            android:id="@+id/order_playground_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/text_color_grey"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/order_playground_title"
-            app:layout_constraintLeft_toRightOf="@id/order_playground_title"
-            app:layout_constraintTop_toTopOf="@id/order_playground_title"
-            tools:text="Футбол" />
-
-        <TextView
-            android:id="@+id/order_price_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:text="Цена: "
-            android:textColor="@color/text_color_grey_light"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="@id/order_playground_title"
-            app:layout_constraintTop_toBottomOf="@id/order_playground_title" />
-
-        <TextView
-            android:id="@+id/order_price_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/text_color_grey"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@id/order_price_title"
-            app:layout_constraintTop_toTopOf="@id/order_price_title"
-            tools:text="1 200" />
-
-        <TextView
-            android:id="@+id/order_date_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:text="Время: "
-            android:textColor="@color/text_color_grey_light"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="@id/order_price_title"
-            app:layout_constraintTop_toBottomOf="@id/order_price_title" />
-
-        <TextView
-            android:id="@+id/order_date_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/text_color_grey"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@id/order_date_title"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/order_date_title"
-            android:text="12 июня 2020 с 15:00 до 16:00" />
+            app:layout_constraintLeft_toLeftOf="@id/order_title"
+            app:layout_constraintRight_toRightOf="@id/order_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
