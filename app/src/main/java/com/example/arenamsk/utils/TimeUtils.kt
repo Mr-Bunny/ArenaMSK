@@ -110,4 +110,19 @@ object TimeUtils {
 
         return dateFormat.format(calendar.time)
     }
+
+    /** Возаращет строку формата 12 июня 2020 с 15:00 до 16:00
+     * @param date - Дата в формате timestamp
+     * @param from - Время начала брони в формате hh:mm:ss
+     * @param to - Время окончания брони в формате hh:mm:ss */
+    fun convertBookedDateAndTime(date: String, from: String, to: String): String {
+        val timeFormatInput = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+
+        val timeFormatOutput = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+        val timeFrom: Date = timeFormatInput.parse(from) ?: Date("")
+        val timeTo: Date = timeFormatInput.parse(to) ?: Date("")
+
+        return "${convertTimeStampToDate(date.toLong())} с ${timeFormatOutput.format(timeFrom)} до ${timeFormatOutput.format(timeTo)}"
+    }
 }

@@ -101,12 +101,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="Площадка: "
             android:textColor="@color/text_color_grey_light"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="@id/order_title"
-            app:layout_constraintTop_toBottomOf="@id/order_title" />
+            app:layout_constraintTop_toBottomOf="@id/order_title"
+            tools:text="Площадка: "/>
 
         <TextView
             android:id="@+id/order_playground_text"
@@ -134,7 +134,7 @@
             app:layout_constraintTop_toBottomOf="@id/order_playground_title" />
 
         <TextView
-            android:id="@+id/place_price_text"
+            android:id="@+id/order_price_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -158,7 +158,7 @@
             app:layout_constraintTop_toBottomOf="@id/order_price_title" />
 
         <TextView
-            android:id="@+id/place_date_text"
+            android:id="@+id/order_date_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

@@ -49,7 +49,7 @@ class BookedPagerItemFragment: BaseFragment(R.layout.fragment_booked_pager_item)
         )
     }
 
-    private val currentOrdersAdapter by lazy { CurrentOrdersAdapter() }
+    private val currentOrdersAdapter by lazy { CurrentOrdersAdapter(::itemClickCallback) }
 
     private val bookedPlacesViewModel by lazy {
         ViewModelProviders.of(this).get(BookedPagerItemViewModel::class.java)

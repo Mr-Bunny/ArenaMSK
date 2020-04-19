@@ -7,7 +7,7 @@ import com.example.arenamsk.R
 import com.example.arenamsk.models.*
 import com.example.arenamsk.ui.places.adapter.PlacesViewHolder
 
-class CurrentOrdersAdapter : RecyclerView.Adapter<OrdersViewHolder>() {
+class CurrentOrdersAdapter(private val itemClickCallback: (place: PlaceModel, position: Int) -> Unit) : RecyclerView.Adapter<OrdersViewHolder>() {
 
     private val orders: MutableList<OrderModel> = mutableListOf()
 
@@ -18,7 +18,7 @@ class CurrentOrdersAdapter : RecyclerView.Adapter<OrdersViewHolder>() {
     }
 
     override fun onBindViewHolder(holderScreen: OrdersViewHolder, position: Int) {
-        holderScreen.bind(orders[position])
+        holderScreen.bind(orders[position], itemClickCallback)
     }
 
     override fun getItemCount(): Int = orders.size
@@ -26,12 +26,6 @@ class CurrentOrdersAdapter : RecyclerView.Adapter<OrdersViewHolder>() {
     fun setNewList(newList: List<OrderModel>) {
         if (orders.isNotEmpty()) orders.clear()
         orders.addAll(newList)
-//        orders.addAll(mutableListOf(
-//            OrderModel("1 200", "12 июня 2020 с 15:00 до 16:00", "", "", PlaygroundModel(1, SportModel("Футбол"), true)),
-//            OrderModel("1 200", "12 июня 2020 с 15:00 до 16:00", "", "", PlaygroundModel(1, SportModel("Футбол"), true)),
-//            OrderModel("1 200", "12 июня 2020 с 15:00 до 16:00", "", "", PlaygroundModel(1, SportModel("Футбол"), true)),
-//            OrderModel("1 200", "12 июня 2020 с 15:00 до 16:00", "", "", PlaygroundModel(1, SportModel("Футбол"), true))
-//        ))
         notifyDataSetChanged()
     }
 

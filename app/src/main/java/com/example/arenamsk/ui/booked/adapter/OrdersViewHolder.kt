@@ -2,27 +2,35 @@ package com.example.arenamsk.ui.booked.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.arenamsk.R
-import com.example.arenamsk.models.CoordinatesModel
 import com.example.arenamsk.models.OrderModel
 import com.example.arenamsk.models.PlaceModel
-import com.example.arenamsk.network.models.ImageModel
-import com.example.arenamsk.network.utils.AuthUtils
-import com.example.arenamsk.ui.places.viewpager.PlaceViewPagerAdapter
 import com.example.arenamsk.utils.TimeUtils
-import com.example.arenamsk.utils.disable
-import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.item_current_order.view.*
-import kotlinx.android.synthetic.main.item_place_card.view.*
+import java.lang.Exception
 
 class OrdersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(order: OrderModel) {
+    fun bind(order: OrderModel, itemClickCallback: (place: PlaceModel, position: Int) -> Unit) {
         with(itemView) {
-            order_playground_text.text = order.playground?.sport?.name ?: "Вид спорта"
-            place_price_text.text = order.amount
+            itemView.setOnClickListener { itemClickCallback.invoke(order.place ?: PlaceModel(), -1) }
 
-            //TODO
+            order_playground_text.text = order.playground?.sport?.name ?: "Вид спорта"
+            order_price_text.text = order.amount
+            order_date_text.text = TimeUtils.convertBookedDateAndTime(order.date, order.booking[0].from, order.booking[0].to)
+
+            val isHalfBooked = try {
+                order.booking[0].isHalfBooking
+            } catch (e: Exception) {
+                false
+            }
+
+            order_playground_title.text = if (isHalfBooked) "Половина площадки: " else "Площадка: "
+
+            order.place?.let {
+                order_place_work_time_text.text = TimeUtils.convertWorkTime(it.workDayStartAt, it.workDayStartAt)
+                order_place_address_text.text = it.address
+                order_place_title.text = it.placeTitle
+            }
         }
     }
 }
