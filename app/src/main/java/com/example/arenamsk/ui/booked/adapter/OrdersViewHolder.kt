@@ -37,8 +37,8 @@ class OrdersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
                 val bookedTimeView = LayoutInflater.from(itemView.context).inflate(R.layout.current_booked_item, booked_container, false).apply {
                     this.order_playground_text.text = order.playground?.sport?.name ?: "Вид спорта"
-                    this.order_price_text.text = order.amount
-                    this.order_date_text.text = TimeUtils.convertBookedDateAndTime(order.date, order.booking[0].from, order.booking[0].to)
+                    this.order_price_text.text = bookingModel.price.toString()
+                    this.order_date_text.text = TimeUtils.convertBookedDateAndTime(order.date, bookingModel.from, bookingModel.to)
 
                     this.order_playground_title.text = if (isHalfBooked) "Половина площадки: " else "Площадка: "
 
