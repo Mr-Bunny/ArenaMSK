@@ -96,6 +96,13 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
             when (it) {
                 EnumUtils.BookingStatus.BOOKED -> {
                     showToast("Площадка забронирована")
+
+                    showProgressBar()
+
+                    if (selectedPlaygroundId == -1L) {
+                        selectedPlaygroundId = place.playgroundModels[0].id
+                    }
+                    placeBookingViewModel.loadBookingData(selectedPlaygroundId)
                 }
 
                 else -> {
