@@ -10,6 +10,7 @@ import android.view.View
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.arenamsk.R
 import com.example.arenamsk.datasources.LocalDataSource
@@ -41,6 +42,28 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile), Galler
     private val authRepository = AuthRepository.getInstance()
 
     private var isAvatarEdited = false
+
+    private val editProfileViewModel by lazy {
+        ViewModelProviders.of(requireActivity()).get(EditProfileViewModel::class.java)
+    }
+
+    private val passwordChangeErrorHandler = object : RequestErrorHandler {
+        override suspend fun networkUnavailableError() {
+            showToast("Нет соединения с интернетом")
+        }
+
+        override suspend fun requestFailedError(error: ApiError?) {
+            showToast("Не удалось поменять пароль, проверьте введенные данные")
+        }
+
+        override suspend fun timeoutException() {
+            showToast("Не удалось поменять пароль, проверьте введенные данные")
+        }
+
+        override suspend fun requestSuccessButResponseIsNull() {
+            showToast("Не удалось поменять пароль, проверьте введенные данные")
+        }
+    }
 
     private val errorHandler = object : RequestErrorHandler {
         override suspend fun networkUnavailableError() {
@@ -93,6 +116,34 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile), Galler
         btn_edit.setOnClickListener { saveNewData() }
 
         delete_profile.setOnClickListener { showDeleteAccountConfirmWindow() }
+
+        //Смена пароля
+        current_password_edit_text.setHintText("Текущий пароль")
+        new_password_edit_text.setHintText("Новый пароль")
+
+        change_password_btn.setOnClickListener {
+            val currentPassword = current_password_edit_text.getEditText().text.toString()
+            val newPassword = new_password_edit_text.getEditText().text.toString()
+
+            if (currentPassword.isEmpty()) {
+                showToast("Введите текущий пароль")
+            } else if (newPassword.isEmpty()) {
+                showToast("Введите новый пароль")
+            } else if (currentPassword.length < 6 || newPassword.length < 6) {
+                showToast("Минимальная длина пароля 6 символов")
+            } else {
+                editProfileViewModel.changePassword(
+                    currentPassword = current_password_edit_text.getEditText().text.toString(),
+                    newPassword = new_password_edit_text.getEditText().text.toString(),
+                    success = {
+                        current_password_edit_text.getEditText().setText("")
+                        new_password_edit_text.getEditText().setText("")
+                        showToast("Пароль изменен!")
+                    },
+                    errorHandler = passwordChangeErrorHandler
+                )
+            }
+        }
     }
 
     override fun galleryPermissionGranted() {

@@ -1,4 +1,4 @@
-package com.example.arenamsk.ui.settings
+package com.example.arenamsk.ui.edit_profile
 
 import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.repositories.AuthRepository
@@ -7,7 +7,7 @@ import com.example.arenamsk.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SettingsViewModel : BaseViewModel() {
+class EditProfileViewModel : BaseViewModel() {
 
     private val repository = AuthRepository.getInstance()
 

@@ -4,15 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.arenamsk.R
-import com.example.arenamsk.network.models.ApiError
-import com.example.arenamsk.network.models.RequestErrorHandler
-import com.example.arenamsk.room.tables.Subway
-import com.example.arenamsk.ui.MainActivity
 import com.example.arenamsk.ui.base.BaseFragment
-import com.example.arenamsk.ui.places.PlacesViewModel
 import com.example.arenamsk.utils.SharedPreferenceManager
 import com.example.arenamsk.utils.SharedPreferenceManager.KEY.NOTIFICATION_IS_ENABLED
 import com.example.arenamsk.utils.SharedPreferenceManager.KEY.NOTIFICATION_TIME
@@ -28,30 +22,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         private const val HOUR_24 = 24
     }
 
-
-    private val settingsViewModel by lazy {
-        ViewModelProviders.of(requireActivity()).get(SettingsViewModel::class.java)
-    }
-
     private val dispatcher by lazy { requireActivity().onBackPressedDispatcher }
-
-    private val errorHandler = object : RequestErrorHandler {
-        override suspend fun networkUnavailableError() {
-            showToast("Нет соединения с интернетом")
-        }
-
-        override suspend fun requestFailedError(error: ApiError?) {
-            showToast("Не удалось поменять пароль, проверьте введенные данные")
-        }
-
-        override suspend fun timeoutException() {
-            showToast("Не удалось поменять пароль, проверьте введенные данные")
-        }
-
-        override suspend fun requestSuccessButResponseIsNull() {
-            showToast("Не удалось поменять пароль, проверьте введенные данные")
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,9 +34,6 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        current_password_edit_text.setHintText("Текущий пароль")
-        new_password_edit_text.setHintText("Новый пароль")
 
         with(spinner_notifications) {
             attachDataSource(resources.getStringArray(R.array.notifications_titles).toList())
@@ -98,30 +66,6 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         initSettings()
 
         settings_geo_btn.setOnClickListener { requireActivity().startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)) }
-
-        change_password_btn.setOnClickListener {
-            val currentPassword = current_password_edit_text.getEditText().text.toString()
-            val newPassword = new_password_edit_text.getEditText().text.toString()
-
-            if (currentPassword.isEmpty()) {
-                showToast("Введите текущий пароль")
-            } else if (newPassword.isEmpty()) {
-                showToast("Введите новый пароль")
-            } else if (currentPassword.length < 6 || newPassword.length < 6) {
-                showToast("Минимальная длина пароля 6 символов")
-            } else {
-                settingsViewModel.changePassword(
-                    currentPassword = current_password_edit_text.getEditText().text.toString(),
-                    newPassword = new_password_edit_text.getEditText().text.toString(),
-                    success = {
-                        current_password_edit_text.getEditText().setText("")
-                        new_password_edit_text.getEditText().setText("")
-                        showToast("Пароль изменен!")
-                    },
-                    errorHandler = errorHandler
-                )
-            }
-        }
     }
 
     /** Выставляем сохраненные настройки уведомлений */

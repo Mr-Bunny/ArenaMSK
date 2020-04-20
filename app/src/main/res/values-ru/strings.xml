@@ -12,7 +12,7 @@
     <string name="text_continue_without_registration"><u>Продолжить без регистрации</u></string>
     <string name="text_toolbar_sign_up">Регистрация</string>
     <string name="text_sign_up">ЗАРЕГИСТРИРОВАТЬСЯ</string>
-    <string name="text_edit_profile_btn">Сохранить</string>
+    <string name="text_edit_profile_btn">Сохранить изменения</string>
     <string name="edit_text_name_hint">Имя</string>
     <string name="edit_text_email_hint">Эл.почта/Телефон</string>
     <string name="edit_text_password_hint">Пароль</string>
