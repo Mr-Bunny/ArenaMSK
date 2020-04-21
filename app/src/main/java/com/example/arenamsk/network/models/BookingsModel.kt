@@ -8,9 +8,11 @@ import kotlinx.android.parcel.Parcelize
  * Обозначает время площадки, которое мы забронирровали */
 @Parcelize
 data class BookingsModel(
+    //Время начала брони
     @SerializedName("bookingFrom")
     val from: String = "",
 
+    //Время окончания брони
     @SerializedName("bookingTo")
     val to: String = "",
 
@@ -18,6 +20,7 @@ data class BookingsModel(
     @SerializedName("half")
     val isHalfBooking: Boolean = false,
 
+    //Цена за бронь
     @SerializedName("price")
     val price: Float = 0f
 ) : Parcelable

@@ -3,6 +3,7 @@ package com.example.arenamsk.room.dao
 import androidx.room.*
 import com.example.arenamsk.room.tables.User
 
+/** Dao для работы с объектом пользователя в БД */
 @Dao
 interface UserDataDao {
     @Query("DELETE from userTable")

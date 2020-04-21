@@ -3,6 +3,7 @@ package com.example.arenamsk.room.dao
 import androidx.room.*
 import com.example.arenamsk.room.tables.Subway
 
+/** Dao для работы со списком метро в БД */
 @Dao
 interface SubwaysDao {
     @Query("DELETE from subwaysTable")

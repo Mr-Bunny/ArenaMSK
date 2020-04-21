@@ -9,6 +9,7 @@ import com.example.arenamsk.room.tables.Subway
 import com.example.arenamsk.room.tables.User
 import com.example.arenamsk.utils.toStringTypedArray
 
+/** Репозиторий связанный с площадками */
 class PlaceRepository private constructor() : BaseRepository() {
 
     companion object {
@@ -20,7 +21,11 @@ class PlaceRepository private constructor() : BaseRepository() {
         }
     }
 
-    /** Загрузка избранных площадок */
+    /** Загрузка избранных площадок
+     * @param success - колбэк, который будет вызван в случае успешного запроса, принимает в качестве параметра
+     * результат запроса
+     * @param errorHandler - Обработчик ошибок, соответствующие
+     * методы которые будут вызваны в зависимости от ошибки запроса */
     fun getFavourites(
         success: (response: List<PlaceModel>) -> Unit,
         errorHandler: RequestErrorHandler
@@ -87,6 +92,7 @@ class PlaceRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
+    /** Добавление площадки в избранное */
     fun addPlaceToFavourite(
         toFavourite: Boolean,
         placeId: Int,
@@ -101,6 +107,7 @@ class PlaceRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
+    /** Загрузка времен бронирования площадки */
     suspend fun getBookingTimeList(
         playgroundId: Long,
         date: String,
@@ -114,6 +121,7 @@ class PlaceRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
+    /** Загрузка списка станций метро */
     suspend fun getSubways(
         success: (response: List<Subway>) -> Unit,
         errorHandler: RequestErrorHandler
@@ -131,6 +139,7 @@ class PlaceRepository private constructor() : BaseRepository() {
         }
     }
 
+    /** Загрузка списка отзывов о площадке */
     suspend fun getFeedbackList(
         placeId: String,
         success: (feedback: FeedbackNetworkModel) -> Unit,

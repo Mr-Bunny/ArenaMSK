@@ -15,6 +15,7 @@ import com.example.arenamsk.network.utils.NetworkUtils.Result
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
+/** Базовый класс репозитория */
 open class BaseRepository {
 
     private val job by lazy { SupervisorJob() }
@@ -22,6 +23,7 @@ open class BaseRepository {
     private val coroutineContext: CoroutineContext
         get() = job + Dispatchers.IO
 
+    /** Вызываем метод запроса на сервер внутри корутины */
     protected fun <T : Any> makeRequest(
         call: suspend () -> Response<T>,
         success: (response: T) -> Unit,
@@ -36,6 +38,7 @@ open class BaseRepository {
         }
     }
 
+    /** Делаем непосредственно запрос на сервер */
     private suspend fun <T : Any> safeApiCall(
         call: suspend () -> Response<T>,
         success: (response: T) -> Unit,
@@ -145,6 +148,7 @@ open class BaseRepository {
         }
     }
 
+    /** Проверяем когда истекает access token */
     private fun checkTokenExpired() =
         if (!AuthUtils.isUserDefault() && AuthUtils.isUserAuthorized()) {
             (System.currentTimeMillis() / 1000) > AuthUtils.getExpiredIn()

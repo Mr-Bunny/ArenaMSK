@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+/** Сущность метро в БД */
 @Parcelize
 @Entity(tableName = "subwaysTable")
 data class Subway(

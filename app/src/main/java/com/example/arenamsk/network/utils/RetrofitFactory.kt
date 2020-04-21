@@ -5,6 +5,7 @@ import com.example.arenamsk.network.api.ApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/** Здесь хранятся статические методы для получения сервиса для обращения к серверу */
 object RetrofitFactory {
 
     fun getAuthApiService(): ApiService = Retrofit.Builder()

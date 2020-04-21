@@ -5,6 +5,7 @@ import com.example.arenamsk.models.FeedbackModel
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+/** DTO со списком отзывов о площадке */
 @Parcelize
 data class FeedbackNetworkModel(
     @SerializedName("content")

@@ -10,6 +10,7 @@ import com.example.arenamsk.room.dao.UserDataDao
 import com.example.arenamsk.room.tables.Subway
 import com.example.arenamsk.room.tables.User
 
+/** БД */
 @Database(
     entities = [User::class, Subway::class],
     version = DB_VERSION

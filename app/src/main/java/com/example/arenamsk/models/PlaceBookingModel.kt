@@ -9,9 +9,11 @@ import kotlinx.android.parcel.Parcelize
  * Используется на экране бронирования (ui/booking) */
 @Parcelize
 data class PlaceBookingModel(
+    //Дата
     @SerializedName("date")
     val date: Long = 0,
 
+    //Забронированное время
     @SerializedName("bookings")
     val bookings: List<BookingDateModel> = emptyList()
 

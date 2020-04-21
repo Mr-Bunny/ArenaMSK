@@ -10,7 +10,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
-
+/** Реопзиторий связанный с авторизацией */
 class AuthRepository private constructor() : BaseRepository() {
 
     companion object {
@@ -22,6 +22,7 @@ class AuthRepository private constructor() : BaseRepository() {
         }
     }
 
+    /** Регистрация */
     fun startSignUp(
         model: SignUpUserModel,
         success: (response: User) -> Unit,
@@ -32,6 +33,7 @@ class AuthRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
+    /** Загрузка аватарки */
     fun uploadAvatar(
         image: Bitmap,
         success: (response: UserImageUrl) -> Unit,
@@ -52,6 +54,7 @@ class AuthRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
+    /** Авторизация */
     fun startLogIn(
         model: LogInUserModel,
         success: (response: UpdatedTokensModel) -> Unit,
@@ -62,6 +65,7 @@ class AuthRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
+    /** Загрузка информации о пользователе */
     fun getAccountInfo(
         success: (response: User) -> Unit,
         errorHandler: RequestErrorHandler
@@ -71,6 +75,7 @@ class AuthRepository private constructor() : BaseRepository() {
         errorHandler = errorHandler
     )
 
+    /** Смена пароля */
     fun changePassword(
         currentPassword: String,
         newPassword: String,

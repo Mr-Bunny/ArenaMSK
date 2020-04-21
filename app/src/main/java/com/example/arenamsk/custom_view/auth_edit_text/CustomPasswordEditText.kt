@@ -6,6 +6,7 @@ import com.example.arenamsk.R
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.custom_password_edit_text.view.*
 
+/** Кастомный editText для ввода пароля на экране авторизации */
 class CustomPasswordEditText:
     AbstractCustomEditText {
 

@@ -5,6 +5,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
+/** Класс предоставляет instance OkHttpProvider для retrofit */
 object OkHttpProvider {
     fun getInstance(isAuth: Boolean = false) = provideClient(isAuth)
 

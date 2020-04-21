@@ -6,6 +6,7 @@ import com.example.arenamsk.R
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.custom_sign_up_name_edit_text.view.*
 
+/** Кастомный editText для ввода имени на экране регистрации */
 class CustomSignUpNameEditText:
     AbstractSignUpCustomEditText {
 

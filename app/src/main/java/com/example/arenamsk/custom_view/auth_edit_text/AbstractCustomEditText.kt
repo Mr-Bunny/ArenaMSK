@@ -3,14 +3,15 @@ package com.example.arenamsk.custom_view.auth_edit_text
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.view.View
 import android.widget.LinearLayout
 import com.example.arenamsk.R
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.custom_email_edit_text.view.*
 
+/** Абстрактный класс кастомного поля ввода (EditText) на экране авторизации */
 abstract class AbstractCustomEditText : LinearLayout {
 
+    /** Состояния editText-а */
     protected companion object {
         enum class State {
             EMPTY,
@@ -25,13 +26,13 @@ abstract class AbstractCustomEditText : LinearLayout {
     //Сохраняем сюда текст ошибки
     protected var errorHint: String = ""
 
+    /** Текущее состояние */
     protected var currentState: State =
         State.EMPTY
         set(value) {
             field = value
             updateView()
         }
-
 
     constructor(context: Context) : super(context)
 
@@ -59,8 +60,10 @@ abstract class AbstractCustomEditText : LinearLayout {
         }
     }
 
+    /** Получение editText для редактирования или получения данных */
     open fun getText() = getEditText().text.toString()
 
+    /** Обновляем editText в зависимости от состояния */
     protected open fun updateView() {
         when (currentState) {
             State.EMPTY -> {

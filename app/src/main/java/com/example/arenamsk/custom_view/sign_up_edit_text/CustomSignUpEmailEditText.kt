@@ -8,6 +8,7 @@ import com.example.arenamsk.R
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.custom_sign_up_email_edit_text.view.*
 
+/** Кастомный editText для ввода email на экране регистрации */
 class CustomSignUpEmailEditText:
     AbstractSignUpCustomEditText {
 

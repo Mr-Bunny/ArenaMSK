@@ -8,11 +8,16 @@ import com.example.arenamsk.R
 import com.example.arenamsk.ui.places.TagSelectedCallback
 import kotlinx.android.synthetic.main.custom_place_tag.view.*
 
+/** Кастомная View для отображения вида спорта */
 class TagView : FrameLayout {
 
+    /** Id вида спорта */
     private var tagId = 0
+    /** Название вида спорта */
     private var tagName: String = ""
+    /** Флаг - выбран вид спорта или нет */
     private var tagSelected: Boolean = false
+    /** Callback нажатия на тег */
     private var tagClickListener: TagSelectedCallback? = null
 
     constructor(context: Context) : super(context) {
@@ -39,6 +44,7 @@ class TagView : FrameLayout {
         init()
     }
 
+    /** Ставим флаг что тег выбран и обновляем view */
     fun setTagCheck(isCheck: Boolean = true) {
         tagSelected = isCheck
         setBorder()

@@ -6,6 +6,7 @@ import android.widget.FrameLayout
 import com.example.arenamsk.R
 import kotlinx.android.synthetic.main.place_additional_info_item.view.*
 
+/** Кастомная View с изображением дополнительной информации о площадке (например, наличие парковки) */
 class AdditionalInfoView : FrameLayout {
 
     private var stringTypeId = 0

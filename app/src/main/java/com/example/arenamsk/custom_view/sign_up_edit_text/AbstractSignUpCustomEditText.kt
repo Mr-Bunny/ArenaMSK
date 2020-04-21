@@ -7,6 +7,7 @@ import com.example.arenamsk.R
 import com.example.arenamsk.custom_view.auth_edit_text.AbstractCustomEditText
 import kotlinx.android.synthetic.main.custom_email_edit_text.view.*
 
+/** Абстрактный класс кастомного поля ввода (EditText) на экране регистрации */
 abstract class AbstractSignUpCustomEditText : AbstractCustomEditText {
 
     constructor(context: Context) : super(context)
@@ -19,6 +20,7 @@ abstract class AbstractSignUpCustomEditText : AbstractCustomEditText {
         defStyle
     )
 
+    /** Обновляем editText в зависимости от состояния */
     override fun updateView() {
         when (currentState) {
             Companion.State.EMPTY -> {

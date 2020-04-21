@@ -2,6 +2,7 @@ package com.example.arenamsk.network.models.auth
 
 import com.google.gson.annotations.SerializedName
 
+/** DTO для регистрации пользователя */
 data class SignUpUserModel(
     @SerializedName("firstName")
     var firstName: String = "",
