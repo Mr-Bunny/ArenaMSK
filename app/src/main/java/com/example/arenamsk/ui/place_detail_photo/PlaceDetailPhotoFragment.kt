@@ -10,6 +10,7 @@ import com.example.arenamsk.ui.place_detail.PlaceDetailFragment.Companion.PLACE_
 import com.example.arenamsk.ui.place_detail_photo.adapter.PlaceDetailPhotoAdapter
 import kotlinx.android.synthetic.main.fragment_place_detail_photo.*
 
+/** Фрагмент с офтографиями площадки */
 class PlaceDetailPhotoFragment : BaseFragment(R.layout.fragment_place_detail_photo) {
 
     companion object {

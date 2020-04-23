@@ -8,6 +8,7 @@ import com.example.arenamsk.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_full_screen_image.*
 
+/** Activity для показа изображения во весь экран */
 class FullScreenImageActivity : AppCompatActivity() {
 
     companion object {

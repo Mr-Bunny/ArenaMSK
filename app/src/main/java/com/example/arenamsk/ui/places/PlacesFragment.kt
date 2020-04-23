@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.places_errors_form.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
+/** ЖКран со списком площадок */
 class PlacesFragment : BaseFragment(R.layout.fragment_places), TagSelectedCallback {
 
     private val placeAdapter by lazy {

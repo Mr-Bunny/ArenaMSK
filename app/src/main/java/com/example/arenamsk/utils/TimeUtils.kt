@@ -5,6 +5,7 @@ import com.example.arenamsk.models.DateModel
 import java.text.SimpleDateFormat
 import java.util.*
 
+/** Класс для работы с датой и временем */
 object TimeUtils {
 
     @SuppressLint("ConstantLocale")

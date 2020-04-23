@@ -22,6 +22,7 @@ import com.example.arenamsk.utils.hide
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import uk.co.senab.photoview.PhotoViewAttacher
 
+/** Фрагмент регистрации */
 class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), GalleryCallback {
 
     private val signUpViewModel by lazy {

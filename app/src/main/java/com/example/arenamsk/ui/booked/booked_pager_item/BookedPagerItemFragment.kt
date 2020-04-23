@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.places_errors_form.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
+/** Экран со списком либо текущих забронированных площадок, либо со списком истории бронирования */
 class BookedPagerItemFragment: BaseFragment(R.layout.fragment_booked_pager_item) {
 
     companion object {

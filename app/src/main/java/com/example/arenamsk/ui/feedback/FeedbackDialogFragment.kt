@@ -19,6 +19,7 @@ import com.example.arenamsk.utils.TimeUtils
 import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.fragment_feedback.*
 
+/** Экран с отзывами о площадке */
 class FeedbackDialogFragment private constructor() : DialogFragment(), LifecycleOwner {
 
     companion object {

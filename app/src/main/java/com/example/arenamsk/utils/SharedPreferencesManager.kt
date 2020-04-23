@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.arenamsk.App
 
+/** Класс для работы с SharedPreferences */
 class SharedPreferenceManager private constructor() {
 
     companion object {

@@ -1,7 +1,9 @@
 package com.example.arenamsk.utils
 
+/** Enum классы */
 object EnumUtils {
 
+    /** статус процесса регистрации */
     enum class SignUpStatus {
         USERNAME_EMPTY,
         EMAIL_EMPTY,
@@ -14,6 +16,7 @@ object EnumUtils {
         NETWORK_OFFLINE
     }
 
+    /** Статус процесса авторизации */
     enum class LogInStatus {
         EMAIL_EMPTY,
         EMAIL_INCORRECT,
@@ -25,6 +28,7 @@ object EnumUtils {
         NETWORK_OFFLINE
     }
 
+    /** Статус загрузки списка площадкок */
     enum class GetPlacesStatus {
         LOAD_PLACES,
         NOT_FOUND,
@@ -32,11 +36,13 @@ object EnumUtils {
         NETWORK_OFFLINE
     }
 
+    /** Статус бронирования площадки */
     enum class BookingStatus {
         BOOKED,
         BOOKING_ERROR
     }
 
+    /** Виды спорта */
     enum class Sports(val type: String) {
         SPORT_ALL("Все виды"),
         SPORT_FOOTBALL("Футбол"),

@@ -8,6 +8,7 @@ import com.example.arenamsk.App
 import com.example.arenamsk.R
 import com.example.arenamsk.network.utils.AuthUtils
 
+/** Класс для работы с уведомлениями */
 object NotificationsUtils {
 
     const val CHANNEL_ID = "4815162342"

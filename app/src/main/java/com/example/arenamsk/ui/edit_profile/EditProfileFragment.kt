@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.fragment_sign_up.*
 import kotlinx.coroutines.*
 import uk.co.senab.photoview.PhotoViewAttacher
 
+/** Экран изменения информации о пользователе */
 class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile), GalleryCallback {
 
     private val dispatcher by lazy { requireActivity().onBackPressedDispatcher }

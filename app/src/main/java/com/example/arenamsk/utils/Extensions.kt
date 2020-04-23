@@ -13,6 +13,9 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.maps.android.ui.IconGenerator
 
+/** Различные функции-расширения */
+
+/** Показываем клавиатуру */
 fun View.showKeyboard() {
     this.requestFocus()
     val inputMethodManager =
@@ -20,24 +23,29 @@ fun View.showKeyboard() {
     inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
 }
 
+/** Скрываем клавиатуру */
 fun View.hideKeyboard() {
     val inputMethodManager =
         context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 }
 
+/** Делаем view VISIBLE */
 fun View.enable() {
     visibility = View.VISIBLE
 }
 
+/** Делаем view GONE */
 fun View.disable() {
     visibility = View.GONE
 }
 
+/** Делаем View INVISIBLE */
 fun View.hide() {
     visibility = View.INVISIBLE
 }
 
+/** Приводим список к нужному для передачи на сервер виду */
 fun ArrayList<String>.toStringTypedArray(): String? {
     if (this.isNullOrEmpty()) return null
 
@@ -47,6 +55,7 @@ fun ArrayList<String>.toStringTypedArray(): String? {
         .replace("]", "")
 }
 
+/** Получаем высоту статус бара в dp */
 fun Context.getStatusBarHeight(): Int {
     var result = 0
     val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
@@ -56,6 +65,7 @@ fun Context.getStatusBarHeight(): Int {
     return result
 }
 
+/** Получаем иконку точки на карте на основе вида спорта */
 fun String?.getSportIcon(context: Context): BitmapDescriptor {
     val result = when (this) {
         EnumUtils.Sports.SPORT_FOOTBALL.type, EnumUtils.Sports.SPORT_MINI_FOOTBALL.type -> {
@@ -82,6 +92,7 @@ fun String?.getSportIcon(context: Context): BitmapDescriptor {
     return result ?: BitmapDescriptorFactory.defaultMarker()
 }
 
+/** Получаем иконку спорта на основе его названия */
 fun String?.getSportIconDrawableId(): Int = when (this) {
         EnumUtils.Sports.SPORT_FOOTBALL.type, EnumUtils.Sports.SPORT_MINI_FOOTBALL.type -> {
             R.drawable.ic_football_logo
@@ -104,6 +115,7 @@ fun String?.getSportIconDrawableId(): Int = when (this) {
         }
 }
 
+/** Получаем BitmapDescriptor из векторной картинки */
 private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
     return ContextCompat.getDrawable(context, vectorResId)?.run {
         setBounds(0, 0, intrinsicWidth, intrinsicHeight)

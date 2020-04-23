@@ -12,6 +12,7 @@ import com.example.arenamsk.utils.getStatusBarHeight
 import kotlinx.android.synthetic.main.fragment_booked.booked_tab_layout
 import kotlinx.android.synthetic.main.fragment_booked.booked_view_pager
 
+/** Фрагмент для отображения viewPager и tab layout, в котором показываются текущие и прошедшие брони */
 class BookedFragment: BaseFragment(R.layout.fragment_booked) {
 
     private val dispatcher by lazy { requireActivity().onBackPressedDispatcher }

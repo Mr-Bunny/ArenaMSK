@@ -8,6 +8,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
 
+/** Класс отвечает за то как выглядят кластеры и точки */
 class MapRenderer(
     val context: Context,
     map: GoogleMap,

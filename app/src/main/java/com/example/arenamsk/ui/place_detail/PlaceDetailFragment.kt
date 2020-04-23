@@ -8,6 +8,8 @@ import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.place_detail.adapter.PlaceDetailViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_place_detail.*
 
+/** Экран с информацией о площадке
+ * Здесь во viewPager отображаются фрагменты с информацией, фото и отзывами */
 class PlaceDetailFragment : BaseFragment(R.layout.fragment_place_detail) {
 
     companion object {

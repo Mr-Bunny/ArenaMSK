@@ -16,6 +16,7 @@ import com.example.arenamsk.ui.auth.sign_up.GalleryCallback
 import com.example.arenamsk.utils.Constants.DOUBLE_CLICK_DELAY
 import kotlinx.android.synthetic.main.activity_main.*
 
+/** Главная Activity */
 class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     companion object {

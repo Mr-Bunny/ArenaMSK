@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_filter_content.*
 import kotlinx.android.synthetic.main.fragment_place_info.*
 import org.greenrobot.eventbus.EventBus
 
+/** Фрагмент с подробной информацией о площадке */
 class PlaceDetailInfoFragment private constructor() : BaseFragment(R.layout.fragment_place_info) {
 
     companion object {

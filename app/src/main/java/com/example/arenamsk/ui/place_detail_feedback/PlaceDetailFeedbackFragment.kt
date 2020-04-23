@@ -19,6 +19,7 @@ import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.fragment_place_detail_feedback.*
 
+/** Фрагмент с отзывами о площадке */
 class PlaceDetailFeedbackFragment private constructor() :
     BaseFragment(R.layout.fragment_place_detail_feedback) {
 

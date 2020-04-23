@@ -28,6 +28,8 @@ import kotlinx.android.synthetic.main.fragment_place_dialog.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
+/** Базовый фрагмент экрана подробной информации о площадке
+ * В нем открываются фрагмент с информацией и фрагмент бронирвоания */
 class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwner {
 
     companion object {

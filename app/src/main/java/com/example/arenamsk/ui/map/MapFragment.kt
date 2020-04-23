@@ -28,6 +28,7 @@ import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgor
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.android.synthetic.main.map_bottom_layout.*
 
+/** Экран карты с отображением всех точек на основе фильтра */
 class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
 
     companion object {
@@ -172,6 +173,7 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+    /** Устанавливаем логику работы кластеров */
     private fun setClusterParameters() {
         clusterManager = ClusterManager(requireContext(), mMap)
         clusterManager?.let {
@@ -190,6 +192,7 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         }
     }
 
+    /** По нажатию на кластер приближаем выбранный кластер */
     private fun onClusterClick(cluster: Cluster<PlaceItem>): Boolean {
         return mMap?.let {
             it.animateCamera(CameraUpdateFactory.newLatLngZoom(
@@ -246,6 +249,7 @@ class MapFragment : BaseFragment(R.layout.fragment_map), OnMapReadyCallback {
         }
     }
 
+    /** По нажатию на точку - двигаем карту к ней и показываем панельку с информацией */
     private fun onClusterItemClick(placeItem: PlaceItem): Boolean {
         placeItem.place.let {
             mMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(it.latitude, it.longitude)))

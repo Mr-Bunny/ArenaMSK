@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.places_errors_form.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
+/** Экран избранных площадок */
 class FavouritesFragment : BaseFragment(R.layout.fragment_favourites) {
 
     private val placeAdapter by lazy {

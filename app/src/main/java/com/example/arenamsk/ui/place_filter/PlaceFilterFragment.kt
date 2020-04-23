@@ -31,6 +31,7 @@ import org.greenrobot.eventbus.EventBus
 import java.util.*
 import kotlin.collections.ArrayList
 
+/** Фрагмент с фильтром */
 class PlaceFilterFragment private constructor() : DialogFragment(), LifecycleOwner {
 
     companion object {

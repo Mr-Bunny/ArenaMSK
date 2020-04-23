@@ -13,6 +13,8 @@ import com.example.arenamsk.utils.SharedPreferenceManager.KEY.NOTIFICATION_TIME
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.angmarch.views.OnSpinnerItemSelectedListener
 
+/** Экран настроек приложения
+ * Здесь можно поменять уведомления и перейти в настройки передачи гео-данных */
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     companion object {

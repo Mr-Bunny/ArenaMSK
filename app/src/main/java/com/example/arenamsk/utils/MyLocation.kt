@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.SphericalUtil
 import java.util.*
 
+/** Класс для получения информации о местоположении пользователя */
 class MyLocation {
     internal lateinit var timer1: Timer
     internal var lm: LocationManager? = null

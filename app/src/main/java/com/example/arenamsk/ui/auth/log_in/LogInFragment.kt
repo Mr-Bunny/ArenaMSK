@@ -14,6 +14,7 @@ import com.example.arenamsk.ui.feedback.FeedbackDialogFragment
 import com.example.arenamsk.utils.EnumUtils.LogInStatus
 import kotlinx.android.synthetic.main.fragment_log_in.*
 
+/** Фрагмент авторизации */
 class LogInFragment : BaseAuthFragment(R.layout.fragment_log_in) {
 
     private val logInViewModel by lazy {

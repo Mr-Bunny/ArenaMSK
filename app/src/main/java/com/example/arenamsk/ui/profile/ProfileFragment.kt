@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.coroutines.*
 
+/** Экран профиля пользователя */
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     private var feedbackFragment: FeedbackDialogFragment? = null

@@ -15,6 +15,7 @@ import com.example.arenamsk.network.models.auth.ResetPasswordModel
 import com.example.arenamsk.repositories.PlaceRepository
 import kotlinx.android.synthetic.main.fragment_password_reset.*
 
+/** Окно для инициализации сброса пароля */
 class PasswordResetDialogFragment private constructor() : DialogFragment() {
 
     companion object {

@@ -12,6 +12,7 @@ import java.io.IOException
 import java.io.OutputStream
 import java.util.*
 
+/** Полезные методы для работы с изображениями */
 object ImageUtils {
 
     fun createCircleBitmap(source: Bitmap): Bitmap {
@@ -38,6 +39,7 @@ object ImageUtils {
         return output
     }
 
+    /** Получаем кратинку из ImageView */
     fun getImageFromView(imageView: ImageView): Bitmap {
         val bitmap = Bitmap.createBitmap(imageView.width, imageView.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
@@ -46,6 +48,7 @@ object ImageUtils {
         return bitmap
     }
 
+    /** Создаем файл из bitmap */
     fun createFileFromBitmap(image: Bitmap): File {
         // Get the context wrapper
         val wrapper = ContextWrapper(App.appContext())

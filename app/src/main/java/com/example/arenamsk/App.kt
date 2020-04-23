@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
 import com.example.arenamsk.utils.NotificationsUtils.CHANNEL_ID
 
+/** Класс приложения */
 class App : MultiDexApplication() {
 
     companion object {
         private lateinit var instance: App
 
+        /** Метод для получения контекста приложения из люой точки приложения */
         fun appContext() = instance.applicationContext
     }
 
@@ -22,7 +24,7 @@ class App : MultiDexApplication() {
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
-        // Create the NotificationChannel
+        //Create the NotificationChannel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = getString(R.string.channel_name)
             val descriptionText = getString(R.string.channel_description)

@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.utils.Constants.DOUBLE_CLICK_DELAY
 
+/** Activity авторизации и регистрации */
 class AuthActivity : AppCompatActivity() {
 
     companion object {
@@ -28,6 +29,7 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(com.example.arenamsk.R.layout.activity_auth)
 
+        //Если пользователь авторизирован - открываем приложение
         if (AuthUtils.isUserAuthorized()) {
             openApp()
         } else {
@@ -43,6 +45,7 @@ class AuthActivity : AppCompatActivity() {
             }
         }
 
+        //Выход по двойному нажатию кнопки назад
         if (doubleBackToExitPressedOnce) {
             finishAffinity()
         } else {
@@ -108,6 +111,7 @@ class AuthActivity : AppCompatActivity() {
         finish()
     }
 
+    /** Открываем фрагмент авторизации */
     private fun openLogInFragment() {
         with(supportFragmentManager.beginTransaction()) {
             replace(

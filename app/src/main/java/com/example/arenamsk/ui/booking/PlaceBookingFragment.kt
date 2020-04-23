@@ -27,6 +27,7 @@ import org.greenrobot.eventbus.Subscribe
 import java.util.*
 import kotlin.collections.HashSet
 
+/** Экран со списком времен, которые можно забронировать */
 class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), DatePickerDialog.OnDateSetListener {
 
     companion object {

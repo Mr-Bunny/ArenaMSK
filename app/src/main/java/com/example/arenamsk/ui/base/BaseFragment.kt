@@ -27,6 +27,7 @@ import com.example.arenamsk.utils.getStatusBarHeight
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.fragment_booked.*
 
+/** Базовый фрагмент */
 abstract class BaseFragment(private val layoutId: Int): Fragment(), LifecycleOwner {
 
     private var toast: Toast? = null

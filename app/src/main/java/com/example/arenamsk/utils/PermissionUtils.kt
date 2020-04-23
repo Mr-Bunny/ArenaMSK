@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 
+/** Класс помощник для работы с разрешениями */
 object PermissionUtils {
 
     fun checkForPermission(
