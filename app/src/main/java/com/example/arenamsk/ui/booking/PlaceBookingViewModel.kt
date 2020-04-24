@@ -1,17 +1,21 @@
 package com.example.arenamsk.ui.booking
 
 import androidx.lifecycle.MutableLiveData
+import com.example.arenamsk.datasources.LocalDataSource
 import com.example.arenamsk.models.DateModel
 import com.example.arenamsk.network.models.ApiError
 import com.example.arenamsk.network.models.BookingDateModel
 import com.example.arenamsk.network.models.BookingPlaceModel
 import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.repositories.PlaceRepository
+import com.example.arenamsk.room.tables.User
 import com.example.arenamsk.ui.base.BaseViewModel
 import com.example.arenamsk.utils.EnumUtils
 import com.example.arenamsk.utils.SingleLiveEvent
 import com.example.arenamsk.utils.TimeUtils
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PlaceBookingViewModel : BaseViewModel() {
 
@@ -19,6 +23,9 @@ class PlaceBookingViewModel : BaseViewModel() {
 
     //Текущая дата в формате yyyy-MM-dd, которую будем передавать на бэк для получения расписания
     private val choosedDateLiveData = MutableLiveData<String>()
+
+    //Данные пользователя из локальнойБД
+    private val userLiveData = MutableLiveData<User>()
 
     private val currentDate: String = TimeUtils.getCurrentDay()
 
@@ -29,7 +36,11 @@ class PlaceBookingViewModel : BaseViewModel() {
 
     init {
         choosedDateLiveData.value = currentDate
+
+        getUser()
     }
+
+    fun getUserLiveData() = userLiveData
 
     fun getBookingStatusLiveData() = bookingStatus
 
@@ -39,6 +50,16 @@ class PlaceBookingViewModel : BaseViewModel() {
 
     fun setCurrentDate(dateModel: DateModel) {
         choosedDateLiveData.value = TimeUtils.getDateByDateModel(dateModel)
+    }
+
+    private fun getUser() {
+        launch(Dispatchers.IO) {
+            val user = LocalDataSource.getUserData() ?: User()
+
+            withContext(Dispatchers.Main) {
+                userLiveData.value = user
+            }
+        }
     }
 
     fun setNextDate() {

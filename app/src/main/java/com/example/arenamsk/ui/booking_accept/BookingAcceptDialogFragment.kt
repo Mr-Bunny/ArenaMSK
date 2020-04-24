@@ -2,6 +2,7 @@ package com.example.arenamsk.ui.booking_accept
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.example.arenamsk.network.models.BookingPlaceModel
 import com.example.arenamsk.ui.booking.PlaceBookingViewModel
 import com.example.arenamsk.utils.ActionEvent
 import com.example.arenamsk.utils.EnumUtils
+import kotlinx.android.synthetic.main.fragment_booking_accept.*
 import org.greenrobot.eventbus.EventBus
 
 class BookingAcceptDialogFragment private constructor() : DialogFragment(), LifecycleOwner {
@@ -37,6 +39,8 @@ class BookingAcceptDialogFragment private constructor() : DialogFragment(), Life
             return BookingAcceptDialogFragment()
         }
     }
+
+    private var toast: Toast? = null
 
     private val placeBookingViewModel by lazy {
         ViewModelProviders.of(this).get(PlaceBookingViewModel::class.java)
@@ -80,5 +84,33 @@ class BookingAcceptDialogFragment private constructor() : DialogFragment(), Life
                 }
             }
         })
+
+        placeBookingViewModel.getUserLiveData().observe(viewLifecycleOwner, Observer {
+            accept_name_edit_text.getEditText().setText(it.firstName)
+            accept_email_edit_text.getEditText().setText(if (it.email.isNullOrEmpty()) it.number else it.email)
+        })
+
+        btn_pay.setOnClickListener {
+            val name = accept_name_edit_text.getEditText().text.toString()
+            val emailPhone = accept_email_edit_text.getEditText().text.toString()
+
+            if (name.isEmpty()) {
+                showToast("Укажите имя")
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(emailPhone).matches() && !phoneIsCorrect(emailPhone)) {
+                showToast("Укажите email/Телефон")
+            } else {
+                showToast("${arguments!!.getParcelable<BookingPlaceModel>(ARG_TAG)}")
+            }
+        }
+    }
+
+    private fun phoneIsCorrect(phone: String): Boolean {
+        return phone.length == 11 && (phone.toIntOrNull() == null)
+    }
+
+    private fun showToast(msg: String) {
+        toast?.cancel()
+        toast = Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG)
+        toast?.show()
     }
 }

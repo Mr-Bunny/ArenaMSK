@@ -79,6 +79,7 @@
     <string name="text_total_area_title">Total area</string>
     <string name="number_of_places_text">Number of places</string>
     <string name="book_button_text">BOOK</string>
+    <string name="pay_button_text">Pay</string>
     <string name="text_recommendation">Recommend</string>
     <string name="text_no_review_yet">No reviews yet</string>
     <string name="text_no_review_yet_send_first">No reviews yet\n<u>Send first feedback</u></string>
@@ -116,5 +117,6 @@
     <string name="title_settings_fragment">@string/text_profile_item_settings</string>
     <string name="channel_name">Arena</string>
     <string name="channel_description">Arena</string>
+    <string name="conditions_text"><u>By clicking button below you agree with our terms</u></string>
 
 </resources>
