@@ -10,13 +10,14 @@ import com.example.arenamsk.R
 import com.example.arenamsk.models.DateModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.BookingDateModel
+import com.example.arenamsk.network.models.BookingPlaceModel
 import com.example.arenamsk.ui.base.BaseFragment
+import com.example.arenamsk.ui.base.PlaceDialogFragment
 import com.example.arenamsk.ui.booking.adapter.PlaceBookingAdapter
+import com.example.arenamsk.ui.booking_accept.BookingAcceptDialogFragment
+import com.example.arenamsk.ui.place_filter.PlaceFilterFragment
+import com.example.arenamsk.utils.*
 import com.example.arenamsk.utils.ActionEvent.OpenCalendar
-import com.example.arenamsk.utils.EnumUtils
-import com.example.arenamsk.utils.TimeUtils
-import com.example.arenamsk.utils.disable
-import com.example.arenamsk.utils.enable
 import com.tsongkha.spinnerdatepicker.DatePicker
 import com.tsongkha.spinnerdatepicker.DatePickerDialog
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
@@ -40,6 +41,8 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
     private val placeBookingViewModel by lazy {
         ViewModelProviders.of(this).get(PlaceBookingViewModel::class.java)
     }
+
+    private var placeDetailFragment: BookingAcceptDialogFragment? = null
 
     private var selectedPlaygroundId = -1L
 
@@ -92,26 +95,6 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
             }
         })
 
-        //Подписываемся на статус бронирования
-        placeBookingViewModel.getBookingStatusLiveData().observe(viewLifecycleOwner, Observer {
-            when (it) {
-                EnumUtils.BookingStatus.BOOKED -> {
-                    showToast("Площадка забронирована")
-
-                    showProgressBar()
-
-                    if (selectedPlaygroundId == -1L) {
-                        selectedPlaygroundId = place.playgroundModels[0].id
-                    }
-                    placeBookingViewModel.loadBookingData(selectedPlaygroundId)
-                }
-
-                else -> {
-                    showToast("Не удалось забронировать площадку")
-                }
-            }
-        })
-
         //Выбрали следующий день
         booking_date_next.setOnClickListener {
             placeBookingViewModel.setNextDate()
@@ -129,8 +112,18 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
             }
         }
 
+        //Открываем экран подтверждения оплаты и соглащения с условиями
         btn_book.setOnClickListener {
-            placeBookingViewModel.bookPlace(selectedBookingTimeId.toList())
+            val bookingModel = BookingPlaceModel(
+                date = placeBookingViewModel.getCurrentDateLiveData().value ?: "",
+                bookingsId = selectedBookingTimeId.toList())
+
+            placeDetailFragment?.dismiss()
+            placeDetailFragment = BookingAcceptDialogFragment.getInstance(bookingModel)
+            placeDetailFragment?.show(
+                activity!!.supportFragmentManager,
+                BookingAcceptDialogFragment.BOOKING_ACCEPT_TAG
+            )
         }
     }
 
@@ -153,6 +146,16 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
             month = monthOfYear,
             day = dayOfMonth
         ))
+    }
+
+    @Subscribe
+    fun updateUI(event: ActionEvent.UpdateBookingList) {
+        showProgressBar()
+
+        if (selectedPlaygroundId == -1L) {
+            selectedPlaygroundId = place.playgroundModels[0].id
+        }
+        placeBookingViewModel.loadBookingData(selectedPlaygroundId)
     }
 
     @Subscribe
