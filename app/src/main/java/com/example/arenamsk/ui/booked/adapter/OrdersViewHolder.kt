@@ -36,6 +36,8 @@ class OrdersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 btn_pay.disable()
             }
 
+            booked_container.removeAllViews()
+
             //Для каждого значения времени в order.booking создаем view и добавляем в общий контейнер
             order.booking.forEachIndexed { index, bookingModel->
                 //Если мы бронировали несколько времен, то будем отображать цифры
