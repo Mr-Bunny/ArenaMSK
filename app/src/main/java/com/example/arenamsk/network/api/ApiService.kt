@@ -101,9 +101,9 @@ interface ApiService {
     @POST("api/v1/feedback/service")
     suspend fun postAppFeedback(@Body feedback: AppFeedbackModel): Response<Unit>
 
-    /** POST Запрос бронирования площадки на определенное время и дату */
+    /** POST Запрос бронирования площадки на определенное время и дату, успешный запрос возвращает ссылку на оплату*/
     @POST("api/v1/booking/booking")
-    suspend fun postBookingModel(@Body bookingPlaceModel: BookingPlaceModel): Response<Unit>
+    suspend fun postBookingModel(@Body bookingPlaceModel: BookingPlaceModel): Response<String>
 
     /** POST Запрос на отправку отзыва о площадке */
     @POST("api/v1/feedback/{place}")

@@ -1,6 +1,7 @@
 package com.example.arenamsk.ui.booking_accept
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -14,11 +15,15 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
 import com.example.arenamsk.network.models.BookingPlaceModel
 import com.example.arenamsk.ui.booking.PlaceBookingViewModel
+import com.example.arenamsk.ui.webview.WebActivity
 import com.example.arenamsk.utils.ActionEvent
 import com.example.arenamsk.utils.EnumUtils
 import kotlinx.android.synthetic.main.fragment_booking_accept.*
 import org.greenrobot.eventbus.EventBus
 
+/** Экран с вводом имени и email/телефона и кнопкой оплаты, которая открывает сбер
+ * после успешного запроса на бронирование возвращается ссылка на оплату
+ * которую мы открываем в WebActivity */
 class BookingAcceptDialogFragment private constructor() : DialogFragment(), LifecycleOwner {
 
     companion object {
@@ -26,17 +31,13 @@ class BookingAcceptDialogFragment private constructor() : DialogFragment(), Life
         private const val ARG_TAG = "arg_tag"
 
         fun getInstance(
-            bookingModel: BookingPlaceModel? = null
+            bookingModel: BookingPlaceModel
         ): BookingAcceptDialogFragment {
-            bookingModel?.let {
-                return BookingAcceptDialogFragment().apply {
-                    arguments = Bundle().apply {
-                        putParcelable(ARG_TAG, it)
-                    }
+            return BookingAcceptDialogFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(ARG_TAG, bookingModel)
                 }
             }
-
-            return BookingAcceptDialogFragment()
         }
     }
 
@@ -53,7 +54,7 @@ class BookingAcceptDialogFragment private constructor() : DialogFragment(), Life
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return object : Dialog(activity!!, theme) {
+        return object : Dialog(requireActivity(), theme) {
             override fun onBackPressed() {
                 dismiss()
             }
@@ -73,15 +74,13 @@ class BookingAcceptDialogFragment private constructor() : DialogFragment(), Life
 
         //Подписываемся на статус бронирования
         placeBookingViewModel.getBookingStatusLiveData().observe(viewLifecycleOwner, Observer {
-            when (it) {
-                EnumUtils.BookingStatus.BOOKED -> {
-                    EventBus.getDefault().post(ActionEvent.UpdateBookingList())
-                    Toast.makeText(context, "Площадка забронирована", Toast.LENGTH_LONG).show()
-                }
-
-                else -> {
-                    Toast.makeText(context, "Не удалось забронировать площадку", Toast.LENGTH_LONG).show()
-                }
+            if (it.isNullOrEmpty()) {
+                Toast.makeText(context, "Не удалось забронировать площадку", Toast.LENGTH_LONG).show()
+            } else {
+                //Если площадка забронирована для проведения оплаты - посылаем сигнал что нужно обновить экран с временм для бронирвоания
+                //а так же открываем webActivity для проведения оплаты
+                EventBus.getDefault().post(ActionEvent.UpdateBookingList())
+                requireActivity().startActivity(Intent(requireContext(), WebActivity::class.java).apply { putExtra("paymentUrl", it) })
             }
         })
 
@@ -97,9 +96,11 @@ class BookingAcceptDialogFragment private constructor() : DialogFragment(), Life
             if (name.isEmpty()) {
                 showToast("Укажите имя")
             } else if (!Patterns.EMAIL_ADDRESS.matcher(emailPhone).matches() && !phoneIsCorrect(emailPhone)) {
-                showToast("Укажите email/Телефон")
+                showToast("Укажите корректный email/Телефон")
             } else {
-                showToast("${arguments!!.getParcelable<BookingPlaceModel>(ARG_TAG)}")
+                arguments!!.getParcelable<BookingPlaceModel>(ARG_TAG)?.let {
+                    placeBookingViewModel.bookPlace(it)
+                } ?: showToast("Не удалось получить время для бронирования, пожалуйста, выберите его еще раз")
             }
         }
     }

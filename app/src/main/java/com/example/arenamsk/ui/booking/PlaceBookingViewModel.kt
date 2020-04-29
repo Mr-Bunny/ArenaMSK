@@ -30,7 +30,7 @@ class PlaceBookingViewModel : BaseViewModel() {
     private val currentDate: String = TimeUtils.getCurrentDay()
 
     //Статус бронирования
-    private val bookingStatus = SingleLiveEvent<EnumUtils.BookingStatus>()
+    private val bookingStatus = MutableLiveData<String>()
 
     private val repository = PlaceRepository.getInstance()
 
@@ -97,29 +97,29 @@ class PlaceBookingViewModel : BaseViewModel() {
     }
 
     /** Запрос на бронирование выбраного времени
-     * @param idList - Список выбранных id */
-    fun bookPlace(idList: List<String>) {
+     * @param bookingModel - DTO для бронирования на время оплаты */
+    fun bookPlace(bookingModel: BookingPlaceModel) {
         launch {
             repository.bookPlace(
-                bookingPlaceModel = BookingPlaceModel(choosedDateLiveData.value ?: "", idList),
-                success = {
-                    bookingStatus.value = EnumUtils.BookingStatus.BOOKED
+                bookingPlaceModel = bookingModel,
+                success = { paymentUrl ->
+                    bookingStatus.value = paymentUrl
                 },
                 errorHandler = object : RequestErrorHandler {
                     override suspend fun networkUnavailableError() {
-                        bookingStatus.value = EnumUtils.BookingStatus.BOOKING_ERROR
+                        bookingStatus.value = ""
                     }
 
                     override suspend fun requestFailedError(error: ApiError?) {
-                        bookingStatus.value = EnumUtils.BookingStatus.BOOKING_ERROR
+                        bookingStatus.value = ""
                     }
 
                     override suspend fun requestSuccessButResponseIsNull() {
-                        bookingStatus.value = EnumUtils.BookingStatus.BOOKING_ERROR
+                        bookingStatus.value = ""
                     }
 
                     override suspend fun timeoutException() {
-                        bookingStatus.value = EnumUtils.BookingStatus.BOOKING_ERROR
+                        bookingStatus.value = ""
                     }
                 }
             )
