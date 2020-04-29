@@ -104,6 +104,20 @@
             app:layout_constraintLeft_toLeftOf="@id/order_title"
             app:layout_constraintRight_toRightOf="@id/order_title" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_pay"
+            style="@style/FilterBookingButton"
+            android:layout_width="0dp"
+            android:text="@string/pay_button_text"
+            app:backgroundTint="@color/auth_button_color"
+            app:cornerRadius="25dp"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/order_title"
+            app:layout_constraintRight_toRightOf="@id/order_title"
+            app:layout_constraintTop_toBottomOf="@id/booked_container" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -24,6 +24,10 @@ data class OrderModel(
     @SerializedName("to")
     val to: String = "",
 
+    //Ссылка на оплату, если бронь не оплачена
+    @SerializedName("paymentUrl")
+    val paymentUrl: String? = "",
+
     //Список забронированного времени
     @SerializedName("booking")
     val booking: List<BookingsModel> = emptyList(),

@@ -1,12 +1,16 @@
 package com.example.arenamsk.ui.booked.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
 import com.example.arenamsk.models.OrderModel
 import com.example.arenamsk.models.PlaceModel
+import com.example.arenamsk.ui.webview.WebActivity
 import com.example.arenamsk.utils.TimeUtils
+import com.example.arenamsk.utils.disable
+import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.current_booked_item.view.*
 import kotlinx.android.synthetic.main.item_current_order.view.*
 import java.lang.Exception
@@ -21,6 +25,15 @@ class OrdersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 order_place_work_time_text.text = TimeUtils.convertWorkTime(it.workDayStartAt, it.workDayStartAt)
                 order_place_address_text.text = it.address
                 order_place_title.text = it.placeTitle
+            }
+
+            if (!order.paymentUrl.isNullOrEmpty()) {
+                btn_pay.enable()
+                btn_pay.setOnClickListener {
+                    context.startActivity(Intent(context, WebActivity::class.java).apply { putExtra("paymentUrl", order.paymentUrl) })
+                }
+            } else {
+                btn_pay.disable()
             }
 
             //Для каждого значения времени в order.booking создаем view и добавляем в общий контейнер
