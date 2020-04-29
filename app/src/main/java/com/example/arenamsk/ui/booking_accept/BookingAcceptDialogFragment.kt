@@ -17,9 +17,9 @@ import com.example.arenamsk.network.models.BookingPlaceModel
 import com.example.arenamsk.ui.booking.PlaceBookingViewModel
 import com.example.arenamsk.ui.webview.WebActivity
 import com.example.arenamsk.utils.ActionEvent
-import com.example.arenamsk.utils.EnumUtils
 import kotlinx.android.synthetic.main.fragment_booking_accept.*
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 /** Экран с вводом имени и email/телефона и кнопкой оплаты, которая открывает сбер
  * после успешного запроса на бронирование возвращается ссылка на оплату
@@ -77,10 +77,11 @@ class BookingAcceptDialogFragment private constructor() : DialogFragment(), Life
             if (it.isNullOrEmpty()) {
                 Toast.makeText(context, "Не удалось забронировать площадку", Toast.LENGTH_LONG).show()
             } else {
+                requireActivity().startActivity(Intent(requireContext(), WebActivity::class.java).apply { putExtra("paymentUrl", it) })
+
                 //Если площадка забронирована для проведения оплаты - посылаем сигнал что нужно обновить экран с временм для бронирвоания
                 //а так же открываем webActivity для проведения оплаты
                 EventBus.getDefault().post(ActionEvent.UpdateBookingList())
-                requireActivity().startActivity(Intent(requireContext(), WebActivity::class.java).apply { putExtra("paymentUrl", it) })
             }
         })
 

@@ -18,7 +18,6 @@ import com.example.arenamsk.utils.EnumUtils
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.fragment_booked_pager_item.*
-import kotlinx.android.synthetic.main.fragment_places.*
 import kotlinx.android.synthetic.main.places_errors_form.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -98,6 +97,12 @@ class BookedPagerItemFragment: BaseFragment(R.layout.fragment_booked_pager_item)
         EventBus.getDefault().unregister(this)
 
         super.onStop()
+    }
+
+    /** После оплаты обновляем текущие брони */
+    @Subscribe
+    fun updateData(event: ActionEvent.PaymentFinished) {
+        bookedPlacesViewModel.loadCurrentBookedPlaces()
     }
 
     @Subscribe

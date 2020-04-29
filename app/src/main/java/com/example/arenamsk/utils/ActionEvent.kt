@@ -12,6 +12,8 @@ sealed class ActionEvent {
     class UpdateSportList: ActionEvent()
     /** Применяется когда нужно обновить UI конкретной площадки в recyclerView */
     class UpdatePlaceInPosition(val position: Int, val inFav: Boolean): ActionEvent()
-    /** Применяется когда нужно обновить список рвемени для бронирования */
+    /** Применяется когда нужно обновить список времени для бронирования */
     class UpdateBookingList: ActionEvent()
+    /** Применяется когда нужно обновить список после закрытия окна оплаты */
+    class PaymentFinished: ActionEvent()
 }

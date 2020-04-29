@@ -150,6 +150,8 @@ class PlaceBookingFragment : BaseFragment(R.layout.fragment_place_booking), Date
 
     @Subscribe
     fun updateUI(event: ActionEvent.UpdateBookingList) {
+        placeDetailFragment?.dismiss()
+
         showProgressBar()
 
         if (selectedPlaygroundId == -1L) {
