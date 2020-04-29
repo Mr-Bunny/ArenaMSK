@@ -19,8 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.webview.WebActivity"></activity>
-        <activity android:name=".ui.FullScreenImageActivity" />
+        <activity android:name=".ui.webview.WebActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.FullScreenImageActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
