@@ -18,6 +18,13 @@ object TimeUtils {
         return dateFormat.format(Date(time))
     }
 
+    /** Конвертируем дату из yyyy-MM-dd в формат dd MMMM yyyy */
+    fun convertDateToAnotherFormat(date: String): String {
+        val dateFormatOutput = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+
+        return dateFormatOutput.format(dateFormat.parse(date) ?: Date(""))
+    }
+
     /** Конвертируем время из workStart = "12:11:10" и workEnd = "15:14:13" в "12.11-15.14" */
     fun convertWorkTime(workStart: String, workEnd: String): String {
         return try {
@@ -113,7 +120,7 @@ object TimeUtils {
     }
 
     /** Возаращет строку формата 12 июня 2020 с 15:00 до 16:00
-     * @param date - Дата в формате timestamp
+     * @param date - Дата в формате yyyy-MM-dd
      * @param from - Время начала брони в формате hh:mm:ss
      * @param to - Время окончания брони в формате hh:mm:ss */
     fun convertBookedDateAndTime(date: String, from: String, to: String): String {
@@ -124,6 +131,6 @@ object TimeUtils {
         val timeFrom: Date = timeFormatInput.parse(from) ?: Date("")
         val timeTo: Date = timeFormatInput.parse(to) ?: Date("")
 
-        return "${convertTimeStampToDate(date.toLong())} с ${timeFormatOutput.format(timeFrom)} до ${timeFormatOutput.format(timeTo)}"
+        return "${convertDateToAnotherFormat(date)} с ${timeFormatOutput.format(timeFrom)} до ${timeFormatOutput.format(timeTo)}"
     }
 }

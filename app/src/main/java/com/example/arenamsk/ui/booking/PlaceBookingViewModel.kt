@@ -102,8 +102,8 @@ class PlaceBookingViewModel : BaseViewModel() {
         launch {
             repository.bookPlace(
                 bookingPlaceModel = bookingModel,
-                success = { paymentUrl ->
-                    bookingStatus.value = paymentUrl
+                success = {
+                    bookingStatus.value = it.paymentUrl
                 },
                 errorHandler = object : RequestErrorHandler {
                     override suspend fun networkUnavailableError() {

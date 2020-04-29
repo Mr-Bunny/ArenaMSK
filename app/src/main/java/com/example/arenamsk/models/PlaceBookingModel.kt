@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 data class PlaceBookingModel(
     //Дата
     @SerializedName("date")
-    val date: Long = 0,
+    val date: String = "",
 
     //Забронированное время
     @SerializedName("bookings")

@@ -6,6 +6,7 @@ import com.example.arenamsk.models.PlaceBookingModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.network.models.AppFeedbackModel
 import com.example.arenamsk.network.models.BookingPlaceModel
+import com.example.arenamsk.network.models.BookingResponseModel
 import com.example.arenamsk.network.models.FeedbackNetworkModel
 import com.example.arenamsk.network.models.auth.ResetPasswordModel
 import com.example.arenamsk.network.models.auth.*
@@ -103,7 +104,7 @@ interface ApiService {
 
     /** POST Запрос бронирования площадки на определенное время и дату, успешный запрос возвращает ссылку на оплату*/
     @POST("api/v1/booking/booking")
-    suspend fun postBookingModel(@Body bookingPlaceModel: BookingPlaceModel): Response<String>
+    suspend fun postBookingModel(@Body bookingPlaceModel: BookingPlaceModel): Response<BookingResponseModel>
 
     /** POST Запрос на отправку отзыва о площадке */
     @POST("api/v1/feedback/{place}")

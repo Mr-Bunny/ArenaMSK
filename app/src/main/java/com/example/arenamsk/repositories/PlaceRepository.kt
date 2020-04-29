@@ -168,7 +168,7 @@ class PlaceRepository private constructor() : BaseRepository() {
     /** Бронируем площадку по времени */
     fun bookPlace(
         bookingPlaceModel: BookingPlaceModel,
-        success: (String) -> Unit,
+        success: (BookingResponseModel) -> Unit,
         errorHandler: RequestErrorHandler
     ) = makeRequest(
         call = {
