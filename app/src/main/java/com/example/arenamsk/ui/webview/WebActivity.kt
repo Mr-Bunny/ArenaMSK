@@ -28,16 +28,6 @@ class WebActivity : AppCompatActivity() {
         }
     }
 
-    /** Переопределяем кнопку назад, чтобы навигация была внутри сайта, а не приложения */
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && this.webview.canGoBack()) {
-            this.webview.goBack()
-            return true
-        }
-
-        return super.onKeyDown(keyCode, event)
-    }
-
     /** Веб клиент для открытия ссылок в webView приложения, а не в каком-то другом браузере */
     private class SimpleWebViewClient : WebViewClient() {
         override fun shouldOverrideUrlLoading(
