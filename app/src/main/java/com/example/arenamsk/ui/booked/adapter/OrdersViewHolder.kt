@@ -8,6 +8,7 @@ import com.example.arenamsk.R
 import com.example.arenamsk.models.OrderModel
 import com.example.arenamsk.models.PlaceModel
 import com.example.arenamsk.ui.webview.WebActivity
+import com.example.arenamsk.utils.Constants
 import com.example.arenamsk.utils.TimeUtils
 import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
@@ -27,7 +28,7 @@ class OrdersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 order_place_title.text = it.placeTitle
             }
 
-            if (!order.paymentUrl.isNullOrEmpty()) {
+            if (order.status != Constants.STATUS_PAID) {
                 btn_pay.enable()
                 btn_pay.setOnClickListener {
                     context.startActivity(Intent(context, WebActivity::class.java).apply { putExtra("paymentUrl", order.paymentUrl) })

@@ -38,6 +38,10 @@ data class OrderModel(
 
     //Забронированное место
     @SerializedName("place")
-    val place: PlaceModel? = null
+    val place: PlaceModel? = null,
+
+    //Статус брони: CREATED - создан, но еще не оплачен, PAID - создан и оплачен
+    @SerializedName("status")
+    val status: String? = "CREATED"
 
 ) : Parcelable
