@@ -23,7 +23,7 @@ class OrdersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             itemView.setOnClickListener { itemClickCallback.invoke(order.place ?: PlaceModel(), -1) }
 
             order.place?.let {
-                order_place_work_time_text.text = TimeUtils.convertWorkTime(it.workDayStartAt, it.workDayStartAt)
+                order_place_work_time_text.text = TimeUtils.convertWorkTime(it.workDayStartAt, it.workDayEndAt)
                 order_place_address_text.text = it.address
                 order_place_title.text = it.placeTitle
             }
