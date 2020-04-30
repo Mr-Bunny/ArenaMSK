@@ -31,15 +31,10 @@ class WebActivity : AppCompatActivity() {
         }
     }
 
-    /** Переопределяем кнопку назад, чтобы навигация была внутри сайта, а не приложения */
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            EventBus.getDefault().post(ActionEvent.PaymentFinished())
-            setResult(Activity.RESULT_OK)
-            finish()
-            return true
-        }
-        return super.onKeyDown(keyCode, event)
+    override fun onStop() {
+        EventBus.getDefault().post(ActionEvent.PaymentFinished())
+
+        super.onStop()
     }
 
     /** Веб клиент для открытия ссылок в webView приложения, а не в каком-то другом браузере */

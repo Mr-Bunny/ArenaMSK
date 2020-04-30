@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arenamsk.R
 import com.example.arenamsk.models.*
-import com.example.arenamsk.ui.places.adapter.PlacesViewHolder
 
 class CurrentOrdersAdapter(private val itemClickCallback: (place: PlaceModel, position: Int) -> Unit) : RecyclerView.Adapter<OrdersViewHolder>() {
 
