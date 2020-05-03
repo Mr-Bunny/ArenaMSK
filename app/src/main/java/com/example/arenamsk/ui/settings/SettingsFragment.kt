@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.example.arenamsk.FCMService
 import com.example.arenamsk.R
+import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.utils.SharedPreferenceManager
 import com.example.arenamsk.utils.SharedPreferenceManager.KEY.NOTIFICATION_IS_ENABLED
@@ -37,6 +39,14 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (AuthUtils.isUserDefault()) {
+            notification_container.setOnClickListener {
+                showUnauthorizedDialog()
+            }
+
+            spinner_notifications.isClickable = false
+        }
 
         with(spinner_notifications) {
             attachDataSource(resources.getStringArray(R.array.notifications_titles).toList())
@@ -118,5 +128,20 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                 sendToken(getCurrentFCMToken())
             }
         }
+    }
+
+    /** Если пользователь не авторизирован - показываем диалоговое окно с кнопкой для перехода к регистрации */
+    private fun showUnauthorizedDialog() {
+        AlertDialog.Builder(requireContext(), R.style.FavouriteAlertDialog)
+            .setTitle("Вы не авторизированы")
+            .setMessage("Для получения уведомлений необходимо зарегистрироваться")
+            .setPositiveButton("Зарегистрироваться") { _, _ ->
+                exitFromProfile()
+            }
+            .setNegativeButton("Закрыть") { dialog, _ ->
+                dialog.cancel()
+            }
+            .setCancelable(false)
+            .show()
     }
 }
