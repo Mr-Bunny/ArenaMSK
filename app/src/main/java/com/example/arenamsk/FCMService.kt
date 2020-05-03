@@ -74,7 +74,10 @@ class FCMService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
-        //TODO
-        NotificationsUtils.showNotification("Arena", "Notification", 0)
+        val data = message.data
+        NotificationsUtils.showNotification(
+            data["title"] ?: "Arena",
+            data["text"] ?: "У вас забронирована площадка",
+            data["hours"]?.toInt() ?: 0)
     }
 }

@@ -111,8 +111,7 @@ interface ApiService {
     @GET("api/v1/booking/booked")
     suspend fun getCurrentOrders(): Response<List<OrderModel>>
 
-    //TODO
     /** POST Запрос на отправку firebase токена для получения уведомлений */
-    @POST("api/v1/feedback/")
+    @POST("api/v1/account/device/token/")
     suspend fun postFCMToken(@Body token: FCMTokenModel): Response<Unit>
 }
