@@ -5,6 +5,7 @@ import com.example.arenamsk.models.PlaceFilterModel
 import com.example.arenamsk.network.api.ApiService
 import com.example.arenamsk.network.models.AppFeedbackModel
 import com.example.arenamsk.network.models.BookingPlaceModel
+import com.example.arenamsk.network.models.FCMTokenModel
 import com.example.arenamsk.network.models.auth.*
 import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.network.utils.RetrofitFactory
@@ -131,5 +132,8 @@ object RemoteDataSource {
 
     /** Запрос на удаление аккаунта */
     suspend fun deleteAccount() = service.deleteAccount()
+
+    /** Запрос на сохранение firebase токена для получения уведомлений */
+    suspend fun postFCMToken(token: FCMTokenModel) = service.postFCMToken(token)
 
 }

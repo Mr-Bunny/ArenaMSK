@@ -4,10 +4,7 @@ import com.example.arenamsk.models.FeedbackModel
 import com.example.arenamsk.models.OrderModel
 import com.example.arenamsk.models.PlaceBookingModel
 import com.example.arenamsk.models.PlaceModel
-import com.example.arenamsk.network.models.AppFeedbackModel
-import com.example.arenamsk.network.models.BookingPlaceModel
-import com.example.arenamsk.network.models.BookingResponseModel
-import com.example.arenamsk.network.models.FeedbackNetworkModel
+import com.example.arenamsk.network.models.*
 import com.example.arenamsk.network.models.auth.ResetPasswordModel
 import com.example.arenamsk.network.models.auth.*
 import com.example.arenamsk.room.tables.Subway
@@ -113,4 +110,9 @@ interface ApiService {
     /** GET Запрос получения информации о текущих забронированных площадках */
     @GET("api/v1/booking/booked")
     suspend fun getCurrentOrders(): Response<List<OrderModel>>
+
+    //TODO
+    /** POST Запрос на отправку firebase токена для получения уведомлений */
+    @POST("api/v1/feedback/")
+    suspend fun postFCMToken(@Body token: FCMTokenModel): Response<Unit>
 }

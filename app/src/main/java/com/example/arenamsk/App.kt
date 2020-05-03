@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
 import com.example.arenamsk.utils.NotificationsUtils.CHANNEL_ID
+import com.google.firebase.FirebaseApp
 
 /** Класс приложения */
 class App : MultiDexApplication() {
@@ -19,6 +20,8 @@ class App : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
+
+        FirebaseApp.initializeApp(this)
 
         instance = this
 

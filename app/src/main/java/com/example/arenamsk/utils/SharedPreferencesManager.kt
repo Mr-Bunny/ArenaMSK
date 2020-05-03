@@ -90,5 +90,7 @@ class SharedPreferenceManager private constructor() {
         const val EXPIRED_IN = "expired_in"
         const val NOTIFICATION_IS_ENABLED = "notifications_is_enabled"
         const val NOTIFICATION_TIME = "notifications_time"
+        const val FCM_TOKEN = "notifications_time"
+        const val FCM_TOKEN_UPDATED = "notifications_time"
     }
 }

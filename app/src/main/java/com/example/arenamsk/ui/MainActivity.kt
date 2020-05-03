@@ -9,11 +9,16 @@ import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.arenamsk.FCMService
 import com.example.arenamsk.R
 import com.example.arenamsk.ui.auth.sign_up.GalleryCallback
+import com.example.arenamsk.utils.ConnectionLiveData
 import com.example.arenamsk.utils.Constants.DOUBLE_CLICK_DELAY
+import com.example.arenamsk.utils.SharedPreferenceManager
+import com.example.arenamsk.utils.SharedPreferenceManager.KEY.FCM_TOKEN_UPDATED
 import kotlinx.android.synthetic.main.activity_main.*
 
 /** Главная Activity */
@@ -41,6 +46,17 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         val navController = findNavController(R.id.nav_host_fragment)
 
         navView.setupWithNavController(navController)
+
+        //При появлении интернета проверяем флаг отправки fcm токена, и если он не был отправлен - отправляем его
+        ConnectionLiveData(this).observe(this, Observer { isConnected ->
+            isConnected?.let {
+                if (isConnected && SharedPreferenceManager.getInstance().getBooleanValue(FCM_TOKEN_UPDATED, false) == false) {
+                    with(FCMService) {
+                        sendToken(getCurrentFCMToken())
+                    }
+                }
+            }
+        })
     }
 
     /** Переопределяем слушатель кнопки назад. Если открыт фрагмент из нижнего меню - то

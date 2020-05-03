@@ -14,8 +14,11 @@ object NotificationsUtils {
     const val CHANNEL_ID = "4815162342"
     private const val NOTIFY_ID = 123
 
-    /** Показывем уведомления, если они включены  */
-    fun showNotification() {
+    /** Показывем уведомления, если они включены
+     * @param notificationTitle - Заголовок уведомления
+     * @param notificationText - Текст уведомления
+     * @param notificationHours - Сколько часов осталось до начала брони */
+    fun showNotification(notificationTitle: String, notificationText: String, notificationHours: Int) {
         //Если пользователь пропускал регистрацию или не авторизировался - уведомление не показываем
         if (AuthUtils.isUserDefault() || !AuthUtils.isUserAuthorized()) return
 
@@ -24,11 +27,18 @@ object NotificationsUtils {
         ) {
             val hours = SharedPreferenceManager.getInstance()
                 .getIntValue(SharedPreferenceManager.KEY.NOTIFICATION_TIME, 0)
+
+            //Если уведомление пришло не за то время, за которое должно (например мы в настройках выбрали
+            // показывать уведомления за 1 час, а нам пришло за 12 часов, то не показываем его)
+            if (notificationHours != hours) {
+                return
+            }
+
             val builder: NotificationCompat.Builder =
                 NotificationCompat.Builder(App.appContext(), CHANNEL_ID)
                     .setSmallIcon(getIcon())
-                    .setContentTitle("Напоминание")
-                    .setStyle(NotificationCompat.BigTextStyle().bigText("Забронированная площадка будет доступна через ${hours}ч."))
+                    .setContentTitle(notificationTitle)
+                    .setStyle(NotificationCompat.BigTextStyle().bigText(notificationText))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setDefaults(Notification.DEFAULT_ALL)
 

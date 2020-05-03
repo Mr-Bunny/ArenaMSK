@@ -2,6 +2,7 @@ package com.example.arenamsk.repositories
 
 import android.graphics.Bitmap
 import com.example.arenamsk.datasources.RemoteDataSource
+import com.example.arenamsk.network.models.FCMTokenModel
 import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.network.models.auth.*
 import com.example.arenamsk.room.tables.User
@@ -83,6 +84,16 @@ class AuthRepository private constructor() : BaseRepository() {
         errorHandler: RequestErrorHandler
     ) = makeRequest(
         call = { RemoteDataSource.changePassword(PasswordChangeDto(currentPassword, newPassword)) },
+        success = success,
+        errorHandler = errorHandler
+    )
+
+    fun sendFCMTokenToServer(
+        token: String,
+        success: (Unit) -> Unit,
+        errorHandler: RequestErrorHandler
+    ) = makeRequest(
+        call = { RemoteDataSource.postFCMToken(FCMTokenModel(token)) },
         success = success,
         errorHandler = errorHandler
     )

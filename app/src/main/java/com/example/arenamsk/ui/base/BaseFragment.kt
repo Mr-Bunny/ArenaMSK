@@ -23,6 +23,7 @@ import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.ui.AuthActivity
 import com.example.arenamsk.ui.MainActivity
 import com.example.arenamsk.utils.MyLocation
+import com.example.arenamsk.utils.SharedPreferenceManager
 import com.example.arenamsk.utils.getStatusBarHeight
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.fragment_booked.*
@@ -82,6 +83,9 @@ abstract class BaseFragment(private val layoutId: Int): Fragment(), LifecycleOwn
             saveAuthToken("")
             saveRefreshToken("")
         }
+
+        SharedPreferenceManager.getInstance().saveValue(SharedPreferenceManager.KEY.NOTIFICATION_IS_ENABLED, false)
+        SharedPreferenceManager.getInstance().saveValue(SharedPreferenceManager.KEY.NOTIFICATION_TIME, 0)
 
         startActivity(Intent(activity, AuthActivity::class.java))
         activity?.finish()

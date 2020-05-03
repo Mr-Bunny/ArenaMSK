@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
+import com.example.arenamsk.FCMService
 import com.example.arenamsk.R
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.utils.SharedPreferenceManager
@@ -109,5 +110,13 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         SharedPreferenceManager.getInstance().saveValue(NOTIFICATION_IS_ENABLED, hours != 0)
         //Сохраняем кол-во часов для уведолмений
         SharedPreferenceManager.getInstance().saveValue(NOTIFICATION_TIME, hours)
+
+        //Отправляем firebase токен, если он не был отправлен
+        if (SharedPreferenceManager.getInstance().getBooleanValue(
+                SharedPreferenceManager.KEY.FCM_TOKEN_UPDATED, false) == false) {
+            with(FCMService) {
+                sendToken(getCurrentFCMToken())
+            }
+        }
     }
 }
