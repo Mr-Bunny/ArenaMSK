@@ -114,7 +114,7 @@ object RemoteDataSource {
 
     /** Делаем запрос на бронирование определенного времени
      * @param bookingPlaceModel - DTO модель с информацией о брони */
-    suspend fun postBookingModel(bookingPlaceModel: BookingPlaceModel) = service.postBookingModel(bookingPlaceModel)
+    suspend fun postBookingModel(bookingPlaceModel: BookingPlaceModel) = authService.postBookingModel(bookingPlaceModel)
 
     /** Отправка отзыва о площадке
      * @param placeId - Id площадки

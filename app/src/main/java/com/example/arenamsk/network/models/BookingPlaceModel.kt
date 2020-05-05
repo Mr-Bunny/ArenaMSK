@@ -11,6 +11,15 @@ data class BookingPlaceModel(
     @SerializedName("date")
     val date: String = "",
 
+    @SerializedName("name")
+    var name: String = "",
+
+    @SerializedName("email")
+    var email: String = "",
+
+    @SerializedName("phone")
+    var phone: String = "",
+
     //Список id времен, которые мы хотим забронировать
     @SerializedName("bookingsId")
     val bookingsId: List<String> = emptyList()

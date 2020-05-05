@@ -100,6 +100,13 @@ class BookingAcceptDialogFragment private constructor() : DialogFragment(), Life
                 showToast("Укажите корректный email/Телефон")
             } else {
                 arguments!!.getParcelable<BookingPlaceModel>(ARG_TAG)?.let {
+                    it.name = name
+                    //Если введен email сохраняем его, иначе сохраняем телефон
+                    if (Patterns.EMAIL_ADDRESS.matcher(emailPhone).matches()) {
+                        it.email = emailPhone
+                    } else {
+                        it.phone = emailPhone
+                    }
                     placeBookingViewModel.bookPlace(it)
                 } ?: showToast("Не удалось получить время для бронирования, пожалуйста, выберите его еще раз")
             }
