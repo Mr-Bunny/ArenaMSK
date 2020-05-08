@@ -100,18 +100,6 @@
                 android:text="@string/text_profile_item_exit"
                 app:drawableStartCompat="@drawable/ic_exit" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/politic"
-                style="@style/ProfileTextMenuItem"
-                android:textColor="@color/text_color_grey_light"
-                android:text="Политика конфиденциальностти" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/conditions"
-                style="@style/ProfileTextMenuItem"
-                android:text="Условия соглашения"
-                android:textColor="@color/text_color_grey_light" />
-
         </LinearLayout>
 
     </ScrollView>

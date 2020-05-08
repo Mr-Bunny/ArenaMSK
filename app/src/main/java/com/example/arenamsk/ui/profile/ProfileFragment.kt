@@ -19,7 +19,6 @@ import kotlinx.coroutines.*
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     private var feedbackFragment: FeedbackDialogFragment? = null
-    private var appInfoDialogFragment: AppInfoDialogFragment? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,10 +53,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
         profile_item_settings.setOnClickListener { openSettingsFragment() }
 
-        politic.setOnClickListener { openPolitic() }
-
-        conditions.setOnClickListener { openConditions() }
-
         profile_item_booked.setOnClickListener {
             openBookedFragment()
         }
@@ -80,24 +75,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     /** Открываем фрагмент настроек */
     private fun openSettingsFragment() {
         findNavController().navigate(R.id.navigation_settings)
-    }
-
-    private fun openPolitic() {
-        appInfoDialogFragment?.dismiss()
-        appInfoDialogFragment = AppInfoDialogFragment.getInstance("politic")
-        appInfoDialogFragment?.show(
-            activity!!.supportFragmentManager,
-            AppInfoDialogFragment.INFO_TAG
-        )
-    }
-
-    private fun openConditions() {
-        appInfoDialogFragment?.dismiss()
-        appInfoDialogFragment = AppInfoDialogFragment.getInstance("conditions")
-        appInfoDialogFragment?.show(
-            activity!!.supportFragmentManager,
-            AppInfoDialogFragment.INFO_TAG
-        )
     }
 
     private fun openFeedbackScreen() {
