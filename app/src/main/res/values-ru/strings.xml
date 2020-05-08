@@ -109,6 +109,6 @@
     <string name="title_edit_profile_fragment">@string/text_profile_item_edit</string>
     <string name="title_settings_fragment">@string/text_profile_item_settings</string>
     <string name="channel_name">Arena</string>
-    <string name="conditions_text"><u>Нажимая на кнопку \"Оплатить\", вы соглашаетесь с нашими условиями</u></string>
+    <string name="acception_text">Нажимая на кнопку \"Зарегистрироваться\", вы принимаете нашу \n<a href="arenasport.me/polconf.pdf">политику конфиденциальности</a> и \n<a href="arenasport.me/polsogl.pdf">политику соглашения</a></string>
 
 </resources>

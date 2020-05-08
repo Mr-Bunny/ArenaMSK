@@ -5,7 +5,13 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
+import android.text.Html
+import android.text.SpannableStringBuilder
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.URLSpan
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -14,6 +20,7 @@ import com.example.arenamsk.ui.AuthActivity
 import com.example.arenamsk.ui.AuthActivity.Companion.GALLERY_PERMISSION_REQUEST_CODE
 import com.example.arenamsk.ui.AuthActivity.Companion.GALLERY_REQUEST_CODE
 import com.example.arenamsk.ui.base.BaseAuthFragment
+import com.example.arenamsk.ui.webview.WebActivity
 import com.example.arenamsk.utils.EnumUtils.SignUpStatus
 import com.example.arenamsk.utils.ImageUtils
 import com.example.arenamsk.utils.PermissionUtils
@@ -31,6 +38,8 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), GalleryCallb
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        acception_text.movementMethod = LinkMovementMethod.getInstance()
 
         toolbar_arrow.setOnClickListener { activity!!.onBackPressed() }
 
@@ -148,5 +157,33 @@ class SignUpFragment : BaseAuthFragment(R.layout.fragment_sign_up), GalleryCallb
 //                circle_crop_image_view
 //            )
 //        )
+    }
+
+    private fun makeLinkClickable(
+        strBuilder: SpannableStringBuilder,
+        span: URLSpan?
+    ) {
+        val start = strBuilder.getSpanStart(span)
+        val end = strBuilder.getSpanEnd(span)
+        val flags = strBuilder.getSpanFlags(span)
+        val clickable: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(view: View) {
+                startActivity(Intent(requireActivity(), WebActivity::class.java).apply { putExtra("url", span?.url) })
+            }
+        }
+        strBuilder.setSpan(clickable, start, end, flags)
+        strBuilder.removeSpan(span)
+    }
+
+    private fun setTextViewHTML(text: TextView, html: String?) {
+        val sequence: CharSequence = Html.fromHtml(html)
+        val strBuilder = SpannableStringBuilder(sequence)
+        val urls =
+            strBuilder.getSpans(0, sequence.length, URLSpan::class.java)
+        for (span in urls) {
+            makeLinkClickable(strBuilder, span)
+        }
+        text.text = strBuilder
+        text.movementMethod = LinkMovementMethod.getInstance()
     }
 }

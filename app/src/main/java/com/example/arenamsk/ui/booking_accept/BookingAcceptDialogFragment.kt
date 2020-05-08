@@ -77,7 +77,7 @@ class BookingAcceptDialogFragment private constructor() : DialogFragment(), Life
             if (it.isNullOrEmpty()) {
                 Toast.makeText(context, "Не удалось забронировать площадку", Toast.LENGTH_LONG).show()
             } else {
-                requireActivity().startActivity(Intent(requireContext(), WebActivity::class.java).apply { putExtra("paymentUrl", it) })
+                requireActivity().startActivity(Intent(requireContext(), WebActivity::class.java).apply { putExtra("url", it) })
 
                 //Если площадка забронирована для проведения оплаты - посылаем сигнал что нужно обновить экран с временм для бронирвоания
                 //а так же открываем webActivity для проведения оплаты

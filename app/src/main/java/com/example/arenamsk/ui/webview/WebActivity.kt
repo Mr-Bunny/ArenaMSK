@@ -8,6 +8,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.example.arenamsk.R
+import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.utils.ActionEvent
 import kotlinx.android.synthetic.main.activity_web.*
 import org.greenrobot.eventbus.EventBus
@@ -20,8 +21,8 @@ class WebActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web)
 
-        //Получаем ссылку на оплату из интента
-        val link = intent.getStringExtra("paymentUrl")
+        //Получаем ссылку из интента
+        val link = intent.getStringExtra("url")
 
         //Открываем ссылку во встроенном webView
         with(webview) {
@@ -32,7 +33,7 @@ class WebActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        EventBus.getDefault().post(ActionEvent.PaymentFinished())
+        if (AuthUtils.isUserAuthorized()) EventBus.getDefault().post(ActionEvent.PaymentFinished())
 
         super.onStop()
     }

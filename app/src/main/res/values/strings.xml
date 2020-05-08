@@ -117,6 +117,6 @@
     <string name="title_settings_fragment">@string/text_profile_item_settings</string>
     <string name="channel_name">Arena</string>
     <string name="channel_description">Arena</string>
-    <string name="conditions_text"><u>By clicking button below you agree with our terms</u></string>
+    <string name="acception_text">Нажимая на кнопку \"Зарегистрироваться\", вы принимаете нашу \n<a href="http://www.arenasport.me/polconf.pdf">политику конфиденциальности</a> и \n<a href="http://www.arenasport.me/polsogl.pdf">политику соглашения</a></string>
 
 </resources>

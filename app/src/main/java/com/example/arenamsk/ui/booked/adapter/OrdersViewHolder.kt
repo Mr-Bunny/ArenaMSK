@@ -31,7 +31,7 @@ class OrdersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             if (order.status != Constants.STATUS_PAID) {
                 btn_pay.enable()
                 btn_pay.setOnClickListener {
-                    context.startActivity(Intent(context, WebActivity::class.java).apply { putExtra("paymentUrl", order.paymentUrl) })
+                    context.startActivity(Intent(context, WebActivity::class.java).apply { putExtra("url", order.paymentUrl) })
                 }
             } else {
                 btn_pay.disable()
