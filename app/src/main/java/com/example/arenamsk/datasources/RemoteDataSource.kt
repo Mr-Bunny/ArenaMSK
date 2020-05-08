@@ -40,7 +40,8 @@ object RemoteDataSource {
     suspend fun getAccountInfo() = service.getUserAccountInfo()
 
     /** Сохраняем новый пароль */
-    suspend fun changePassword(passwordChangeModel: PasswordChangeDto) = service.changePassword(passwordChangeModel)
+    suspend fun changePassword(passwordChangeModel: PasswordChangeDto) =
+        service.changePassword(passwordChangeModel)
 
     /** Places */
     /** Если пользователь дефолтный, то делаем запрос площадок без токена */
@@ -106,7 +107,8 @@ object RemoteDataSource {
     /** Получаем расписание площадки за определенную дату
      * @param placeId - Id площадки (PlaceModel)
      * @param date - Выбранная дата в формате yyyy-MM-dd */
-    suspend fun getBookingTimeList(playgroundId: String, date: String) = authService.getBookingTimeList(playgroundId, date)
+    suspend fun getBookingTimeList(playgroundId: String, date: String) =
+        authService.getBookingTimeList(playgroundId, date)
 
     /** Отправка отзыва о приложении
      * @param feedback - DTO с отзывом для отправки на сервер */
@@ -114,21 +116,28 @@ object RemoteDataSource {
 
     /** Делаем запрос на бронирование определенного времени
      * @param bookingPlaceModel - DTO модель с информацией о брони */
-    suspend fun postBookingModel(bookingPlaceModel: BookingPlaceModel) = authService.postBookingModel(bookingPlaceModel)
+    suspend fun postBookingModel(bookingPlaceModel: BookingPlaceModel) =
+        if (AuthUtils.isUserDefault())
+            authService.postBookingModel(bookingPlaceModel)
+        else
+            service.postBookingModel(bookingPlaceModel)
 
     /** Отправка отзыва о площадке
      * @param placeId - Id площадки
      * @param feedback - DTO с отзывом */
-    suspend fun sendPlaceFeedback(placeId: String, feedback: FeedbackModel) = service.postPlaceFeedback(placeId, feedback)
+    suspend fun sendPlaceFeedback(placeId: String, feedback: FeedbackModel) =
+        service.postPlaceFeedback(placeId, feedback)
 
     /** Обновление имени пользователя, которое было изменено на экране редактирования профиля
      * @param name - Новое имя, мы копируем объект текущего пользователя из локальной БД, сохраняем в него новое имя и
      * сохраняем на сервер */
-    suspend fun updateUserData(name: String) = service.postUserAccountInfo(LocalDataSource.getUserData()!!.copy(firstName = name))
+    suspend fun updateUserData(name: String) =
+        service.postUserAccountInfo(LocalDataSource.getUserData()!!.copy(firstName = name))
 
     /** Отправляем запрос на смену пароля
      * @param resetModel - DTO с информацией для подтверждения смены пароля */
-    suspend fun sendEmailToResetPassword(resetModel: ResetPasswordModel) = service.postUserAccountInfo(resetModel)
+    suspend fun sendEmailToResetPassword(resetModel: ResetPasswordModel) =
+        service.postUserAccountInfo(resetModel)
 
     /** Запрос на удаление аккаунта */
     suspend fun deleteAccount() = service.deleteAccount()
