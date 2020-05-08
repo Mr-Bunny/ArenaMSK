@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:clipToPadding="false"
-    android:overScrollMode="never">
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/acception_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="42dp"
-        android:paddingBottom="16dp"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp">
+        android:gravity="start"
+        android:lineSpacingExtra="1.5dp"
+        android:text="@string/acception_login_text"
+        android:textColor="@color/text_color_grey_light"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/btn_accept"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-        <TextView
-            android:id="@+id/main_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_color_grey"
-            android:textSize="16sp"
-            app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_accept"
+        style="@style/AuthButton"
+        android:layout_marginTop="16dp"
+        android:text="Войти"
+        app:backgroundTint="@color/auth_button_color"
+        app:cornerRadius="25dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/acception_text"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

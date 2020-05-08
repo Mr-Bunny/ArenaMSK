@@ -80,6 +80,7 @@ abstract class BaseFragment(private val layoutId: Int): Fragment(), LifecycleOwn
         with(AuthUtils) {
             setUserIsAuthorized(false)
             setUserIsDefault(false)
+            setPoliticAccepted(false)
             saveAuthToken("")
             saveRefreshToken("")
         }

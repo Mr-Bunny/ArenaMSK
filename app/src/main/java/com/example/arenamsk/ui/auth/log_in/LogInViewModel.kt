@@ -49,9 +49,10 @@ class LogInViewModel : BaseAuthViewModel() {
 
     fun getLogInStatus() = logInStatus
 
-    /** Пропускаем авторизацию */
+    /** Пропускаем авторизацию только после того как пользователь подтвердил что принимает политику приложения*/
     override fun skipAuth() {
         //Открываем приложение
+        AuthUtils.setPoliticAccepted(true)
         logInStatus.value = LogInStatus.LOG_IN_SUCCESS
 
         super.skipAuth()

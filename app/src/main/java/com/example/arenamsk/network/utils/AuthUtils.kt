@@ -35,6 +35,11 @@ object AuthUtils {
         manager.saveValue(SharedPreferenceManager.KEY.IS_USER_DEFAULT, isDefault)
     }
 
+    /** Сохраняем флаг что пользователь принял политику приложения */
+    fun setPoliticAccepted(isAccepted: Boolean) {
+        manager.saveValue(SharedPreferenceManager.KEY.POLITIC_ACCEPTED, isAccepted)
+    }
+
     /** Проверка флага авторизирован ли пользователь */
     fun isUserAuthorized(): Boolean = manager.getBooleanValue(
         SharedPreferenceManager.KEY.IS_USER_AUTHORIZED,
@@ -44,6 +49,12 @@ object AuthUtils {
     /** Проверка флага пользователь пропускал авторизацию или нет */
     fun isUserDefault(): Boolean = manager.getBooleanValue(
         SharedPreferenceManager.KEY.IS_USER_DEFAULT,
+        false
+    ) as Boolean
+
+    /** Проверка флага пользователь принял политику приложения или нет */
+    fun isUserAcceptPolitics(): Boolean = manager.getBooleanValue(
+        SharedPreferenceManager.KEY.POLITIC_ACCEPTED,
         false
     ) as Boolean
 

@@ -6,10 +6,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.arenamsk.R
 import com.example.arenamsk.datasources.LocalDataSource
 import com.example.arenamsk.network.utils.AuthUtils
-import com.example.arenamsk.ui.app_info.AppInfoDialogFragment
 import com.example.arenamsk.ui.base.BaseFragment
 import com.example.arenamsk.ui.feedback.FeedbackDialogFragment
-import com.example.arenamsk.utils.NotificationsUtils
 import com.example.arenamsk.utils.disable
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*

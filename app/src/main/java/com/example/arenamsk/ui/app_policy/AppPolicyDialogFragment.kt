@@ -1,39 +1,35 @@
-package com.example.arenamsk.ui.app_info
+package com.example.arenamsk.ui.app_policy
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
-import com.example.arenamsk.datasources.LocalDataSource
-import com.example.arenamsk.network.utils.AuthUtils
-import com.example.arenamsk.ui.base.BaseFragment
-import com.example.arenamsk.ui.feedback.FeedbackDialogFragment
-import com.example.arenamsk.utils.NotificationsUtils
-import com.example.arenamsk.utils.disable
-import com.squareup.picasso.Picasso
+import com.example.arenamsk.ui.auth.log_in.LogInViewModel
 import kotlinx.android.synthetic.main.fragment_app_info.*
-import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.coroutines.*
+import kotlinx.android.synthetic.main.fragment_app_info.acception_text
+import kotlinx.android.synthetic.main.fragment_sign_up.*
 
-/** Экран с текстом политики конфиденциальности или условий */
-class AppInfoDialogFragment private constructor() : DialogFragment(), LifecycleOwner {
+/** Экран с текстом гиперссылками политики конфиденциальности или условий
+ * Поялвяется если пользователь хочет пропустить авторизацию */
+class AppPolicyDialogFragment private constructor() : DialogFragment(), LifecycleOwner {
 
     companion object {
-        const val INFO_TAG = "app_info_tag"
-        private const val ARGUMENT = "arg"
+        const val POLICY_TAG = "app_policy_tag"
 
-        fun getInstance(text: String = ""): AppInfoDialogFragment {
-            return AppInfoDialogFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARGUMENT, text)
-                }
-            }
+        fun getInstance(): AppPolicyDialogFragment {
+            return AppPolicyDialogFragment()
         }
+    }
+
+    private val logInViewModel by lazy {
+        ViewModelProviders.of(requireActivity()).get(LogInViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +61,8 @@ class AppInfoDialogFragment private constructor() : DialogFragment(), LifecycleO
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val text = arguments?.getString(ARGUMENT) ?: ""
-        main_text.text = text
+        acception_text.movementMethod = LinkMovementMethod.getInstance()
+
+        btn_accept.setOnClickListener { logInViewModel.skipAuth() }
     }
 }

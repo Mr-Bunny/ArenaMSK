@@ -5,12 +5,14 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.arenamsk.R
+import com.example.arenamsk.network.utils.AuthUtils
 import com.example.arenamsk.ui.AuthActivity
+import com.example.arenamsk.ui.app_policy.AppPolicyDialogFragment
+import com.example.arenamsk.ui.app_policy.AppPolicyDialogFragment.Companion.POLICY_TAG
 import com.example.arenamsk.ui.auth.password_reset.PasswordResetDialogFragment
 import com.example.arenamsk.ui.auth.password_reset.PasswordResetDialogFragment.Companion.RESET_TAG
 import com.example.arenamsk.ui.auth.sign_up.SignUpFragment
 import com.example.arenamsk.ui.base.BaseAuthFragment
-import com.example.arenamsk.ui.feedback.FeedbackDialogFragment
 import com.example.arenamsk.utils.EnumUtils.LogInStatus
 import kotlinx.android.synthetic.main.fragment_log_in.*
 
@@ -18,17 +20,23 @@ import kotlinx.android.synthetic.main.fragment_log_in.*
 class LogInFragment : BaseAuthFragment(R.layout.fragment_log_in) {
 
     private val logInViewModel by lazy {
-        ViewModelProviders.of(this).get(LogInViewModel::class.java)
+        ViewModelProviders.of(requireActivity()).get(LogInViewModel::class.java)
     }
 
     private var passwordResetDialogFragment: PasswordResetDialogFragment? = null
+    private var acceptDialogFragment: AppPolicyDialogFragment? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         text_create_new_user.setOnClickListener { openSignUpFragment() }
 
-        text_without_registration.setOnClickListener { logInViewModel.skipAuth() }
+        text_without_registration.setOnClickListener {
+            if (AuthUtils.isUserAcceptPolitics())
+                logInViewModel.skipAuth()
+            else
+                openPolicyScreen()
+        }
 
         text_forget_password.setOnClickListener { openFeedbackScreen() }
 
@@ -92,6 +100,15 @@ class LogInFragment : BaseAuthFragment(R.layout.fragment_log_in) {
             addToBackStack(null)
             commit()
         }
+    }
+
+    private fun openPolicyScreen() {
+        acceptDialogFragment?.dismiss()
+        acceptDialogFragment = AppPolicyDialogFragment.getInstance()
+        acceptDialogFragment?.show(
+            activity!!.supportFragmentManager,
+            POLICY_TAG
+        )
     }
 
     private fun openFeedbackScreen() {
