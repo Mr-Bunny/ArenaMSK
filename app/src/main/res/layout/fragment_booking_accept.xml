@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginTop="24dp"
         android:gravity="start"
         android:text="Ваше имя"
         android:textColor="@color/colorPrimary"
@@ -66,7 +67,21 @@
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="@id/email_title"
         app:layout_constraintRight_toRightOf="@id/email_title"
-        app:layout_constraintTop_toBottomOf="@id/email_title"
+        app:layout_constraintTop_toBottomOf="@id/email_title"/>
+
+    <TextView
+        android:id="@+id/acception_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="start"
+        android:text="Вы можете включить в настройках напоминание о забронированной площадке"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_color_grey_light"
+        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintBottom_toTopOf="@id/btn_pay"/>
 
     <com.google.android.material.button.MaterialButton
