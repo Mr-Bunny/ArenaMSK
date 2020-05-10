@@ -1,9 +1,11 @@
 package com.example.arenamsk.ui.webview
 
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.annotation.TargetApi
+import android.os.Build
 import android.os.Bundle
-import android.view.KeyEvent
+import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +29,25 @@ class WebActivity : AppCompatActivity() {
         //Открываем ссылку во встроенном webView
         with(webview) {
             settings.javaScriptEnabled = true
+            settings.userAgentString = "Android"
+            settings.javaScriptCanOpenWindowsAutomatically = true
+            settings.setSupportMultipleWindows(true)
+            settings.builtInZoomControls = true
+            settings.setAppCacheEnabled(true)
+            settings.setAppCacheMaxSize(10 * 1024 * 1024)
+            settings.setAppCachePath("")
+            settings.databaseEnabled = true
+            settings.domStorageEnabled = true
+            settings.setGeolocationEnabled(true)
+            settings.saveFormData = false
+            settings.savePassword = false
+            settings.setRenderPriority(WebSettings.RenderPriority.HIGH)
+            // Flash settings
+            settings.pluginState = WebSettings.PluginState.ON
+
+            // Geo location settings
+            settings.setGeolocationEnabled(true)
+            settings.setGeolocationDatabasePath("/data/data/selendroid")
             webViewClient = SimpleWebViewClient()
             loadUrl(link)
         }
@@ -40,11 +61,19 @@ class WebActivity : AppCompatActivity() {
 
     /** Веб клиент для открытия ссылок в webView приложения, а не в каком-то другом браузере */
     private class SimpleWebViewClient : WebViewClient() {
+        @TargetApi(Build.VERSION_CODES.N)
         override fun shouldOverrideUrlLoading(
-            webView: WebView,
-            url: String
+            view: WebView,
+            request: WebResourceRequest
         ): Boolean {
-            return false
+            view.loadUrl(request.url.toString())
+            return true
+        }
+
+        // Для старых устройств
+        override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
+            view.loadUrl(url)
+            return true
         }
     }
 }
