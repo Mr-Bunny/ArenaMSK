@@ -14,7 +14,7 @@ import com.example.arenamsk.utils.disable
 import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.current_booked_item.view.*
 import kotlinx.android.synthetic.main.item_current_order.view.*
-import java.lang.Exception
+import kotlin.Exception
 
 class OrdersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -39,8 +39,9 @@ class OrdersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             booked_container.removeAllViews()
 
+            //Меняем порядок времени, чтобы было по увеличению
             //Для каждого значения времени в order.booking создаем view и добавляем в общий контейнер
-            order.booking.forEachIndexed { index, bookingModel->
+            order.booking.reversed().forEachIndexed { index, bookingModel->
                 //Если мы бронировали несколько времен, то будем отображать цифры
                 val isNumberVisible = order.booking.size > 1
 
