@@ -40,6 +40,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        btn_back.setOnClickListener { findNavController().popBackStack() }
+
         if (AuthUtils.isUserDefault()) {
             notification_container.setOnClickListener {
                 showUnauthorizedDialog()

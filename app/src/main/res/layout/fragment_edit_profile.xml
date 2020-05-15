@@ -10,19 +10,31 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            app:srcCompat="@drawable/ic_arrow_left_blue"
+            app:layout_constraintTop_toTopOf="@id/edit_profile_title"
+            app:layout_constraintBottom_toBottomOf="@id/edit_profile_title"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
         <TextView
             android:id="@+id/edit_profile_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
             android:gravity="center_horizontal"
             android:fontFamily="@font/montserrat_bold"
             android:lineSpacingExtra="5dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
             android:text="Редактирование профиля"
             android:textColor="@color/colorPrimary"
             android:textSize="22sp"
+            android:paddingRight="32dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/btn_back"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RelativeLayout

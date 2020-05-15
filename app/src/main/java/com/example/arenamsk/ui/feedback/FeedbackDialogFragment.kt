@@ -9,15 +9,16 @@ import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.fragment.findNavController
 import com.example.arenamsk.R
 import com.example.arenamsk.models.FeedbackModel
 import com.example.arenamsk.network.models.ApiError
 import com.example.arenamsk.network.models.AppFeedbackModel
 import com.example.arenamsk.network.models.RequestErrorHandler
 import com.example.arenamsk.repositories.PlaceRepository
-import com.example.arenamsk.utils.TimeUtils
 import com.example.arenamsk.utils.enable
 import kotlinx.android.synthetic.main.fragment_feedback.*
+import kotlinx.android.synthetic.main.fragment_feedback.btn_back
 
 /** Экран с отзывами о площадке */
 class FeedbackDialogFragment private constructor() : DialogFragment(), LifecycleOwner {
@@ -100,6 +101,8 @@ class FeedbackDialogFragment private constructor() : DialogFragment(), Lifecycle
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        btn_back.setOnClickListener { dismiss() }
 
         if (isPlaceFeedback) {
             feedback_mark_title.enable()

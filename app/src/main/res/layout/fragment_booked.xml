@@ -1,9 +1,36 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:srcCompat="@drawable/ic_arrow_left_blue"
+        app:layout_constraintTop_toTopOf="@id/booked_title"
+        app:layout_constraintBottom_toBottomOf="@id/booked_title"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/booked_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:gravity="center_horizontal"
+        android:fontFamily="@font/montserrat_bold"
+        android:lineSpacingExtra="5dp"
+        android:layout_marginEnd="16dp"
+        android:paddingRight="32dp"
+        android:text="Забронированно"
+        android:textColor="@color/colorPrimary"
+        android:textSize="22sp"
+        app:layout_constraintLeft_toRightOf="@id/btn_back"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/booked_tab_layout"
@@ -18,12 +45,15 @@
         app:tabIndicatorHeight="1dp"
         app:tabMode="scrollable"
         app:tabPaddingStart="16dp"
-        app:tabTextAppearance="@style/PlaceDetailTabLayout" />
+        app:tabTextAppearance="@style/PlaceDetailTabLayout"
+        app:layout_constraintTop_toBottomOf="@id/booked_title"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/booked_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        app:layout_constraintTop_toBottomOf="@id/booked_tab_layout"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

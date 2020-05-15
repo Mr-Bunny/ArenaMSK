@@ -94,6 +94,8 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile), Galler
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        btn_back.setOnClickListener { findNavController().popBackStack() }
+
         CoroutineScope(Dispatchers.IO).launch {
             LocalDataSource.getUserData()?.let {
                 withContext(Dispatchers.Main) {
