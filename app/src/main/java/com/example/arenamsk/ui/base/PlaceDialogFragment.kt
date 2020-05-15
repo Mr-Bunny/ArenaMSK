@@ -245,9 +245,11 @@ class PlaceDialogFragment private constructor() : DialogFragment(), LifecycleOwn
 
                 if (scrollRange + verticalOffset == 0) {
                     place_detail_toolbar.title = place.placeTitle
+                    place_detail_toolbar.setNavigationIcon(R.drawable.ic_arrow_left_white)
                     isShow = true
                 } else if (isShow) {
                     place_detail_toolbar.title = " "
+                    place_detail_toolbar.setNavigationIcon(R.drawable.arrow_back_background)
                     isShow = false
                 }
             }
