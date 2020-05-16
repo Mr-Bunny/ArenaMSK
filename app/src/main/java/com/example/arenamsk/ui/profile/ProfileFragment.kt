@@ -1,6 +1,7 @@
 package com.example.arenamsk.ui.profile
 
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.example.arenamsk.R
@@ -11,7 +12,10 @@ import com.example.arenamsk.ui.feedback.FeedbackDialogFragment
 import com.example.arenamsk.utils.disable
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /** Экран профиля пользователя */
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
@@ -44,19 +48,84 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             profile_item_booked.disable()
             profile_item_edit.disable()
         }
-
         profile_item_edit.setOnClickListener { openEditProfileFragment() }
-
-        profile_item_exit.setOnClickListener { exitFromProfile() }
-
-        profile_item_settings.setOnClickListener { openSettingsFragment() }
-
-        profile_item_booked.setOnClickListener {
-            openBookedFragment()
+        profile_item_edit.setOnTouchListener { _, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    profile_item_edit.setTextColor(resources.getColor(R.color.colorWhite))
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    profile_item_edit.setTextColor(resources.getColor(R.color.text_color_grey))
+                    view.callOnClick()
+                    true
+                }
+            }
+            false
         }
 
-        profile_item_contact.setOnClickListener {
-            openFeedbackScreen()
+        profile_item_exit.setOnClickListener { exitFromProfile() }
+        profile_item_exit.setOnTouchListener { _, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    profile_item_exit.setTextColor(resources.getColor(R.color.colorWhite))
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    profile_item_exit.setTextColor(resources.getColor(R.color.text_color_grey))
+                    view.callOnClick()
+                    true
+                }
+            }
+            false
+        }
+
+        profile_item_settings.setOnClickListener { openSettingsFragment() }
+        profile_item_settings.setOnTouchListener { _, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    profile_item_settings.setTextColor(resources.getColor(R.color.colorWhite))
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    profile_item_settings.setTextColor(resources.getColor(R.color.text_color_grey))
+                    view.callOnClick()
+                    true
+                }
+            }
+            false
+        }
+
+        profile_item_booked.setOnClickListener { openBookedFragment() }
+        profile_item_booked.setOnTouchListener { _, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    profile_item_booked.setTextColor(resources.getColor(R.color.colorWhite))
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    profile_item_booked.setTextColor(resources.getColor(R.color.text_color_grey))
+                    view.callOnClick()
+                    true
+                }
+            }
+            false
+        }
+
+        profile_item_contact.setOnClickListener { openFeedbackScreen() }
+        profile_item_contact.setOnTouchListener { _, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    profile_item_contact.setTextColor(resources.getColor(R.color.colorWhite))
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    profile_item_contact.setTextColor(resources.getColor(R.color.text_color_grey))
+                    view.callOnClick()
+                    true
+                }
+            }
+            false
         }
     }
 
