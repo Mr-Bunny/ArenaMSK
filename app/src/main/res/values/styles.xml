@@ -8,10 +8,12 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
     </style>
 
     <style name="MainAppTheme" parent="AppTheme">
         <item name="android:windowTranslucentNavigation">false</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
     </style>
 
     <style name="AuthButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
