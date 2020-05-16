@@ -110,7 +110,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/edit_text_feedback_background"
         android:gravity="top"
-        android:hint="Расскажите о своих впечатлениях"
+        android:hint="Расскажите о Ваших впечатлениях"
         android:inputType="textMultiLine"
         android:maxHeight="200dp"
         android:minHeight="128dp"
