@@ -100,6 +100,21 @@
                 android:text="@string/text_profile_item_exit"
                 app:drawableStartCompat="@drawable/ic_exit" />
 
+            <TextView
+                android:id="@+id/acception_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:gravity="start"
+                android:text="@string/acception_oferta"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:lineSpacingExtra="1.5dp"
+                android:textColor="@color/text_color_grey_light"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toBottomOf="@id/password_edit_text"/>
+
         </LinearLayout>
 
     </ScrollView>

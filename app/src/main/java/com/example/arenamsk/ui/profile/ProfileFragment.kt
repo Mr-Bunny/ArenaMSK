@@ -1,6 +1,7 @@
 package com.example.arenamsk.ui.profile
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.MotionEvent
 import android.view.View
 import androidx.navigation.fragment.findNavController
@@ -25,7 +26,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //NotificationsUtils.showNotification()
+        acception_text.movementMethod = LinkMovementMethod.getInstance()
 
         //Setup name
         CoroutineScope(Dispatchers.IO).launch {

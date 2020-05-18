@@ -59,6 +59,8 @@ class PasswordResetDialogFragment private constructor() : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        btn_back.setOnClickListener { dismiss() }
+
         send_btn.setOnClickListener {
             checkInputData()
         }
