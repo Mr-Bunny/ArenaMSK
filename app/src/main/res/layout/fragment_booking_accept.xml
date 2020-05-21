@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/accept_title"
         app:layout_constraintBottom_toTopOf="@id/accept_name_edit_text"/>
 
-    <com.example.arenamsk.custom_view.sign_up_edit_text.CustomSignUpNameEditText
+    <com.arenabooking.arenamsk.custom_view.sign_up_edit_text.CustomSignUpNameEditText
         android:id="@+id/accept_name_edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@id/accept_name_edit_text"
         app:layout_constraintBottom_toTopOf="@id/accept_email_edit_text"/>
 
-    <com.example.arenamsk.custom_view.sign_up_edit_text.CustomSignUpEmailEditText
+    <com.arenabooking.arenamsk.custom_view.sign_up_edit_text.CustomSignUpEmailEditText
         android:id="@+id/accept_email_edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -8,6 +8,53 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:862525657495:android:bb47529eb7e973e455b4d2",
+        "android_client_info": {
+          "package_name": "com.arenabooking.arenamsk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862525657495-kv3rpht0n827t0km7gv79brq4n17votj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arenabooking.arenamsk",
+            "certificate_hash": "a7f3d03c4f005ea2cc299ed7b3c690445f1c6ade"
+          }
+        },
+        {
+          "client_id": "862525657495-ci5s92re0eikpg3pdvmkol7krlpkdtm8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQIC305r0EfT9fPqMT2Yo6Gql8HUiej-8"
+        },
+        {
+          "current_key": "AIzaSyAMSJaG5NWoCJzbWtcqs9WdYX2IkgL1Svg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "862525657495-ci5s92re0eikpg3pdvmkol7krlpkdtm8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "862525657495-kp6klu2f0kvt9fqir1f1njjamfplr4fn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.arena-booking.arena"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:862525657495:android:5309760868e4df9655b4d2",
         "android_client_info": {
           "package_name": "com.example.arenamsk"
@@ -28,6 +75,9 @@
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyAQIC305r0EfT9fPqMT2Yo6Gql8HUiej-8"
+        },
         {
           "current_key": "AIzaSyAMSJaG5NWoCJzbWtcqs9WdYX2IkgL1Svg"
         }

@@ -103,7 +103,7 @@
             app:layout_constraintBottom_toTopOf="@id/name_edit_text"
             app:layout_constraintTop_toBottomOf="@id/edit_add_new_photo" />
 
-        <com.example.arenamsk.custom_view.sign_up_edit_text.CustomSignUpNameEditText
+        <com.arenabooking.arenamsk.custom_view.sign_up_edit_text.CustomSignUpNameEditText
             android:id="@+id/name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
             app:layout_constraintLeft_toLeftOf="@id/btn_edit"
             app:layout_constraintTop_toBottomOf="@id/btn_edit"/>
 
-        <com.example.arenamsk.custom_view.sign_up_edit_text.CustomSignUpPasswordEditText
+        <com.arenabooking.arenamsk.custom_view.sign_up_edit_text.CustomSignUpPasswordEditText
             android:id="@+id/current_password_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
             android:layout_marginStart="16dp"
             app:layout_constraintTop_toBottomOf="@id/settings_password_change" />
 
-        <com.example.arenamsk.custom_view.sign_up_edit_text.CustomSignUpPasswordEditText
+        <com.arenabooking.arenamsk.custom_view.sign_up_edit_text.CustomSignUpPasswordEditText
             android:id="@+id/new_password_edit_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
