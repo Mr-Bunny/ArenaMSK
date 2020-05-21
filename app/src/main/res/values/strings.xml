@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">ArenaMSK</string>
     <string name="image_description" translatable="false">image</string>
 
-    <string name="map_api_key" translatable="false">AIzaSyAMSJaG5NWoCJzbWtcqs9WdYX2IkgL1Svg</string>
+    <string name="map_api_key" translatable="false">AIzaSyAQIC305r0EfT9fPqMT2Yo6Gql8HUiej-8</string>
 
     <!--Toasts-->
     <string name="network_offline_text">Check your network connection</string>
